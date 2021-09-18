@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Album>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    table {
+        font-family:Arial , sans-serif;
+        border-collapse:collapse;
+        width:100%;
+    }
+
+    td , th {
+        border: 1px solid #dddddd;
+        text-align:left;
+        padding:8px;
+    }
+
+    tr:nth-child(even){
+        background-color:#dddddd;
+    }
+
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to the Music Store</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">Welcome to our store</a>.</p>
+</div>
+
+<div>
+     @*tuk tova e validaciqta taka sa pishi*@
+    @if(Model.Count()>0)
+            {
+    <div>
+
+        <h3>All Albums  </h3>
+        
+        <table>
+            <tr>
+                <th>  Album Title  </th>
+                <th>  Album Price  </th>
+                <th>   Album Genre </th>
+                <th>   Edit </th>
+            </tr>
+
+            @foreach (var album in Model)
+            {
+                <tr>
+                    <td>
+                        @album.Title
+                    </td>
+                    <td>
+                        @album.Price
+                    </td>
+                    <td>
+                        @album.Genre
+                    </td>
+
+                    <td><a class="btn btn-outline-warning" asp-action="Edit" asp-route-AlbumID="@album.Id" asp-controller="MusicStore" role="button">Index Page</a> </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+            }
+</div>

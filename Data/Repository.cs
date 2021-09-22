@@ -2,8 +2,10 @@
 using MvcMusicStoreWebProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MvcMusicStoreWebProject.Data
 {
@@ -21,9 +23,9 @@ namespace MvcMusicStoreWebProject.Data
         private string DeleteMassage { get; set; }
         private string ExceptionMessage { get; set; }
 
-        public string DeleteAlbum(int Id)
+        public async Task <string> DeleteAlbum(int Id)
         {
-            Album deleteAlbum = Context.Albums.Find(Id);
+            Album deleteAlbum =  Context.Albums.Find(Id);
             int deletedItems = 0;
 
             try
@@ -31,7 +33,7 @@ namespace MvcMusicStoreWebProject.Data
                 if (deleteAlbum != null)
                 {
                     Context.Albums.Remove(deleteAlbum);
-                    deletedItems = Context.SaveChanges();
+                    deletedItems =await  Context.SaveChangesAsync();
                     
 
                 }
@@ -49,9 +51,9 @@ namespace MvcMusicStoreWebProject.Data
 
          }
 
-        public string DeleteAlbum(Album album)
+        public async Task<string> DeleteAlbum(Album album)
         {
-            return DeleteAlbum(album.Id);
+            return await DeleteAlbum(album.Id);
         }
 
         public async Task <Album> GetAlbumById(int Id)
@@ -79,9 +81,23 @@ namespace MvcMusicStoreWebProject.Data
                 return null;
         }
 
-        public string InsertNewAlbum(Album album)
+        public bool IsDuplicateTitle (string title)
+        {
+            // the Context represents the whole database
+            // tva ako nqkoi mi obqsni kak raboti napravo sha kandidatstvam v NASA i direktno s tva sha im sa hvalq
+            var duplicateAlbum = Context.Albums.FirstOrDefault((album) => album.Title == title);
+
+            if (duplicateAlbum != null)
+                return true;
+
+            return false;
+       
+        }
+
+        public async Task <string>InsertNewAlbum(Album album)
         {
             Context.Albums.Add(album);
+            await Context.SaveChangesAsync();
             return "Inserted";
         }
 

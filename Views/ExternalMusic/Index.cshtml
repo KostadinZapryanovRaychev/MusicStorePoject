@@ -1,6 +1,94 @@
-﻿
+﻿@model List<ApiModel>
 @{
     ViewData["Title"] = "Index";
 }
 
+<a class="btn btn-primary" asp-action="Index" asp-controller="MusicStore" role="button">Main page</a>
 <h1>    This is our Extarnal Page</h1>
+
+
+<table>
+    <tr>
+        <th> Price   </th>
+        <th> Album Title   </th>
+        <th> Album Genre   </th>
+        <th> Edit  Album  </th>
+       
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td class="price">@item.Id</td>
+    <td class="title">@item.Title</td>
+    @if (item.UserId < 4)
+    {
+        <td class="genre">Pop</td>
+    }
+    else if (item.UserId >= 4 && item.UserId < 8)
+    {
+        <td class="genre">Rock</td>
+    }
+    else
+    {
+        <td class="genre">Classic</td>
+    }
+
+
+    @if (item.IsDuplicated)
+    {
+        <td><a class="btn btn-outline-danger" href="#" role="button">Existing</a></td>
+    }
+    else
+    {
+        <td><a class="btn btn-outline-primary addInDb" href="#" role="button">Add in DB</a></td>
+
+    }
+
+
+</tr>
+      }
+
+    </table>
+
+@section Scripts {
+
+<script>
+    $(document).ready(function () {
+        $(".addInDb").on("click", function () {
+
+            var parent = $(this).parent();
+             
+            // taka za[azvame resultat ot gornoto this]
+            var clickedElement = $(this);
+
+            // [pri siblings moje i da ne otbelqzvame che e elementa td ili div a direktno i samo klasa ako kajem pak stava]
+
+            //trima btw e vajen shtot sha opravi spaces za da ne gi vkara v database che togava searcha sha e problemen
+            var title = parent.siblings("td.title").first().text().trim();
+            var price = parent.siblings(".price").first().text().trim();
+            var genre = parent.siblings("td.genre").first().text().trim();
+
+     
+
+            // i teq ajax colove kvi sa shto sa kuv e im e filma
+            $.ajax({
+
+                type: 'POST',
+                url: '/ExternalMusic/AjaxTest',
+                data: { title: title, price: price, genre: genre },
+                success: function (data) {
+
+                    clickedElement.removeClass("addInDb").removeClass("btn btn-outline-primary").addClass("btn-outline-danger").text("Existing").unbind("click");
+                }
+
+            });
+
+            // [premahvane celiq red maina ]
+           //  $(this).closest("tr").remove();
+
+        });
+
+    });
+</script>
+}

@@ -34,6 +34,7 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(viewModel);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Edit(AlbumViewModel modifiedAlbum)
         {
@@ -43,6 +44,14 @@ namespace MvcMusicStoreWebProject.Controllers
                 await Repo.UpdateAlbum(album);
             }
             return View(modifiedAlbum);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int AlbumID)
+        {
+            var deleteMessage = await Repo.DeleteAlbum(AlbumID);
+
+            return Content(deleteMessage);
         }
 
 
@@ -61,7 +70,7 @@ namespace MvcMusicStoreWebProject.Controllers
                 if (ModelState.IsValid)
                 {
                     // save i DB
-                    Repo.InsertNewAlbum(viewModel.Album);
+                    await Repo.InsertNewAlbum(viewModel.Album);
                     await Repo.Save();
 
                     return RedirectToAction("Create");

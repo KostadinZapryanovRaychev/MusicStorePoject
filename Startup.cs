@@ -30,6 +30,8 @@ namespace MvcMusicStoreWebProject
             services.AddScoped<IRepository, Repository>();
             services.AddDbContext<MusicStoreDbContext>(options=> options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.AddControllersWithViews();
+
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

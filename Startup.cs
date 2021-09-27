@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MvcMusicStoreWebProject.Data;
+using MvcMusicStoreWebProject.Data.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +32,18 @@ namespace MvcMusicStoreWebProject
             string mySqlConnectionStr = Configuration.GetConnectionString("Connection");
 
             services.AddScoped<IRepository, Repository>();
+
+            services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<MusicStoreDbContext>()
+            .AddDefaultUI(); //Това ми трябва за правилното пренасочване към login/register page
+
             services.AddDbContext<MusicStoreDbContext>(options=> options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.AddControllersWithViews();
 
             services.AddHttpClient();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +64,7 @@ namespace MvcMusicStoreWebProject
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -59,6 +72,7 @@ namespace MvcMusicStoreWebProject
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=MusicStore}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

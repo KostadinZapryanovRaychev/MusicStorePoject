@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
+using MvcMusicStoreWebProject.Data.Models;
 using MvcMusicStoreWebProject.Models;
 using System;
 using System.Collections.Generic;
@@ -7,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace MvcMusicStoreWebProject.Data
 {
-    public class MusicStoreDbContext : DbContext
+    public class MusicStoreDbContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, int>
     {
-        public MusicStoreDbContext(DbContextOptions <MusicStoreDbContext> options) : base (options)
+        public MusicStoreDbContext(DbContextOptions<MusicStoreDbContext> options) : base (options)
         {
 
         }

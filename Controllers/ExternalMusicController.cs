@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
@@ -24,6 +25,7 @@ namespace MvcMusicStoreWebProject.Controllers
         public IRepository Repo { get; }
 
 
+        [Authorize]
         // nishtu ne razbiram tuka s teq RestFul API alata balata
         public async Task <IActionResult> Index()
         {

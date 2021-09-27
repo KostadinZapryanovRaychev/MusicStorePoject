@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcMusicStoreWebProject", "MvcMusicStoreWebProject.csproj", "{83C3F851-4F6E-452A-88C4-FC0C818C918D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "..\WebApplication2\WebApplication2.csproj", "{93AB29CC-C29A-4BC3-A0D5-10646D70B303}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{83C3F851-4F6E-452A-88C4-FC0C818C918D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C3F851-4F6E-452A-88C4-FC0C818C918D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C3F851-4F6E-452A-88C4-FC0C818C918D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93AB29CC-C29A-4BC3-A0D5-10646D70B303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93AB29CC-C29A-4BC3-A0D5-10646D70B303}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93AB29CC-C29A-4BC3-A0D5-10646D70B303}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93AB29CC-C29A-4BC3-A0D5-10646D70B303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

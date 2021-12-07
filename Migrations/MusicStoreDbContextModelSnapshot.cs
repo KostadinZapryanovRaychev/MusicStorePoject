@@ -214,7 +214,7 @@ namespace MvcMusicStoreWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ApplicationUserId")
+                    b.Property<int>("ApplicationUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Auditorium")
@@ -255,9 +255,6 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -349,15 +346,12 @@ namespace MvcMusicStoreWebProject.Migrations
             modelBuilder.Entity("MvcMusicStoreWebProject.Models.Attendance", b =>
                 {
                     b.HasOne("MvcMusicStoreWebProject.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Attendances")
-                        .HasForeignKey("ApplicationUserId");
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("MvcMusicStoreWebProject.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Attendances");
                 });
 #pragma warning restore 612, 618
         }

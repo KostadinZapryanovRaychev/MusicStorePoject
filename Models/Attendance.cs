@@ -45,24 +45,18 @@ namespace MvcMusicStoreWebProject.Models
 
         public string Note { get; set; }
 
-        // traq da go napravq foreign key referirasht zavisimost kum Id v programs
-
         [ForeignKey("Programs")]
         public string Programs { get; set; }
-        // traq da go napravq foreign key referirasht zavisimost kum Id v disciplines / Uj GO napravih nz dali e takaa !!!!!!!!!!!!!!!!!!
+     
 
         [ForeignKey("Discipline")]
         public string Discipline { get; set; }
 
-
-
-        [ForeignKey("Discipline")]
-        public int UserId { get; set; }
-
+        
+        public int ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser  { get; set; }
-        //i kak da vkaram kato vunshen kluch sashto taka User ot Identity mnogo vajen moment
+
     }
 
-    //i kak da vkaram kato vunshen kluch sashto taka User ot Identity mnogo vajen moment
 }
 

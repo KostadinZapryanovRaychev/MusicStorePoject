@@ -9,8 +9,8 @@ using MvcMusicStoreWebProject.Data;
 namespace MvcMusicStoreWebProject.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    [Migration("20211205120141_CrazyStuff")]
-    partial class CrazyStuff
+    [Migration("20211207161016_ViktorTwo")]
+    partial class ViktorTwo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -216,6 +216,9 @@ namespace MvcMusicStoreWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Auditorium")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -230,8 +233,8 @@ namespace MvcMusicStoreWebProject.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("DisciplineId")
-                        .HasColumnType("int");
+                    b.Property<string>("Discipline")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Groupe")
                         .HasColumnType("int");
@@ -246,8 +249,8 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("ProgramsId")
-                        .HasColumnType("int");
+                    b.Property<string>("Programs")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Timeframe")
                         .IsRequired()
@@ -258,9 +261,7 @@ namespace MvcMusicStoreWebProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DisciplineId");
-
-                    b.HasIndex("ProgramsId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Attendances");
                 });
@@ -285,8 +286,8 @@ namespace MvcMusicStoreWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -346,17 +347,13 @@ namespace MvcMusicStoreWebProject.Migrations
 
             modelBuilder.Entity("MvcMusicStoreWebProject.Models.Attendance", b =>
                 {
-                    b.HasOne("MvcMusicStoreWebProject.Models.Discipline", "Discipline")
+                    b.HasOne("MvcMusicStoreWebProject.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("DisciplineId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("MvcMusicStoreWebProject.Models.Programs", "Programs")
-                        .WithMany()
-                        .HasForeignKey("ProgramsId");
-
-                    b.Navigation("Discipline");
-
-                    b.Navigation("Programs");
+                    b.Navigation("ApplicationUser");
                 });
 #pragma warning restore 612, 618
         }

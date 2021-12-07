@@ -9,6 +9,5 @@ namespace MvcMusicStoreWebProject.Data.Models
 {
     public class ApplicationUser : IdentityUser<int>
     {
-        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

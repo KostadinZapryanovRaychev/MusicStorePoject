@@ -25,39 +25,39 @@ namespace MvcMusicStoreWebProject.Controllers
         public IRepository Repo { get; }
 
 
-        [Authorize]
-        // nishtu ne razbiram tuka s teq RestFul API alata balata
-        public async Task <IActionResult> Index()
-        {
-            //tuk veche otkakto go opravibme po toq nachin izobshto ne go chatkam
-            var client = HttpClientFactory.CreateClient();
-           
-               var result = await client.GetStringAsync("https://jsonplaceholder.typicode.com/albums");
+        //[Authorize]
+        //nishtu ne razbiram tuka s teq RestFul API alata balata
+        //public async Task<IActionResult> Index()
+        //{
+        //    tuk veche otkakto go opravibme po toq nachin izobshto ne go chatkam
+        //    var client = HttpClientFactory.CreateClient();
 
-                //var text = await result.Content.ReadAsStringAsync();
+        //    var result = await client.GetStringAsync("https://jsonplaceholder.typicode.com/albums");
 
-                // drugiq variant e da komentirame vtoriq red i napravo dan napravim gornata funkciq GetStringAsync
+        //    var text = await result.Content.ReadAsStringAsync();
 
-               var deserialized = JsonConvert.DeserializeObject<List<ApiModel>>(result);
+        //    drugiq variant e da komentirame vtoriq red i napravo dan napravim gornata funkciq GetStringAsync
 
-            foreach( var album in deserialized)
-            {
-                if (Repo.IsDuplicateTitle(album.Title))
-                {
-                    album.IsDuplicated = true;
-                }
-            }
-     
-            return View(deserialized);
-        }
+        //       var deserialized = JsonConvert.DeserializeObject<List<ApiModel>>(result);
 
-        [HttpPost]
-        public async Task <IActionResult> AjaxTest(string title ,decimal price , string genre)
-        {
-            // entity si genirira samo ID ta ne e nujno da sa zanimavame s tva daj e nejelatelno
-            var newAlbum = new Album { Title = title, Price = price, Genre = genre, ReleaseDate = DateTime.Now.AddMonths(6) };
-            var result = await Repo.InsertNewAlbum(newAlbum);
-            return Content(result); 
-        }
+        //    foreach (var album in deserialized)
+        //    {
+        //        if (Repo.IsDuplicateTitle(album.Title))
+        //        {
+        //            album.IsDuplicated = true;
+        //        }
+        //    }
+
+        //    return View(deserialized);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> AjaxTest(string title, decimal price, string genre)
+        //{
+        //    entity si genirira samo ID ta ne e nujno da sa zanimavame s tva daj e nejelatelno
+        //   var newAlbum = new Album { Title = title, Price = price, Genre = genre, ReleaseDate = DateTime.Now.AddMonths(6) };
+        //    var result = await Repo.InsertNewAlbum(newAlbum);
+        //    return Content(result);
+        //}
     }
 }

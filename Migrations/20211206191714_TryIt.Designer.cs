@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcMusicStoreWebProject.Data;
 
 namespace MvcMusicStoreWebProject.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    partial class MusicStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206191714_TryIt")]
+    partial class TryIt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,9 +216,6 @@ namespace MvcMusicStoreWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ApplicationUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Auditorium")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -257,12 +256,7 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Attendances");
                 });
@@ -344,20 +338,6 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Attendance", b =>
-                {
-                    b.HasOne("MvcMusicStoreWebProject.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Attendances")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("MvcMusicStoreWebProject.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Attendances");
                 });
 #pragma warning restore 612, 618
         }

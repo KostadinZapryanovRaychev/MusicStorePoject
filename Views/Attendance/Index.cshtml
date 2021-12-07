@@ -1,0 +1,172 @@
+﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Attendance>
+
+
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1>    Здравейте асистент Стоянова </h1>
+            @*<h1>    Здравейте асистент Ячева </h1>*@
+            @*taq validaciq tuka traq da si izqsnim kvo pravi kak raboti mamka mu*@
+            <div asp-validation-summary="All">   </div>
+            @*<img src="https://scontent.fsof10-1.fna.fbcdn.net/v/t1.6435-9/202194678_2930299750586537_8237822614223076407_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=3w_7ObFqxGEAX8x3rlY&_nc_oc=AQmAGJjo3hK-s23-GFr-ZlIEeiuGh58TKdUfrq2ag1-WrIXF4WLfksNmIsOkjSJkbz8&_nc_ht=scontent.fsof10-1.fna&oh=e5789b06a0869ede56221f4cae512cc2&oe=61C9FD18" alt="Alternate Text" width="400" height="400" />*@
+            <img src="https://scontent.fsof9-1.fna.fbcdn.net/v/t1.18169-9/17264156_262025210914936_6532510675194426615_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=m5PWsmyf4_gAX-HfT6m&tn=h9kq6mqPTqKii2ia&_nc_ht=scontent.fsof9-1.fna&oh=000d88a4c53d5f2c6654940ddf588cd4&oe=61CD5A02" alt="Alternate Text" width="400" height="400" />
+            <h2 class="text-primary"> Attandance</h2>
+        </div>
+        <div class="col-6 text-right">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Fill  the fields </a> </div>
+
+    </div>
+
+    <div class="input-group">
+        <div class="form-outline">
+            <input type="text" id="searchTextId" class="form-control" />
+        </div>
+        <button type="button" class="btn btn-primary">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+
+    <br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Degree</th>
+                    <th>Mode</th>
+                    <th>Course</th>
+                    <th>Groupe</th>
+                    <th>Timeframe</th>
+                    <th>Type</th>
+                    <th>Hours</th>
+                    <th>Auditorium</th>
+                    <th>Note</th>
+                    <th>Programs</th>
+                    <th>Discipline</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var attendance in Model)
+                {
+                    <tr class="tableRows">
+                        <td width="8%">@attendance.Date</td>
+                        <td width="8%">@attendance.Degree</td>
+                        <td width="8%">@attendance.Mode</td>
+                        <td width="8%">@attendance.Course</td>
+                        <td width="8%">@attendance.Groupe</td>
+                        <td width="8%">@attendance.Timeframe</td>
+                        <td width="8%">@attendance.Type</td>
+                        <td width="8%">@attendance.Hours</td>
+                        <td width="8%">@attendance.Auditorium</td>
+                        <td width="8%">@attendance.Note</td>
+                        <td width="8%">@attendance.Programs</td>
+                        <td width="12%">@attendance.Discipline</td>
+                        <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
+                        <td><button class="btn btn-danger deleteAttendance" value="@attendance.Id" role="button">Delete </button></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p> No Items Created </p>
+    }
+
+
+
+</div>
+
+
+<!-- Modal -->
+<div id="deleteMessageModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Server Message</h4>
+            </div>
+            <div class="modal-body">
+                <p id="message"> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+            $(".deleteAttendance").on("click", function (e) {
+
+                e.preventDefault();
+
+                var attendanceId = $(this).val();
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: '/Attendance/DeleteAttendance',
+                    data: { AttendanceId: attendanceId },
+                    success: function (data) {
+                        $("#message").html(data);
+                        $("#deleteMessageModal").modal("show");
+                    }
+
+                });
+
+            });
+
+            // като кликна тука и релоадва страницата с тази функция след като deletetnem
+            $("#deleteMessageModal").on("hidden.bs.modal", function () {
+                location.reload();
+            });
+
+            $("#searchTextId").on("keyup", function () {
+                var searchTextId = $(this).val();
+                if (searchTextId != undefined && searchTextId != "") {
+                    console.log(searchTextId);
+                    $(".tableRows").hide();
+                    $("td:contains(" + searchTextId + ")").parent().show();
+
+                }
+                else {
+                    $(".tableRows").show();
+                }
+            });
+        });
+
+    </script>
+}

@@ -36,6 +36,7 @@ namespace MvcMusicStoreWebProject
             services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
+                // Identity frameworkStores relatva IdentityDbContexta i Identityto kato cqlo sus nashiq DbContext i nie tochno s tva pokazvame kade da se sahranqva tova Identity <MusicStoreDbContext>
             }).AddEntityFrameworkStores<MusicStoreDbContext>()
             .AddDefaultUI(); //Това ми трябва за правилното пренасочване към login/register page
 
@@ -71,7 +72,8 @@ namespace MvcMusicStoreWebProject
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=MusicStore}/{action=Index}/{id?}");
+                    // tuk beshe MusicStore kato controller default zadaden
+                    pattern: "{controller=Attendance}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

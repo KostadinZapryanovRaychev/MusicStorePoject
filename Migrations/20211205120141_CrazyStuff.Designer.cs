@@ -9,8 +9,8 @@ using MvcMusicStoreWebProject.Data;
 namespace MvcMusicStoreWebProject.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    [Migration("20210924080804_Initial")]
-    partial class Initial
+    [Migration("20211205120141_CrazyStuff")]
+    partial class CrazyStuff
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,29 +210,87 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Album", b =>
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Attendance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("Auditorium")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<int>("Course")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Degree")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("DisciplineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Groupe")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Mode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("ProgramsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Timeframe")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("ProgramsId");
+
+                    b.ToTable("Attendances");
+                });
+
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Discipline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Albums");
+                    b.ToTable("Disciplines");
+                });
+
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Programs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Programs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -284,6 +342,21 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Attendance", b =>
+                {
+                    b.HasOne("MvcMusicStoreWebProject.Models.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("DisciplineId");
+
+                    b.HasOne("MvcMusicStoreWebProject.Models.Programs", "Programs")
+                        .WithMany()
+                        .HasForeignKey("ProgramsId");
+
+                    b.Navigation("Discipline");
+
+                    b.Navigation("Programs");
                 });
 #pragma warning restore 612, 618
         }

@@ -24,6 +24,7 @@
 <div asp-validation-summary="All">   </div>
 <form method="post" asp-controller="Attendance" asp-action="EditAttendance">
     <input type="hidden" asp-for="@Model.Attendance.Id" />
+    @*<input type="hidden" asp-for="@Model.Attendance.ApplicationUserId" />*@
     <div class="border p-3">
         <div class="form-group row">
             <h2 class="text-black-50 pl-3">Моля редактирайте</h2>
@@ -67,6 +68,9 @@
                     </div>
                     <div class="col-1">
                         <label asp-for="@Model.Attendance.Discipline"></label>
+                    </div>
+                    <div class="col-1">
+                        <label asp-for="@Model.Attendance.ApplicationUserId"></label>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -115,6 +119,9 @@
                             <option value="">Please choose your Discipline</option>
                         </select>
                         <span class="text-danger"></span>
+                    </div>
+                    <div class="col-1">
+                        <input type="hidden" asp-for="@Model.Attendance.ApplicationUserId"class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">

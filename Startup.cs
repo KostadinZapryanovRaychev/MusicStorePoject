@@ -40,6 +40,8 @@ namespace MvcMusicStoreWebProject
             }).AddEntityFrameworkStores<MusicStoreDbContext>()
             .AddDefaultUI(); //Това ми трябва за правилното пренасочване към login/register page
 
+            services.AddScoped<UserManagerExt>();
+
             services.AddDbContext<MusicStoreDbContext>(options=> options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.AddControllersWithViews();
 

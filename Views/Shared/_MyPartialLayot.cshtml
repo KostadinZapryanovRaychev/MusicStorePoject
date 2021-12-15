@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MvcMusicStoreWebProject.Data.Models
+
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+    <ul id="sidebar_menu" class="sidebar-nav" style="text-align: right; padding-right: 10px;
+                padding-top: 10px">
+    </ul>
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand"><a href="#">SIDEBAR </a></li>
+        <li>
+            @if (SignInManager.IsSignedIn(User))
+            {
+
+                var user = await UserManager.GetUserAsync(User);
+
+                <div>@user.UserPhoto</div>
+                <div>@user.OfficialName</div>
+
+
+            }
+            else
+            {
+                <div></div>
+            }
+        </li>
+        <li>
+            <        @if (SignInManager.IsSignedIn(User))
+            {
+
+                var user = await UserManager.GetUserAsync(User);
+
+                <div>@user.Description</div>
+
+
+
+            }
+            else
+            {
+                <div></div>
+            }
+        </li>
+        <li><a href="#">Contact</a> </li>
+    </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+
+
+
+<script>
+    function openSideNav() {
+        var sideBarDisplay = document.getElementById("side-bar").style.width;
+        if (sideBarDisplay == "150px") {
+            document.getElementById("side-bar").style.width = "0px";
+            document.getElementById("body-content").style.marginLeft = "0px";
+        } else {
+            document.getElementById("side-bar").style.width = "150px";
+            document.getElementById("body-content").style.marginLeft = "150px";
+        }
+    }
+
+</script>
+
+
+
+

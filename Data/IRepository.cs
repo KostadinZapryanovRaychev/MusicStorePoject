@@ -48,5 +48,11 @@ namespace MvcMusicStoreWebProject.Data
 
         Task<List<DisciplineViewModel>> GetDiscipline();
 
+        Task<Attendance> GetAttendanceByUserId(int ApplicationUserId);
+
+        public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId);
+
+        //Task<string> GetCurrentUserDetails();
+
     }
 }

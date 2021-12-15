@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using MvcMusicStoreWebProject.Data;
+using MvcMusicStoreWebProject.Data.Models;
 using MvcMusicStoreWebProject.Models;
 using MvcMusicStoreWebProject.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Owin.Host.SystemWeb;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
@@ -13,16 +16,24 @@ namespace MvcMusicStoreWebProject.Controllers
     {
         // tva teq raboti traq da si napravq truda da gi izucha nachi tuka imame konstruktor koito vzema IRepository kato argument dependancy injection i drugite neshta traq da gi razbera.
         private IRepository Repo { get; }
-        public AttendanceController(IRepository repo)
+        
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AttendanceController(IRepository repo , UserManager <ApplicationUser> userManager)
         {
+            _userManager = userManager;
             Repo = repo;
         }
-
-        // I tyk kak da go napravq da vrushta View to na sled deistviqta na vseki kontroler
-        // pochvame da pravim kontroleri za vseki edin metod 
         [HttpGet]
         public IActionResult GetAttendances()
         {
+
+            //var at = Repo.GetAttendanceByUserId(ApplicationUserId);
+
+            //if (at != null)
+            //{
+            //    return View(at);
+            //}
+            //return NotFound();
             var attend = Repo.GetAttendances();
             return View(attend);
         }
@@ -40,32 +51,44 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetAttendanceById(int ApplicationUserId)
+        {
+            var at = Repo.GetAttendanceByUserId(ApplicationUserId);
+
+            if (at != null)
+            {
+                return View(at);
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
 
         public IActionResult CreateAttendance()
         {
             var viewModel = new AttendanceViewModel();
+            
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAttendance(AttendanceViewModel attendanceViewModel)
         {
-            try
-            {
+            
                 if (ModelState.IsValid)
                 {
-                 
+
+                    Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+                    var user = await GetCurrentUserAsync();
+                    var userId = user.Id;
+                    attendanceViewModel.Attendance.ApplicationUserId = userId;
                     await Repo.AddAttendance(attendanceViewModel.Attendance);
+                    
                     return RedirectToAction("CreateAttendance");
                 }
 
                 return RedirectToAction("Index");
-            }
-            catch (Exception)
-            {
-
-                return Content("Exception happend");
-            }
+            
 
         }
 
@@ -118,9 +141,64 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(modifiedAttendance);
         }
 
+        public async Task <IActionResult> LoggedUser()
+        {
+            // FileContentResult UserPhotos()
+            //{
+            //    if (User.Identity.IsAuthenticated)
+            //    {
+            //        Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+            //        var user = GetCurrentUserAsync();
+            //        var userId = user.Id;
+
+            //        // to get the user details to load user Image
+
+            //        var userImage = bdUsers.Users.Where(x => x.Id == userId).FirstOrDefault();
+
+            //        return new FileContentResult(userImage.UserPhoto, "image/jpeg");
+            //    }
+
+            //}
+
+            //IEnumerable<Attendance> attendances = Repo.GetAttendances();
+            Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+            var user = await GetCurrentUserAsync();
+            var userId = user.Id;
+            IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
+            return View(attendances);
+        }
+
+
         public IActionResult Index()
         {
-            IEnumerable<Attendance> attendances = Repo.GetAttendances();
+            
+            return View();
+        }
+
+        public async Task<IActionResult> Report()
+        {
+            // FileContentResult UserPhotos()
+            //{
+            //    if (User.Identity.IsAuthenticated)
+            //    {
+            //        Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+            //        var user = GetCurrentUserAsync();
+            //        var userId = user.Id;
+
+            //        // to get the user details to load user Image
+
+            //        var userImage = bdUsers.Users.Where(x => x.Id == userId).FirstOrDefault();
+
+            //        return new FileContentResult(userImage.UserPhoto, "image/jpeg");
+            //    }
+
+            //}
+
+            //IEnumerable<Attendance> attendances = Repo.GetAttendances();
+            Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+            var user = await GetCurrentUserAsync();
+            var userId = user.Id;
+            IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
             return View(attendances);
         }
     }

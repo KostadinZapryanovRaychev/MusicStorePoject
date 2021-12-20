@@ -8,25 +8,20 @@
 @inject UserManager<ApplicationUser> UserManager
 
 
-<style>
-    table {
-        font-family: Arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
+<div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1> <button><a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Присъствена форма</a></button> </h1>
     }
 
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
+    else
+    {
+        <h1> Please Loggin</h1>
     }
+</div>
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-</style>
 
-<h1> <button><a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Welcome</a></button>   </h1>
+
 
 
 

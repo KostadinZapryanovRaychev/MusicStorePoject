@@ -10,8 +10,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Owin.Host.SystemWeb;
 
+
 namespace MvcMusicStoreWebProject.Controllers
 {
+   
     public class AttendanceController : Controller
     {
         // tva teq raboti traq da si napravq truda da gi izucha nachi tuka imame konstruktor koito vzema IRepository kato argument dependancy injection i drugite neshta traq da gi razbera.
@@ -26,14 +28,6 @@ namespace MvcMusicStoreWebProject.Controllers
         [HttpGet]
         public IActionResult GetAttendances()
         {
-
-            //var at = Repo.GetAttendanceByUserId(ApplicationUserId);
-
-            //if (at != null)
-            //{
-            //    return View(at);
-            //}
-            //return NotFound();
             var attend = Repo.GetAttendances();
             return View(attend);
         }
@@ -129,6 +123,7 @@ namespace MvcMusicStoreWebProject.Controllers
 
         }
 
+
         [HttpPost]
         public async Task<IActionResult> EditAttendance(AttendanceViewModel modifiedAttendance)
 
@@ -141,31 +136,23 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(modifiedAttendance);
         }
 
+
+
         public async Task <IActionResult> LoggedUser()
         {
-            // FileContentResult UserPhotos()
-            //{
-            //    if (User.Identity.IsAuthenticated)
-            //    {
-            //        Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-            //        var user = GetCurrentUserAsync();
-            //        var userId = user.Id;
-
-            //        // to get the user details to load user Image
-
-            //        var userImage = bdUsers.Users.Where(x => x.Id == userId).FirstOrDefault();
-
-            //        return new FileContentResult(userImage.UserPhoto, "image/jpeg");
-            //    }
-
-            //}
 
             //IEnumerable<Attendance> attendances = Repo.GetAttendances();
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
             IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
-            return View(attendances);
+            var result = attendances.OrderBy(x => x.Date);
+
+            return View(result);
+            
+
+            //return View();
+            //return View(attendances);
         }
 
 
@@ -175,31 +162,70 @@ namespace MvcMusicStoreWebProject.Controllers
             return View();
         }
 
+        
         public async Task<IActionResult> Report()
         {
-            // FileContentResult UserPhotos()
-            //{
-            //    if (User.Identity.IsAuthenticated)
-            //    {
-            //        Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-            //        var user = GetCurrentUserAsync();
-            //        var userId = user.Id;
-
-            //        // to get the user details to load user Image
-
-            //        var userImage = bdUsers.Users.Where(x => x.Id == userId).FirstOrDefault();
-
-            //        return new FileContentResult(userImage.UserPhoto, "image/jpeg");
-            //    }
-
-            //}
 
             //IEnumerable<Attendance> attendances = Repo.GetAttendances();
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
             IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
-            return View(attendances);
+            var result = attendances.OrderBy(x => x.Date);
+            return View(result);
+            //return View(attendances);
+        }
+
+
+        // TOVA TRQBVA DA SE IZSLEDVA ZASHTO NE VLIZA TUKA IZOBSHTO spored men zaradi purvite Responsi koito dobavqhme   
+        //public async Task<IActionResult> Multiply()
+        //{
+
+        //    Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+        //    var user = await GetCurrentUserAsync();
+        //    var userId = user.Id;
+        //    IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
+        //    var result = attendances.OrderBy(x => x.Date);
+
+        //    foreach (var r in result)
+        //    {
+        //        for (int i = 2; i < 4; i++)
+        //        {
+        //            Repo.Detached(r);
+        //            r.Date.AddDays(7);
+        //            await Repo.AddAttendance(r);
+
+        //        }
+
+        //    }
+        //    return View();
+
+        //}
+
+
+        public async Task<IActionResult> Mulplication()
+        {
+
+            Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+            var user = await GetCurrentUserAsync();
+            var userId = user.Id;
+            IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
+            var result = attendances.OrderBy(x => x.Date);
+
+            foreach (var r in result)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Repo.Detached(r);
+                    r.Date.AddDays(7);
+                    // edin If statemenet za da filtrira Holidays
+                    await Repo.AddAttendance(r);
+
+                }
+
+            }
+
+            return View();
         }
     }
 }

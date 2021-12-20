@@ -140,5 +140,12 @@ namespace MvcMusicStoreWebProject.Data
             var attend = await Context.Attendances.FindAsync(id);
             return attend;
         }
+
+        public void Detached(Attendance attendanceEntity)
+        {
+            // da se napravi novo Entity koeto da e kopie na tova i na nego da se sloji statusa detached
+            Context.Entry(attendanceEntity).State = EntityState.Detached;
+            attendanceEntity.Id = 0;
+        }
     }
 }

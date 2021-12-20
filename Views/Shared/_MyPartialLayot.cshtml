@@ -1,12 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using MvcMusicStoreWebProject.Data.Models
 
-
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
-
 
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
@@ -18,13 +14,10 @@
         <li>
             @if (SignInManager.IsSignedIn(User))
             {
-
                 var user = await UserManager.GetUserAsync(User);
 
-                <div>@user.UserPhoto</div>
+                <div><img src="@user.UserPhoto" width="200" height="300"></div>
                 <div>@user.OfficialName</div>
-
-
             }
             else
             {
@@ -38,9 +31,6 @@
                 var user = await UserManager.GetUserAsync(User);
 
                 <div>@user.Description</div>
-
-
-
             }
             else
             {

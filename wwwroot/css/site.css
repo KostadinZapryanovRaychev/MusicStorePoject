@@ -51,17 +51,16 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+
 html {
   position: relative;
   min-height: 100%;
 }
 
-body {
+/*body {*/
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
+  /*margin-bottom: 60px;
+}*/
 .footer {
   position: absolute;
   bottom: 0;
@@ -84,4 +83,12 @@ td, th {
 
 tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+
+body {
+    margin: 0;
+    color: #6a6f8c;
+    background: #c8c8c8;
+    font: 600 16px/18px 'Open Sans',sans-serif;
 }

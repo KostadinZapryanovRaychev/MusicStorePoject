@@ -52,6 +52,8 @@ namespace MvcMusicStoreWebProject.Data
 
         public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId);
 
+        public void Detached(Attendance entity);
+
         //Task<string> GetCurrentUserDetails();
 
     }

@@ -31,11 +31,7 @@
         <div class="col-6">
 
 
-            @*<h1>    Здравейте асистент Ячева </h1>*@
-            @*taq validaciq tuka traq da si izqsnim kvo pravi kak raboti mamka mu*@
             <div asp-validation-summary="All">   </div>
-            @*<img src="https://scontent.fsof10-1.fna.fbcdn.net/v/t1.6435-9/202194678_2930299750586537_8237822614223076407_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=3w_7ObFqxGEAX8x3rlY&_nc_oc=AQmAGJjo3hK-s23-GFr-ZlIEeiuGh58TKdUfrq2ag1-WrIXF4WLfksNmIsOkjSJkbz8&_nc_ht=scontent.fsof10-1.fna&oh=e5789b06a0869ede56221f4cae512cc2&oe=61C9FD18" alt="Alternate Text" width="400" height="400" />*@
-            @*<img src="https://scontent.fsof9-1.fna.fbcdn.net/v/t1.18169-9/17264156_262025210914936_6532510675194426615_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=m5PWsmyf4_gAX-HfT6m&tn=h9kq6mqPTqKii2ia&_nc_ht=scontent.fsof9-1.fna&oh=000d88a4c53d5f2c6654940ddf588cd4&oe=61CD5A02" alt="Alternate Text" width="400" height="400" />*@
             <h2 class="text-primary"> Attandance</h2>
         </div>
 
@@ -56,61 +52,69 @@
 
     @if (Model.Count() > 0)
     {
-    <table class="table table-bordered table-striped" style="width:100%">
+        <table class="table table-bordered table-striped" style="width:100%" id="tableRepeat">
 
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Degree</th>
-                <th>Mode</th>
-                <th>Course</th>
-                <th>Groupe</th>
-                <th>Timeframe</th>
-                <th>Type</th>
-                <th>Hours</th>
-                <th>Auditorium</th>
-                <th>Note</th>
-                <th>Programs</th>
-                <th>Discipline</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var attendance in Model)
-            {
-                <tr class="tableRows">
-                    <td width="8%">@attendance.Date</td>
-                    <td width="8%">@attendance.Degree</td>
-                    <td width="8%">@attendance.Mode</td>
-                    <td width="8%">@attendance.Course</td>
-                    <td width="8%">@attendance.Groupe</td>
-                    <td width="8%">@attendance.Timeframe</td>
-                    <td width="8%">@attendance.Type</td>
-                    <td width="8%">@attendance.Hours</td>
-                    <td width="8%">@attendance.Auditorium</td>
-                    <td width="8%">@attendance.Note</td>
-                    <td width="8%">@attendance.Programs</td>
-                    <td width="12%">@attendance.Discipline</td>
-                    <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
-                    <td><button class="btn btn-danger deleteAttendance" value="@attendance.Id" role="button">Delete </button></td>
-
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Degree</th>
+                    <th>Mode</th>
+                    <th>Course</th>
+                    <th>Groupe</th>
+                    <th>Timeframe</th>
+                    <th>Type</th>
+                    <th>Hours</th>
+                    <th>Auditorium</th>
+                    <th>Note</th>
+                    <th>Programs</th>
+                    <th>Discipline</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+
+                @foreach (var attendance in Model)
+                {
+                    <tr class="tableRows">
+                        <td width="8%">@attendance.Date</td>
+                        <td width="8%">@attendance.Degree</td>
+                        <td width="8%">@attendance.Mode</td>
+                        <td width="8%">@attendance.Course</td>
+                        <td width="8%">@attendance.Groupe</td>
+                        <td width="8%">@attendance.Timeframe</td>
+                        <td width="8%">@attendance.Type</td>
+                        <td width="8%">@attendance.Hours</td>
+                        <td width="8%">@attendance.Auditorium</td>
+                        <td width="8%">@attendance.Note</td>
+                        <td width="8%">@attendance.Programs</td>
+                        <td width="12%">@attendance.Discipline</td>
+                        <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
+                        <td><button class="btn btn-danger deleteAttendance" value="@attendance.Id" role="button">Delete </button></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
     else
     {
-    <p> No Items Created </p>
+        <p> No Items Created </p>
     }
+
+
 
 
 
 </div>
 
-<button><a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a></button>
+<div>
+    <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
+    <a class="btn btn-primary" asp-action="Mulplication" asp-controller="Attendance" role="button">Multiplication</a>
+
+     @*PRKULNATIQ BUTON  <a class="btn btn-primary" asp-action="Multiply" asp-controller="Attendance" role="button">Multiply</a>*@
+</div>  
+
 
 
 <!-- Modal -->
@@ -137,7 +141,12 @@
 
 @section Scripts {
 
+
+
+
+
     <script>
+
 
         $(document).ready(function () {
             $(".deleteAttendance").on("click", function (e) {

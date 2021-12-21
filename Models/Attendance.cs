@@ -15,7 +15,7 @@ namespace MvcMusicStoreWebProject.Models
         //dano tva e pravilniq tip
 
         [Required]
-        // [DataType(DateType.Date)]
+        [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
         [Required]

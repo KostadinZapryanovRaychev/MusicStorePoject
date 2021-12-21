@@ -217,14 +217,13 @@ namespace MvcMusicStoreWebProject.Controllers
                 for (int i = 0; i < 3; i++)
                 {
                     Repo.Detached(r);
-                    r.Date.AddDays(7);
-                    // edin If statemenet za da filtrira Holidays
-                    await Repo.AddAttendance(r);
+                    r.Date =r.Date.AddDays(7);
+                    // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
+                    await Repo.AddAttendanceWithoutHolidays(r);
 
                 }
 
             }
-
             return View();
         }
     }

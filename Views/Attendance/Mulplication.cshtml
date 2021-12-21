@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Attendance>
+@using Microsoft.AspNetCore.Identity
+@using MvcMusicStoreWebProject.Data.Models
+
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1> <button><a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Присъствена форма</a></button> </h1>
+    }
+
+    else
+    {
+        <h1> Please Loggin</h1>
+    }
+</div>

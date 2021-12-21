@@ -20,6 +20,38 @@ namespace MvcMusicStoreWebProject.Data
         public IConfiguration Config { get; }
         private string DeleteMassage { get; set; }
         private string ExceptionMessage { get; set; }
+
+        //var NWD = new List<DateTime>()
+        //{
+        //    "2008, 6, 1, 7, 47, 0",
+        //    ,
+        //};
+
+        
+
+        public static bool IsWeekend(DateTime date)
+        {
+            return date.DayOfWeek == DayOfWeek.Saturday
+                || date.DayOfWeek == DayOfWeek.Sunday;
+        }
+
+        // nqkvi shano ekvilibristiki
+        public DateTime IsHoliday(NonWorkingDays nonWorkingDays)
+        {
+            var NOD = nonWorkingDays.Holiday;
+            return NOD;
+        }
+
+
+        //public static int Compare(Attendance t1, NonWorkingDays t2)
+        //{
+        //    foreach (var d in t1.Date)
+        //    {
+
+        //    }
+        //}
+
+
         public Repository(MusicStoreDbContext context, IConfiguration config, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
@@ -146,6 +178,27 @@ namespace MvcMusicStoreWebProject.Data
             // da se napravi novo Entity koeto da e kopie na tova i na nego da se sloji statusa detached
             Context.Entry(attendanceEntity).State = EntityState.Detached;
             attendanceEntity.Id = 0;
+        }
+
+        // primerno da deklarirame tuka nov AddAttendanceWithoutHolidays metod koito da pravi sushtoto kato gorniq no da chekva predi tva da ne bi da e holiday
+        // mai bachkaaa mainaaa
+        // mai bachkaaa mainaaa
+        public async Task<string> AddAttendanceWithoutHolidays(Attendance attendance)
+        {
+            // tuka nqkuv if statement ili while cycle , NonWorkingDays nonWorkingDays
+
+            var holidays = Context.NonWorkingDays.ToList();
+            foreach (var h in holidays)
+            {
+                if (h.Holiday != attendance.Date)
+                {
+                    Context.Attendances.Add(attendance);
+                    await Context.SaveChangesAsync();
+                    return "Inserted";
+                }
+                return "!";
+            }
+            return "Success";
         }
     }
 }

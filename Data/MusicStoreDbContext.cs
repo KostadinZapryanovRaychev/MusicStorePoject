@@ -26,5 +26,7 @@ namespace MvcMusicStoreWebProject.Data
         public DbSet<Programs> Programs { get; set; }
 
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<NonWorkingDays> NonWorkingDays { get; set; }
+
     }
 }

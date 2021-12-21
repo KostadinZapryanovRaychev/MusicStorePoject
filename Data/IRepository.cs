@@ -54,6 +54,10 @@ namespace MvcMusicStoreWebProject.Data
 
         public void Detached(Attendance entity);
 
+
+        // probvame da slojim tova vmesto AddAttendance
+        Task<string> AddAttendanceWithoutHolidays(Attendance attendance);
+
         //Task<string> GetCurrentUserDetails();
 
     }

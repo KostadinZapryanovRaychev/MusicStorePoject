@@ -13,5 +13,10 @@ namespace MvcMusicStoreWebProject.Models
         [Column(TypeName = "date")]
         public DateTime Holiday { get; set; }
 
+        public int SemesterId { get; set; }
+
+        public Semester Semester { get; set; }
+
+
     }
 }

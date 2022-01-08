@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 using MvcMusicStoreWebProject.Data.Models;
 using MvcMusicStoreWebProject.Models;
+using MvcMusicStoreWebProject.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace MvcMusicStoreWebProject.Data
 
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<NonWorkingDays> NonWorkingDays { get; set; }
+
+        public DbSet<Degrees> Degrees { get; set; }
+        public DbSet<Semester> Semesters { get; set; }
 
     }
 }

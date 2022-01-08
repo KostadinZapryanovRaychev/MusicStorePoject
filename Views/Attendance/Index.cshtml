@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Attendance>
+﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Semester>
 @using Microsoft.AspNetCore.Identity
 @using MvcMusicStoreWebProject.Data.Models
 
@@ -11,14 +11,30 @@
 <div>
     @if (SignInManager.IsSignedIn(User))
     {
-        <h1> <button><a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Присъствена форма</a></button> </h1>
-    }
+      @*<form method="post" asp-controller="Attendance" asp-action="CreateAttendance">*@
+          <div>
+              @*<div class="col-1">
+                  <input asp-for= class="form-control" />
+              </div>*@
 
-    else
-    {
-        <h1> Please Loggin</h1>
-    }
-</div>
+              <div class="col-1">
+
+                  <select id="ProgramsList" asp-items="@ViewBag.semNames">
+                      <option> Select Semester</option>
+                  </select>
+              </div>
+              <div> <button><a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a></button> </div>
+          </div>
+       @*</form>*@
+            }
+
+            else
+            {
+            <h1> Please Loggin</h1>
+            }
+
+     
+    </div>
 
 
 

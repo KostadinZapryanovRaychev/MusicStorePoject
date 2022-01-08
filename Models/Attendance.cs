@@ -47,14 +47,19 @@ namespace MvcMusicStoreWebProject.Models
 
         [ForeignKey("Programs")]
         public string Programs { get; set; }
-     
+    
 
-        [ForeignKey("Discipline")]
         public string Discipline { get; set; }
 
-        
+        //public Semester Semester { get; set; }
+
+        //public int SemesterId { get; set; }
         public int ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser  { get; set; }
+
+        public int SemesterId { get; set; }
+
+        public Semester Semester { get; set; }
 
     }
 

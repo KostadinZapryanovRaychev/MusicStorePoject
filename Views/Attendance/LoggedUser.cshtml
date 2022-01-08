@@ -76,23 +76,23 @@
 
                 @foreach (var attendance in Model)
                 {
-                    <tr class="tableRows">
-                        <td width="8%">@attendance.Date</td>
-                        <td width="8%">@attendance.Degree</td>
-                        <td width="8%">@attendance.Mode</td>
-                        <td width="8%">@attendance.Course</td>
-                        <td width="8%">@attendance.Groupe</td>
-                        <td width="8%">@attendance.Timeframe</td>
-                        <td width="8%">@attendance.Type</td>
-                        <td width="8%">@attendance.Hours</td>
-                        <td width="8%">@attendance.Auditorium</td>
-                        <td width="8%">@attendance.Note</td>
-                        <td width="8%">@attendance.Programs</td>
-                        <td width="12%">@attendance.Discipline</td>
-                        <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
-                        <td><button class="btn btn-danger deleteAttendance" value="@attendance.Id" role="button">Delete </button></td>
+                <tr class="tableRows">
+                    <td width="8%">@attendance.Date</td>
+                    <td width="8%">@attendance.Degree</td>
+                    <td width="8%">@attendance.Mode</td>
+                    <td width="8%">@attendance.Course</td>
+                    <td width="8%">@attendance.Groupe</td>
+                    <td width="8%">@attendance.Timeframe</td>
+                    <td width="8%">@attendance.Type</td>
+                    <td width="8%">@attendance.Hours</td>
+                    <td width="8%">@attendance.Auditorium</td>
+                    <td width="8%">@attendance.Note</td>
+                    <td width="8%">@attendance.Programs</td>
+                    <td width="12%">@attendance.Discipline</td>
+                    <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
+                    <td><button class="btn btn-danger deleteAttendance" value="@attendance.Id" role="button">Delete </button></td>
 
-                    </tr>
+                </tr>
                 }
             </tbody>
         </table>

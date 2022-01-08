@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MvcMusicStoreWebProject.Models.ViewModels
 {
-    public class DisciplineViewModel
+    public class SemesterViewModel
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
 
-        public int DegreesId { get; set; }
+        public DateTime startDate { get; set; }
+
+        public DateTime endDate { get; set; }
 
     }
 }

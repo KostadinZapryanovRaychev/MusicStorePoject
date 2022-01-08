@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Owin.Host.SystemWeb;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
@@ -56,26 +56,63 @@ namespace MvcMusicStoreWebProject.Controllers
             return NotFound();
         }
 
+
+        public JsonResult GetDisciplineByProgramId(int DegreesId)
+        {
+            var disciplines = Repo.GetDisciplinesByProgramId(DegreesId);
+            return Json(new SelectList(disciplines, "Id" ,"Name"));
+        }
+
+        public List<Degrees> GetAllDegrees()
+        {
+            List<Degrees> degreeNames = Repo.LetGetDegrees().ToList();
+            return degreeNames;
+
+        }
+
+        public List<Discipline> GetAllDisciplines()
+        {
+            List<Discipline> discPlineNames = Repo.LetGetDisciplines().ToList();
+            return discPlineNames;
+           
+        }
+       
+
         [HttpGet]
 
         public IActionResult CreateAttendance()
         {
-            var viewModel = new AttendanceViewModel();
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+            var viewModel = new AttendanceViewModel(); 
             
             return View(viewModel);
         }
 
+
+
         [HttpPost]
-        public async Task<IActionResult> CreateAttendance(AttendanceViewModel attendanceViewModel)
+        public async Task<IActionResult> CreateAttendance(AttendanceViewModel attendanceViewModel )
         {
-            
-                if (ModelState.IsValid)
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+
+
+            attendanceViewModel.Attendance.Degree = GetAllDegrees().Where(x => x.Id == attendanceViewModel.DegreeId).Select(x => x.Name).FirstOrDefault();
+            attendanceViewModel.Attendance.Discipline = GetDisciplineByProgramId(DegreesId)
+
+            var errors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .Select(x => new { x.Key, x.Value.Errors })
+                .ToArray();
+            if (ModelState.IsValid)
                 {
 
                     Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
                     var user = await GetCurrentUserAsync();
                     var userId = user.Id;
                     attendanceViewModel.Attendance.ApplicationUserId = userId;
+                    
                     await Repo.AddAttendance(attendanceViewModel.Attendance);
                     
                     return RedirectToAction("CreateAttendance");
@@ -150,18 +187,15 @@ namespace MvcMusicStoreWebProject.Controllers
 
             return View(result);
             
-
             //return View();
             //return View(attendances);
         }
 
-
         public IActionResult Index()
         {
-            
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
             return View();
         }
-
         
         public async Task<IActionResult> Report()
         {
@@ -176,55 +210,48 @@ namespace MvcMusicStoreWebProject.Controllers
             //return View(attendances);
         }
 
-
-        // TOVA TRQBVA DA SE IZSLEDVA ZASHTO NE VLIZA TUKA IZOBSHTO spored men zaradi purvite Responsi koito dobavqhme   
-        //public async Task<IActionResult> Multiply()
-        //{
-
-        //    Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-        //    var user = await GetCurrentUserAsync();
-        //    var userId = user.Id;
-        //    IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
-        //    var result = attendances.OrderBy(x => x.Date);
-
-        //    foreach (var r in result)
-        //    {
-        //        for (int i = 2; i < 4; i++)
-        //        {
-        //            Repo.Detached(r);
-        //            r.Date.AddDays(7);
-        //            await Repo.AddAttendance(r);
-
-        //        }
-
-        //    }
-        //    return View();
-
-        //}
-
-
-        public async Task<IActionResult> Mulplication()
+        public async Task<IActionResult> Multiplication()
         {
 
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
+            // da vzema oshte 2 parametura start date i end date 
             IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
             var result = attendances.OrderBy(x => x.Date);
 
             foreach (var r in result)
             {
+
+                var semester = Repo.GetRelatedSemester(r.SemesterId);
+              
                 for (int i = 0; i < 3; i++)
                 {
-                    Repo.Detached(r);
-                    r.Date =r.Date.AddDays(7);
-                    // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
-                    await Repo.AddAttendanceWithoutHolidays(r);
 
+                
+                    var newAttendanceDate = r.Date.AddDays(7);
+                    if (newAttendanceDate < semester)
+                
+                    {
+                        Repo.Detached(r);
+                        r.Date =newAttendanceDate;
+                        // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
+                        await Repo.AddAttendanceWithoutHolidays(r);
+
+                    }
                 }
 
             }
             return View();
         }
+
+
+        public List<Semester> GetAllSemesterDisplay()
+        {
+            List<Semester> semNames = Repo.GetAllSemesters().ToList();
+            return semNames;
+
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MvcMusicStoreWebProject.Migrations
 {
-    public partial class ViktorTwo : Migration
+    public partial class NewTry : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,6 +36,11 @@ namespace MvcMusicStoreWebProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserPhoto = table.Column<byte[]>(type: "longblob", nullable: true),
+                    OfficialName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -66,7 +71,7 @@ namespace MvcMusicStoreWebProject.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Disciplines",
+                name: "Degrees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -76,7 +81,7 @@ namespace MvcMusicStoreWebProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Disciplines", x => x.Id);
+                    table.PrimaryKey("PK_Degrees", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -92,6 +97,23 @@ namespace MvcMusicStoreWebProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Programs", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Semesters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    startDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    endDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Semesters", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -217,12 +239,34 @@ namespace MvcMusicStoreWebProject.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Disciplines",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DegreesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Disciplines", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Disciplines_Degrees_DegreesId",
+                        column: x => x.DegreesId,
+                        principalTable: "Degrees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Attendances",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
                     Degree = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Mode = table.Column<string>(type: "longtext", nullable: false)
@@ -241,7 +285,8 @@ namespace MvcMusicStoreWebProject.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Discipline = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ApplicationUserId = table.Column<int>(type: "int", nullable: false)
+                    ApplicationUserId = table.Column<int>(type: "int", nullable: false),
+                    SemesterId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -250,6 +295,33 @@ namespace MvcMusicStoreWebProject.Migrations
                         name: "FK_Attendances_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Attendances_Semesters_SemesterId",
+                        column: x => x.SemesterId,
+                        principalTable: "Semesters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "NonWorkingDays",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Holiday = table.Column<DateTime>(type: "date", nullable: false),
+                    SemesterId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NonWorkingDays", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NonWorkingDays_Semesters_SemesterId",
+                        column: x => x.SemesterId,
+                        principalTable: "Semesters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -296,6 +368,21 @@ namespace MvcMusicStoreWebProject.Migrations
                 name: "IX_Attendances_ApplicationUserId",
                 table: "Attendances",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendances_SemesterId",
+                table: "Attendances",
+                column: "SemesterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Disciplines_DegreesId",
+                table: "Disciplines",
+                column: "DegreesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NonWorkingDays_SemesterId",
+                table: "NonWorkingDays",
+                column: "SemesterId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -322,6 +409,9 @@ namespace MvcMusicStoreWebProject.Migrations
                 name: "Disciplines");
 
             migrationBuilder.DropTable(
+                name: "NonWorkingDays");
+
+            migrationBuilder.DropTable(
                 name: "Programs");
 
             migrationBuilder.DropTable(
@@ -329,6 +419,12 @@ namespace MvcMusicStoreWebProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Degrees");
+
+            migrationBuilder.DropTable(
+                name: "Semesters");
         }
     }
 }

@@ -259,6 +259,9 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.Property<string>("Programs")
                         .HasColumnType("longtext");
 
+                    b.Property<int>("SemesterId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Timeframe")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -270,10 +273,12 @@ namespace MvcMusicStoreWebProject.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
+                    b.HasIndex("SemesterId");
+
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Discipline", b =>
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Degrees", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -283,6 +288,25 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Degrees");
+                });
+
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Discipline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("DegreesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DegreesId");
 
                     b.ToTable("Disciplines");
                 });
@@ -296,7 +320,12 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.Property<DateTime>("Holiday")
                         .HasColumnType("date");
 
+                    b.Property<int>("SemesterId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SemesterId");
 
                     b.ToTable("NonWorkingDays");
                 });
@@ -313,6 +342,26 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Programs");
+                });
+
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Semester", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("endDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("startDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -374,7 +423,37 @@ namespace MvcMusicStoreWebProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MvcMusicStoreWebProject.Models.Semester", "Semester")
+                        .WithMany()
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("Semester");
+                });
+
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Discipline", b =>
+                {
+                    b.HasOne("MvcMusicStoreWebProject.Models.Degrees", "Degrees")
+                        .WithMany()
+                        .HasForeignKey("DegreesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Degrees");
+                });
+
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.NonWorkingDays", b =>
+                {
+                    b.HasOne("MvcMusicStoreWebProject.Models.Semester", "Semester")
+                        .WithMany()
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Semester");
                 });
 #pragma warning restore 612, 618
         }

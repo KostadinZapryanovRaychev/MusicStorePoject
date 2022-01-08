@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace MvcMusicStoreWebProject.Data
 {
-
+    
     public class Repository : IRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -21,13 +21,18 @@ namespace MvcMusicStoreWebProject.Data
         private string DeleteMassage { get; set; }
         private string ExceptionMessage { get; set; }
 
-        //var NWD = new List<DateTime>()
-        //{
-        //    "2008, 6, 1, 7, 47, 0",
-        //    ,
-        //};
 
-        
+        public List<DateTime> FreeDates { get; set; } = new List<DateTime>()
+        {
+            new DateTime(2021, 12, 21),
+            new DateTime(2021, 12, 22),
+            new DateTime(2021, 12, 23),
+            new DateTime(2021, 12, 24),
+            new DateTime(2021, 12, 25),
+            new DateTime(2021, 12, 26),
+            new DateTime(2021, 12, 27),
+            new DateTime(2021, 12, 28)
+        };
 
         public static bool IsWeekend(DateTime date)
         {
@@ -35,21 +40,6 @@ namespace MvcMusicStoreWebProject.Data
                 || date.DayOfWeek == DayOfWeek.Sunday;
         }
 
-        // nqkvi shano ekvilibristiki
-        public DateTime IsHoliday(NonWorkingDays nonWorkingDays)
-        {
-            var NOD = nonWorkingDays.Holiday;
-            return NOD;
-        }
-
-
-        //public static int Compare(Attendance t1, NonWorkingDays t2)
-        //{
-        //    foreach (var d in t1.Date)
-        //    {
-
-        //    }
-        //}
 
 
         public Repository(MusicStoreDbContext context, IConfiguration config, UserManager<ApplicationUser> userManager)
@@ -62,7 +52,7 @@ namespace MvcMusicStoreWebProject.Data
         }
         public async Task<string> AddAttendance(Attendance attendance)
         {
-
+            
             Context.Attendances.Add(attendance);
             await Context.SaveChangesAsync();
             return "Inserted";
@@ -180,25 +170,127 @@ namespace MvcMusicStoreWebProject.Data
             attendanceEntity.Id = 0;
         }
 
-        // primerno da deklarirame tuka nov AddAttendanceWithoutHolidays metod koito da pravi sushtoto kato gorniq no da chekva predi tva da ne bi da e holiday
-        // mai bachkaaa mainaaa
-        // mai bachkaaa mainaaa
-        public async Task<string> AddAttendanceWithoutHolidays(Attendance attendance)
+        public async Task<string> AddAttendanceWithoutHolidays(Attendance attendance )
         {
-            // tuka nqkuv if statement ili while cycle , NonWorkingDays nonWorkingDays
+            // вземаме от контекста таблицата с НонУъркингДейс
 
-            var holidays = Context.NonWorkingDays.ToList();
-            foreach (var h in holidays)
+            var result = Context.NonWorkingDays.ToList();
+
+            // правим нов лист от тип Datetime
+            var holidays = new List<DateTime>();
+
+            // попълваме листа с данните от таблицата НонУъркингДейс
+            foreach (var holiday in result)
             {
-                if (h.Holiday != attendance.Date)
-                {
-                    Context.Attendances.Add(attendance);
-                    await Context.SaveChangesAsync();
-                    return "Inserted";
-                }
-                return "!";
+
+                holidays.Add(holiday.Holiday);
+            };
+
+            // сравняваме дните в двете таблици и препокритите от NonWorkingDays се премахват като записи
+            if (!holidays.Contains(attendance.Date))
+
+                // тва беше със обикновен лист от данни
+            //if (!FreeDates.Contains(attendance.Date))
+            {
+                Context.Attendances.Add(attendance);
+                await Context.SaveChangesAsync();
+                return "Inserted";
             }
             return "Success";
+            
         }
+
+        //public async Task<string> AddAttendanceWithoutHolidays(Attendance attendance, int semesterId)
+        //{
+        //    // вземаме от контекста таблицата с НонУъркингДейс
+
+        //    var result = Context.NonWorkingDays.Where(a => a.SemesterId == semesterId).ToList();
+
+        //    // правим нов лист от тип Datetime
+        //    var holidays = new List<DateTime>();
+
+        //    // попълваме листа с данните от таблицата НонУъркингДейс
+        //    foreach (var holiday in result)
+        //    {
+
+        //        holidays.Add(holiday.Holiday);
+        //    };
+
+        //    // сравняваме дните в двете таблици и препокритите от NonWorkingDays се премахват като записи
+        //    if (!holidays.Contains(attendance.Date))
+
+        //    // тва беше със обикновен лист от данни
+        //    //if (!FreeDates.Contains(attendance.Date))
+        //    {
+        //        Context.Attendances.Add(attendance);
+        //        await Context.SaveChangesAsync();
+        //        return "Inserted";
+        //    }
+        //    return "Success";
+
+        //}
+
+        public IList<Discipline> LetGetDisciplines()
+        {
+            var disciplineslist = from Discipline in Context.Disciplines select Discipline;
+            var disciplinenames = disciplineslist.ToList<Discipline>();
+            return disciplinenames;
+        }
+
+        public IList<Degrees> LetGetDegrees()
+        {
+            var degreeslist = from Degrees in Context.Degrees select Degrees;
+            var degreenames = degreeslist.ToList<Degrees>();
+            return degreenames;
+        }
+
+
+        public IList<Discipline> GetDisciplinesByProgramId(int DegreesId)
+        {
+            var disciplinelist = from discipline in Context.Disciplines where discipline.DegreesId == DegreesId select discipline;
+            var disciplineNames = disciplinelist.ToList<Discipline>();
+            return disciplineNames;
+        }
+
+        public async Task<List<SemesterViewModel>> GetSemester()
+        {
+            return await Context.Semesters.Select(x => new SemesterViewModel()
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+        }
+
+
+
+
+
+
+
+
+        //trqbva da se opravi zaduljitelno imeto na View Modela osobeno na gornata funkciq
+        public async Task<List<DegreeViewModel>> GetDegrees()
+        {
+            return await Context.Degrees.Select(x => new DegreeViewModel()
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+        }
+
+
+        public IList<Semester> GetAllSemesters()
+        {
+            var allSemesters = from semester in Context.Semesters select semester;
+            var allSemestersNames = allSemesters.ToList<Semester>();
+            return allSemestersNames;
+        }
+
+        public DateTime GetRelatedSemester (int id)
+        {
+            var semester = Context.Semesters.FirstOrDefault(x => x.Id == id);
+            return semester.endDate;
+        }
+
     }
 }

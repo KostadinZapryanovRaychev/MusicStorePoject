@@ -15,8 +15,6 @@ namespace MvcMusicStoreWebProject.Data.Models
         public string OfficialName { get; set; }
         public string Description { get; set; }
 
-
-
     }
 }
 

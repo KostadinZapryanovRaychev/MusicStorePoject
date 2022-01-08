@@ -56,9 +56,27 @@ namespace MvcMusicStoreWebProject.Data
 
 
         // probvame da slojim tova vmesto AddAttendance
+        //Task<string> AddAttendanceWithoutHolidays(Attendance attendance, int semesterId);
+
         Task<string> AddAttendanceWithoutHolidays(Attendance attendance);
+
 
         //Task<string> GetCurrentUserDetails();
 
+
+
+        Task<List<DegreeViewModel>> GetDegrees();
+
+        IList<Degrees> LetGetDegrees();
+
+        IList<Discipline> LetGetDisciplines();
+
+        IList<Semester> GetAllSemesters();
+
+        Task<List<SemesterViewModel>> GetSemester();
+
+        IList<Discipline> GetDisciplinesByProgramId(int DegreesId);
+
+        DateTime GetRelatedSemester(int id);
     }
 }

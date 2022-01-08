@@ -11,6 +11,10 @@ namespace MvcMusicStoreWebProject.Models.ViewModels
     {
 
         public Attendance Attendance { get; set; }
+         
+        public int DegreeId { get; set; }
+
+        public int DisciplineId { get; set; }
 
         public List<SelectListItem> AvailableDegrees { get; set; } = new List<SelectListItem>()
         {
@@ -19,5 +23,13 @@ namespace MvcMusicStoreWebProject.Models.ViewModels
             new SelectListItem {Text="Doctor" , Value="Doctor"}
 
         };
+
+        public List<SelectListItem> Semester { get; set; } = new List<SelectListItem>()
+        {
+            new SelectListItem {Text="1" , Value="1"},
+            new SelectListItem {Text="2" , Value="2"},
+            new SelectListItem {Text="3" , Value="3"}
+
+        }; 
     }
 }

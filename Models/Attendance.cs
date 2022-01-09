@@ -18,7 +18,7 @@ namespace MvcMusicStoreWebProject.Models
         [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
-        [Required]
+        //[Required]
         public string Degree { get; set; }
 
         [Required]

@@ -60,8 +60,9 @@ namespace MvcMusicStoreWebProject.Controllers
         public JsonResult GetDisciplineByProgramId(int DegreesId)
         {
             var disciplines = Repo.GetDisciplinesByProgramId(DegreesId);
-            return Json(new SelectList(disciplines, "Id" ,"Name"));
+            return Json(new SelectList(disciplines, "Id", "Name"));
         }
+
 
         public List<Degrees> GetAllDegrees()
         {
@@ -92,14 +93,14 @@ namespace MvcMusicStoreWebProject.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateAttendance(AttendanceViewModel attendanceViewModel )
+        public async Task<IActionResult> CreateAttendance(AttendanceViewModel attendanceViewModel   )
         {
             ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
             ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
 
 
             attendanceViewModel.Attendance.Degree = GetAllDegrees().Where(x => x.Id == attendanceViewModel.DegreeId).Select(x => x.Name).FirstOrDefault();
-            attendanceViewModel.Attendance.Discipline = GetDisciplineByProgramId(DegreesId)
+            //attendanceViewModel.Attendance.Discipline = GetDisciplineByProgramId(DegreesId).Where(x => x.Id == attendanceViewModel.DegreeId).Select(x => x.Name).FirstOrDefault();
 
             var errors = ModelState
                 .Where(x => x.Value.Errors.Count > 0)

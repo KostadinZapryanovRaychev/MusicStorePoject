@@ -249,6 +249,14 @@ namespace MvcMusicStoreWebProject.Data
         {
             var disciplinelist = from discipline in Context.Disciplines where discipline.DegreesId == DegreesId select discipline;
             var disciplineNames = disciplinelist.ToList<Discipline>();
+            var onlyNames = new List<string>();
+
+            foreach (var onlyName in disciplineNames)
+            {
+
+                onlyNames.Add(onlyName.Name);
+            };
+
             return disciplineNames;
         }
 

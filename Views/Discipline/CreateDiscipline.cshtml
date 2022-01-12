@@ -1,0 +1,61 @@
+﻿@model MvcMusicStoreWebProject.Models.ViewModels.DisciplineViewModel
+
+<!---Blagodarenie na taq prostotie asp action barame metoda ot kontrolera -->
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h1> Присъствена форма </h1>
+
+<div asp-validation-summary="All">   </div>
+<form method="post" asp-controller="Discipline" asp-action="CreateDiscipline">
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Попълнете присъствието си</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-1">
+                        <label asp-for="@Model.Discipline.Name"></label>
+                    </div>
+                    <div class="col-1">
+                        <label asp-for="@Model.Discipline.DegreesId"></label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <input asp-for="@Model.Discipline.Name" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <input asp-for="@Model.Discipline.DegreesId" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <input type="submit" class="btn btn-info w-75" value="submit" />
+                                </div>
+                                <div class="col">
+                                    <a asp-action="Index" class="btn btn-danger w-75">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

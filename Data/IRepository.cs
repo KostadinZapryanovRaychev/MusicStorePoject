@@ -78,5 +78,10 @@ namespace MvcMusicStoreWebProject.Data
         IList<Discipline> GetDisciplinesByProgramId(int DegreesId);
 
         DateTime GetRelatedSemester(int id);
+
+
+        IEnumerable<Attendance> FindAttendanceBySemesterId(int SemesterId);
+
+        int GetRelatedSemesterLongitude(int id);
     }
 }

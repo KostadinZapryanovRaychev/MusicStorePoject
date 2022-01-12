@@ -32,6 +32,7 @@ namespace MvcMusicStoreWebProject
             string mySqlConnectionStr = Configuration.GetConnectionString("Connection");
 
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IDisciplineRepository, DisciplineRepository>();
 
             services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
             {

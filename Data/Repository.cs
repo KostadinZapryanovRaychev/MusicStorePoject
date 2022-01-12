@@ -123,6 +123,13 @@ namespace MvcMusicStoreWebProject.Data
             return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId);
         }
 
+
+        // teq dvete po otdelno li ili da gi obedenq v edna ama mai po otdelno e po dobre
+        public IEnumerable<Attendance> FindAttendanceBySemesterId(int SemesterId)
+        {
+            return Context.Attendances.Where(a => a.SemesterId == SemesterId);
+        }
+
         public async Task<List<ProgramsViewModel>> GetPrograms()
         {
             return await Context.Programs.Select(x => new ProgramsViewModel()
@@ -200,35 +207,6 @@ namespace MvcMusicStoreWebProject.Data
             
         }
 
-        //public async Task<string> AddAttendanceWithoutHolidays(Attendance attendance, int semesterId)
-        //{
-        //    // вземаме от контекста таблицата с НонУъркингДейс
-
-        //    var result = Context.NonWorkingDays.Where(a => a.SemesterId == semesterId).ToList();
-
-        //    // правим нов лист от тип Datetime
-        //    var holidays = new List<DateTime>();
-
-        //    // попълваме листа с данните от таблицата НонУъркингДейс
-        //    foreach (var holiday in result)
-        //    {
-
-        //        holidays.Add(holiday.Holiday);
-        //    };
-
-        //    // сравняваме дните в двете таблици и препокритите от NonWorkingDays се премахват като записи
-        //    if (!holidays.Contains(attendance.Date))
-
-        //    // тва беше със обикновен лист от данни
-        //    //if (!FreeDates.Contains(attendance.Date))
-        //    {
-        //        Context.Attendances.Add(attendance);
-        //        await Context.SaveChangesAsync();
-        //        return "Inserted";
-        //    }
-        //    return "Success";
-
-        //}
 
         public IList<Discipline> LetGetDisciplines()
         {
@@ -298,6 +276,15 @@ namespace MvcMusicStoreWebProject.Data
         {
             var semester = Context.Semesters.FirstOrDefault(x => x.Id == id);
             return semester.endDate;
+        }
+
+
+        // tva tuka вземаме големината на семестъра
+        public int GetRelatedSemesterLongitude(int id)
+        {
+            var semester = Context.Semesters.FirstOrDefault(x => x.Id == id);
+            var semesterLongitude= ((semester.startDate -semester.endDate)/7).Days;
+            return semesterLongitude;
         }
 
     }

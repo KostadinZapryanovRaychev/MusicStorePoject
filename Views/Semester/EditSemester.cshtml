@@ -1,0 +1,70 @@
+﻿@model MvcMusicStoreWebProject.Models.ViewModels.SemesterViewModel
+
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h1>Семестър данни </h1>
+
+<div asp-validation-summary="All">   </div>
+<form method="post" asp-controller="Semester" asp-action="EditSemester">
+    <input type="hidden" asp-for="@Model.Semester.Id" />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Моля редактирайте</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-1">
+                        @*tva e sintaksisa za dostupvane prez ViewModela*@
+                        <label asp-for="@Model.Semester.Name"></label>
+                    </div>
+                    <div class="col-1">
+                        <label asp-for="@Model.Semester.startDate"></label>
+                    </div>
+                    <div class="col-1">
+                        <label asp-for="@Model.Semester.endDate"></label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-1">
+                        <input asp-for="@Model.Semester.Name" class="form-control" />
+                    </div>
+                    <div class="col-1">
+                        <input asp-for="@Model.Semester.startDate" class="form-control" />
+                    </div>
+                    <div class="col-1">
+                        <input asp-for="@Model.Semester.endDate" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            @*tuk koe pozvolqva da se zapazqt vbazata danni kato cuknesh submit*@
+                            <input type="submit" class="btn btn-info w-75" value="Update" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-danger w-75">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

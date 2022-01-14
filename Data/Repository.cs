@@ -159,6 +159,17 @@ namespace MvcMusicStoreWebProject.Data
             return attend;
         }
 
+        public async Task<Attendance> GetAttendanceBySemesterId(int ApplicationUserId,int SemesterId)
+        {
+            // ako id to vkarano kato parametar v taq funkciq e ravno na Id na Attendance vurni mi toq attendance !
+            // return Context.Attendances.SingleOrDefault(x => x.Id == id);
+
+            // durgiq variant e 
+
+            var attend = await Context.Attendances.FindAsync( ApplicationUserId , SemesterId);
+            return attend;
+        }
+
         public async Task<Attendance> GetAttendance(int id)
         {
             // ako id to vkarano kato parametar v taq funkciq e ravno na Id na Attendance vurni mi toq attendance !

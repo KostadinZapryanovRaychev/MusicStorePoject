@@ -262,7 +262,7 @@ namespace MvcMusicStoreWebProject.Controllers
                 for (int i = 0; i < 14; i++)
                 {
                     var newAttendanceDate = r.Date.AddDays(7);
-                    if (newAttendanceDate < semester)
+                    if (newAttendanceDate < semester) 
                     {
                         Repo.Detached(r);
                         r.Date = newAttendanceDate;
@@ -274,6 +274,20 @@ namespace MvcMusicStoreWebProject.Controllers
 
             }
             return View();
+        }
+
+
+        public async Task<IActionResult> UserHistory(int SemesterId)
+        {
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+            Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+            var user = await GetCurrentUserAsync();
+            var userId = user.Id;
+            IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId); 
+            attendances = Repo.FindAttendanceBySemesterId(SemesterId);
+            var result = attendances.OrderBy(x => x.Date);
+
+            return View(result);
         }
 
 

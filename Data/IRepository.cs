@@ -83,5 +83,6 @@ namespace MvcMusicStoreWebProject.Data
         IEnumerable<Attendance> FindAttendanceBySemesterId(int SemesterId);
 
         int GetRelatedSemesterLongitude(int id);
+
     }
 }

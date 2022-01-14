@@ -8,6 +8,7 @@ namespace MvcMusicStoreWebProject.Models.ViewModels
 {
     public class SemesterViewModel
     {
+        public Semester Semester { get; set; }
         public int Id { get; set; }
 
         public string Name { get; set; }

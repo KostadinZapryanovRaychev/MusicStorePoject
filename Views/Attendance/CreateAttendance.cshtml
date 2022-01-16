@@ -71,11 +71,11 @@
                     <div class="col-1">
                         <label asp-for="@Model.Attendance.Discipline"></label>
                     </div>
-                    <div class="col-1">
+                    <div class="col-1" style="display:none;">
                         <label asp-for="@Model.Attendance.ApplicationUserId" style-display="none" visible="false"></label>
                     </div>
 
-                    <div class="col-1">
+                    <div class="col-1" style="display:none;">
                         <label asp-for="@Model.Attendance.SemesterId" style-display="none" visible="false"></label>
                     </div>
 
@@ -87,15 +87,15 @@
                     </div>
                     @*<div class="col-1">
 
-                        <select id="DegreesList" asp-for="@Model.Attendance.Degree" class="form-control" asp-items="(await _Repo.GetDegrees()).Select(x=> new SelectListItem() { Text = x.Name , Value=x.Id.ToString()})">
-                            <option value="">Degree</option>
+                <select id="DegreesList" asp-for="@Model.Attendance.Degree" class="form-control" asp-items="(await _Repo.GetDegrees()).Select(x=> new SelectListItem() { Text = x.Name , Value=x.Id.ToString()})">
+                    <option value="">Degree</option>
+                </select>
+            </div>*@
+                    <div class="col-1">
+                        <select id="DegreesList" class="form-control" asp-for="@Model.DegreeId" asp-items="@ViewBag.degreesNames">
+                            <option> Select Programs</option>
                         </select>
-                    </div>*@
-                      <div class="col-1">
-                            <select id="DegreesList" class="form-control" asp-for="@Model.DegreeId" asp-items="@ViewBag.degreesNames">
-                                <option> Select Programs</option>
-                            </select>
-                        </div>
+                    </div>
                     <div class="col-1">
                         <input asp-for="@Model.Attendance.Mode" class="form-control" />
                     </div>
@@ -124,17 +124,17 @@
                         <input asp-for="@Model.Attendance.Programs" class="form-control" />
                     </div>
                     <div class="col-1">
-                        <select id="DisciplineList" asp-for="@Model.Attendance.Discipline" >
+                        <select id="DisciplineList" asp-for="@Model.Attendance.Discipline">
                             <option value="-1"> Select Discipline</option>
                         </select>
                     </div>
                     @*  <div class="col-1">
 
-                        <select asp-for="@Model.Attendance.SemesterId" class="form-control" asp-items="(await _Repo.GetSemester()).Select(x=> new SelectListItem() { Text = x.Name })">
-                            <option value="">Изберете семестър</option>
-                        </select>
-                        <span class="text-danger"></span>
-                        </div>*@
+            <select asp-for="@Model.Attendance.SemesterId" class="form-control" asp-items="(await _Repo.GetSemester()).Select(x=> new SelectListItem() { Text = x.Name })">
+                <option value="">Изберете семестър</option>
+            </select>
+            <span class="text-danger"></span>
+            </div>*@
 
                     <div class="col-1">
 
@@ -150,9 +150,7 @@
             <span class="text-danger"></span>
             </div>*@
 
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.ApplicationUserId" visible="false"> </label>
-                    </div>
+
                 </div>
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
@@ -165,7 +163,9 @@
                         </div>
                     </div>
                 </div>
-
+                <div style="display:none;">
+                    <label asp-for="@Model.Attendance.ApplicationUserId" visible="false"> </label>
+                </div>
             </div>
         </div>
     </div>

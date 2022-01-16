@@ -72,14 +72,17 @@
                     <div class="col-1">
                         <label asp-for="@Model.Attendance.ApplicationUserId"></label>
                     </div>
+                    <div class="col-1" style="display:none;">
+                        <label asp-for="@Model.Attendance.SemesterId" style-display="none" visible="false"></label>
+                    </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-1">
                         <input asp-for="@Model.Attendance.Date" class="form-control" />
                     </div>
                     <div class="col-1">
-                        <select asp-for="@Model.Attendance.Degree" asp-items="@Model.AvailableDegrees" class="form-control">
-                            <option selected disabled> ---SELECT----</option>
+                        <select id="DegreesList" class="form-control" asp-for="@Model.DegreeId" asp-items="@ViewBag.degreesNames">
+                            <option> Select Degree</option>
                         </select>
                     </div>
                     <div class="col-1">
@@ -107,22 +110,22 @@
                         <input asp-for="@Model.Attendance.Note" class="form-control" />
                     </div>
                     <div class="col-1">
-
-                        <select asp-for="@Model.Attendance.Programs" class="form-control" asp-items="(await _Repo.GetPrograms()).Select(x=> new SelectListItem() { Text = x.Name})">
-                            <option value="">Please choose your Program</option>
-                        </select>
-                        <span class="text-danger"></span>
+                        <input asp-for="@Model.Attendance.Programs" class="form-control" />
                     </div>
                     <div class="col-1">
-
-                        <select asp-for="@Model.Attendance.Discipline" class="form-control" asp-items="(await _Repo.GetDiscipline()).Select(x=> new SelectListItem() { Text = x.Name})">
-                            <option value="">Please choose your Discipline</option>
+                        <select id="DisciplineList" asp-for="@Model.Attendance.Discipline">
+                            <option value="-1"> Select Discipline</option>
                         </select>
-                        <span class="text-danger"></span>
                     </div>
                     <div class="col-1">
-                        <input type="hidden" asp-for="@Model.Attendance.ApplicationUserId"class="form-control"/>
+                        <select id="ProgramsList" asp-for="@Model.Attendance.SemesterId" asp-items="@ViewBag.semNames" class="form-control">
+                            <option> Select Semester</option>
+                        </select>
                     </div>
+                    <div class="col-1" style="display:none;">
+                        <input type="hidden" asp-for="@Model.Attendance.ApplicationUserId" class="form-control" />
+                    </div>
+
                 </div>
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
@@ -140,3 +143,42 @@
         </div>
     </div>
 </form>
+
+@section Scripts {
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            $("#DegreesList").change(function () {
+                $("#DisciplineList").empty();
+
+                debugger
+                $.ajax({
+                    type: "GET",
+
+                    url: "@Url.Action("GetDisciplineByProgramId")",
+                    dataType: "json",
+                    data: { DegreesId: $("#DegreesList").val() },
+                    success: function (disciplines) {
+                        $("#DisciplineList").append('<option value"' + -1 + ' " >' + "Select Discipline" + '</option>');
+                        $.each(disciplines, function (index , discipline) {
+                            $("#DisciplineList").append('<option value"' + discipline.value + ' " >' + discipline.text + '</option>');
+                        });
+
+                    },
+                    error: function (ex) {
+                        alert('Failed to retreive states ' + ex);
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
+
+}

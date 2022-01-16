@@ -67,7 +67,7 @@
                     <td width="30%">@semester.startDate</td>
                     <td width="30%">@semester.endDate</td>
                     <td><a class="btn btn-primary" asp-action="EditSemester" asp-controller="Semester" asp-route-AttendanceId="@semester.Id" role="button">Edit</a></td>
-                    <td><button class="btn btn-danger deleteAttendance" value="@semester.Id" role="button">Delete </button></td>
+                    <td><button class="btn btn-danger deleteSemester" value="@semester.Id" role="button">Delete </button></td>
 
                 </tr>
                 }
@@ -111,17 +111,17 @@
     <script>
 
         $(document).ready(function () {
-            $(".deleteAttendance").on("click", function (e) {
+            $(".deleteSemester").on("click", function (e) {
 
                 e.preventDefault();
 
-                var attendanceId = $(this).val();
+                var semesterId = $(this).val();
 
                 $.ajax({
 
                     type: 'POST',
                     url: '/Semester/DeleteSemester',
-                    data: { SemesterId: attendanceId },
+                    data: { SemesterId: semesterId },
                     success: function (data) {
                         $("#message").html(data);
                         $("#deleteMessageModal").modal("show");

@@ -154,6 +154,8 @@ namespace MvcMusicStoreWebProject.Controllers
         public async Task<IActionResult> EditAttendance(int AttendanceId)
 
         {
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
             var existingAttend = await Repo.GetAttendance(AttendanceId);
             var viewModel = new AttendanceViewModel { Attendance = existingAttend };
             return View(viewModel);
@@ -166,6 +168,10 @@ namespace MvcMusicStoreWebProject.Controllers
         public async Task<IActionResult> EditAttendance(AttendanceViewModel modifiedAttendance)
 
         {
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+
+            modifiedAttendance.Attendance.Degree = GetAllDegrees().Where(x => x.Id == modifiedAttendance.DegreeId).Select(x => x.Name).FirstOrDefault();
             if (ModelState.IsValid)
             {
                 var existingAttend = modifiedAttendance.Attendance;
@@ -276,17 +282,14 @@ namespace MvcMusicStoreWebProject.Controllers
             return View();
         }
 
-
         public async Task<IActionResult> UserHistory(int SemesterId)
         {
             ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
-            IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId); 
-            attendances = Repo.FindAttendanceBySemesterId(SemesterId);
-            var result = attendances.OrderBy(x => x.Date);
-
+            var result = Repo.FindAttendanceBySemesterIdandUserId(userId, SemesterId);
+            
             return View(result);
         }
 

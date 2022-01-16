@@ -98,8 +98,12 @@ namespace MvcMusicStoreWebProject.Data
                 existingAttend.Programs = attendance.Programs;
                 existingAttend.Auditorium = attendance.Auditorium;
                 existingAttend.Degree = attendance.Degree;
+                existingAttend.Semester = attendance.Semester;
+                existingAttend.SemesterId = attendance.SemesterId;
+                existingAttend.Discipline = attendance.Discipline;
                 existingAttend.Note = attendance.Note;
                 existingAttend.Course = attendance.Course;
+
 
                 Context.Attendances.Update(existingAttend);
                 await Context.SaveChangesAsync();
@@ -128,6 +132,11 @@ namespace MvcMusicStoreWebProject.Data
         public IEnumerable<Attendance> FindAttendanceBySemesterId(int SemesterId)
         {
             return Context.Attendances.Where(a => a.SemesterId == SemesterId);
+        }
+
+        public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId)
+        {
+            return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId== SemesterId);
         }
 
         public async Task<List<ProgramsViewModel>> GetPrograms()

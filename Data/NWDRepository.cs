@@ -65,6 +65,7 @@ namespace MvcMusicStoreWebProject.Data
             if (existingNWD != null)
             {
                 existingNWD.Holiday = nonWorkingDays.Holiday;
+                existingNWD.SemesterId = nonWorkingDays.SemesterId; 
                 Context.NonWorkingDays.Update(existingNWD);
                 await Context.SaveChangesAsync();
             }

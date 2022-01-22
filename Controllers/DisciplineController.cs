@@ -123,7 +123,7 @@ namespace MvcMusicStoreWebProject.Controllers
         {
             var disciplines = Repo.GetAllAvailableDisciplines();
             return View(disciplines);
-        }
+        } 
 
     }
 }

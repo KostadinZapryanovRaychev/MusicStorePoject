@@ -86,5 +86,9 @@ namespace MvcMusicStoreWebProject.Data
 
         IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId);
 
+        Task<string> CoppyAttendance(Attendance attendance);
+
+        void ReDetached(Attendance attendanceEntity);
+
     }
 }

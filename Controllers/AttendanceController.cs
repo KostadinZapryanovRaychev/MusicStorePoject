@@ -159,8 +159,6 @@ namespace MvcMusicStoreWebProject.Controllers
             var existingAttend = await Repo.GetAttendance(AttendanceId);
             var viewModel = new AttendanceViewModel { Attendance = existingAttend };
             return View(viewModel);
-
-
         }
 
 
@@ -178,6 +176,26 @@ namespace MvcMusicStoreWebProject.Controllers
                 await Repo.EditAttendance(existingAttend);
             }
             return View(modifiedAttendance);
+        }
+
+
+
+
+        /// <summary>
+        /// TOVA RABOTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+        /// </summary>
+        /// <param name="AttendanceId"></param>
+        /// <returns></returns>
+        
+        public async Task<IActionResult> CoppyAttendance(int AttendanceId)
+
+        {
+            var existingAttend = await Repo.GetAttendance(AttendanceId);
+            var newAttendanceDate = existingAttend.Date.AddDays(1);
+            existingAttend.Date = newAttendanceDate;
+            Repo.Detached(existingAttend);
+            await Repo.AddAttendance(existingAttend);
+            return RedirectToAction("Index");
         }
 
 
@@ -217,35 +235,33 @@ namespace MvcMusicStoreWebProject.Controllers
             //return View(attendances);
         }
 
-        //public async Task<IActionResult> Multiplication()
-        //{
-        //    Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-        //    var user = await GetCurrentUserAsync();
-        //    var userId = user.Id;
-        //    // da vzema oshte 2 parametura start date i end date 
-        //    IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
-        //    var result = attendances.OrderBy(x => x.Date);
+        public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId)
+        {
 
-        //    foreach (var r in result)
-        //    {
-        //        var semester = Repo.GetRelatedSemester(r.SemesterId);
+            var attendance = await Repo.GetAttendance(AttendanceId);
+            var semester =  Repo.GetRelatedSemester(attendance.SemesterId);
 
-        //        for (int i = 0; i < 3; i++)
-        //        {
-        //            var newAttendanceDate = r.Date.AddDays(7);
-        //            if (newAttendanceDate < semester)
-        //            {
-        //                Repo.Detached(r);
-        //                r.Date = newAttendanceDate;
-        //                // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
-        //                await Repo.AddAttendanceWithoutHolidays(r);
+                for (int i = 0; i < 3; i++)
+                {
+                    var newAttendanceDate = attendance.Date.AddDays(7);
+                    if (newAttendanceDate < semester)
+                    {
+                        Repo.Detached(attendance);
+                        attendance.Date = newAttendanceDate;
+                        // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
+                        await Repo.AddAttendanceWithoutHolidays(attendance);
 
-        //            }
-        //        }
+                    }
+                }
+            return RedirectToAction("Index");
+        }
 
-        //    }
-        //    return View();
-        //}
+        public async Task<IActionResult> CopyAttendance(Attendance att)
+        {
+            var attendence = await Repo.CoppyAttendance(att);
+
+            return RedirectToAction("Index");
+        }
 
         public async Task<IEnumerable<Attendance>> AttendanceByUserId()
         {

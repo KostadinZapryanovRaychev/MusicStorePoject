@@ -58,6 +58,18 @@ namespace MvcMusicStoreWebProject.Data
             return "Inserted";
         }
 
+        public async Task<string> CoppyAttendance(Attendance attendance)
+        {
+          
+
+            var originalEntity = Context.Attendances.AsNoTracking()
+                             .FirstOrDefault(e => e.Id == attendance.Id);
+            Context.Attendances.Add(originalEntity);
+            await Context.SaveChangesAsync();
+            return "Inserted";
+        }
+
+
 
         // tuk kva e razlikata dali shte go narpavq taka ili s ID nemoga da razbera
         public async Task<string> DeleteAttendance(int id)
@@ -104,7 +116,7 @@ namespace MvcMusicStoreWebProject.Data
                 existingAttend.Note = attendance.Note;
                 existingAttend.Course = attendance.Course;
 
-
+                
                 Context.Attendances.Update(existingAttend);
                 await Context.SaveChangesAsync();
             }
@@ -191,6 +203,13 @@ namespace MvcMusicStoreWebProject.Data
         }
 
         public void Detached(Attendance attendanceEntity)
+        {
+            // da se napravi novo Entity koeto da e kopie na tova i na nego da se sloji statusa detached
+            Context.Entry(attendanceEntity).State = EntityState.Detached;
+            attendanceEntity.Id = 0;
+        }
+
+        public void ReDetached(Attendance attendanceEntity)
         {
             // da se napravi novo Entity koeto da e kopie na tova i na nego da se sloji statusa detached
             Context.Entry(attendanceEntity).State = EntityState.Detached;

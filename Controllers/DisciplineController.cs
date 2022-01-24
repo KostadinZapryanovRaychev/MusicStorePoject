@@ -60,6 +60,7 @@ namespace MvcMusicStoreWebProject.Controllers
         public async Task<IActionResult> EditDiscipline(int DisciplineId)
 
         {
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
             var existingDiscipline = await Repo.GetDiscipline(DisciplineId);
             var viewModel = new DisciplineViewModel { Discipline = existingDiscipline };
             return View(viewModel);
@@ -69,6 +70,7 @@ namespace MvcMusicStoreWebProject.Controllers
         public async Task<IActionResult> EditDiscipline(DisciplineViewModel modifiedDiscipline)
 
         {
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
             if (ModelState.IsValid)
             {
                 var existingDiscipline = modifiedDiscipline.Discipline;
@@ -90,6 +92,7 @@ namespace MvcMusicStoreWebProject.Controllers
 
         public IActionResult CreateDiscipline()
         {
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
             var viewModel = new DisciplineViewModel();
 
             return View(viewModel);
@@ -98,6 +101,7 @@ namespace MvcMusicStoreWebProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDiscipline(DisciplineViewModel disciplineViewModel)
         {
+            ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
             if (ModelState.IsValid)
             {
                 await Repo.AddDiscipline(disciplineViewModel.Discipline);
@@ -123,7 +127,6 @@ namespace MvcMusicStoreWebProject.Controllers
         {
             var disciplines = Repo.GetAllAvailableDisciplines();
             return View(disciplines);
-        } 
-
+        }
     }
 }

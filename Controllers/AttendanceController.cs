@@ -17,6 +17,7 @@ namespace MvcMusicStoreWebProject.Controllers
     public class AttendanceController : Controller
     {
         // tva teq raboti traq da si napravq truda da gi izucha nachi tuka imame konstruktor koito vzema IRepository kato argument dependancy injection i drugite neshta traq da gi razbera.
+        int multiplicationLenght;
         private IRepository Repo { get; }
         
         private readonly UserManager<ApplicationUser> _userManager;
@@ -77,7 +78,7 @@ namespace MvcMusicStoreWebProject.Controllers
             return discPlineNames;
            
         }
-       
+
 
         [HttpGet]
 
@@ -203,6 +204,27 @@ namespace MvcMusicStoreWebProject.Controllers
         public async Task <IActionResult> LoggedUser()
         {
 
+                    List<SelectListItem> mySkills = new List<SelectListItem>() 
+                    {
+                                new SelectListItem {
+                                    Text = "1", Value = "1"
+                                },
+                                new SelectListItem {
+                                    Text = "2", Value = "2"
+                                },
+                                new SelectListItem {
+                                    Text = "3", Value = "3"
+                                },
+                                new SelectListItem {
+                                    Text = "4", Value = "4"
+                                },
+                                new SelectListItem {
+                                    Text = "5", Value = "5"
+                                },
+       
+                     };
+            ViewBag.MySkills = mySkills;
+
             //IEnumerable<Attendance> attendances = Repo.GetAttendances();
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
@@ -218,6 +240,7 @@ namespace MvcMusicStoreWebProject.Controllers
 
         public IActionResult Index()
         {
+
             ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
             return View();
         }
@@ -235,14 +258,20 @@ namespace MvcMusicStoreWebProject.Controllers
             //return View(attendances);
         }
 
-        public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId)
+        public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId,int MultiplicationLenght)
         {
+            //, int MultiplicationLenght
 
+            var lenght = MultiplicationLenght;
             var attendance = await Repo.GetAttendance(AttendanceId);
             var semester =  Repo.GetRelatedSemester(attendance.SemesterId);
+            
 
-                for (int i = 0; i < 3; i++)
-                {
+            // i < multiplicationLenght;
+
+            for (int i = 0; i < lenght; i++)
+            //for (int i = 0; i < 2; i++)
+            {
                     var newAttendanceDate = attendance.Date.AddDays(7);
                     if (newAttendanceDate < semester)
                     {
@@ -272,6 +301,35 @@ namespace MvcMusicStoreWebProject.Controllers
             var result = attendances.OrderBy(x => x.Date);
             return result;
         }
+
+
+        public int GiveMeValue(int MultiplicationLenght)
+        {
+
+            List<SelectListItem> mySkills = new List<SelectListItem>()
+                    {
+                                new SelectListItem {
+                                    Text = "1", Value = "1"
+                                },
+                                new SelectListItem {
+                                    Text = "2", Value = "2"
+                                },
+                                new SelectListItem {
+                                    Text = "3", Value = "3"
+                                },
+                                new SelectListItem {
+                                    Text = "4", Value = "4"
+                                },
+                                new SelectListItem {
+                                    Text = "5", Value = "5"
+                                },
+
+                     };
+            ViewBag.MySkills = mySkills;
+            var result = MultiplicationLenght;
+            return result;
+        }
+
 
         public async Task<IActionResult> Multiplication()
         {
@@ -315,7 +373,6 @@ namespace MvcMusicStoreWebProject.Controllers
         {
             List<Semester> semNames = Repo.GetAllSemesters().ToList();
             return semNames;
-
         }
 
     }

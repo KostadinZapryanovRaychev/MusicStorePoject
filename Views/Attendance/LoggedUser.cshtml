@@ -98,8 +98,20 @@
                     <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
                     <td><a class="btn btn-primary" asp-action="CoppyAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Copy</a></td>
                     <td><button class="btn btn-danger deleteAttendance" OnClientClick="return confirm('Are you certain you want to delete this item?');" value="@attendance.Id" role="button">Delete </button></td>
-                    <td><a class="btn btn-primary" asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">MultiplyRow</a></td>
-
+                    
+                    <td>
+                      
+                            <form asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id">
+                                <div>
+                                    <select name="MultiplicationLenght" asp-items="@ViewBag.MySkills" onsubmit="javascript:this.form.submit()">
+                                        <option selected disabled> ---SELECT----</option>
+                                    </select>
+                                </div>
+                                <input type="submit" class="btn btn-info w-75" value="Multiply" />
+                            </form>
+                        
+                  @*<a class="btn btn-primary" asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">MultiplyRow</a>*@
+                    </td>                  
                 </tr>
                 }
             </tbody>

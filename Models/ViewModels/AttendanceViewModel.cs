@@ -30,6 +30,14 @@ namespace MvcMusicStoreWebProject.Models.ViewModels
             new SelectListItem {Text="2" , Value="2"},
             new SelectListItem {Text="3" , Value="3"}
 
-        }; 
+        };
+
+        public List<SelectListItem> AvailableModes { get; set; } = new List<SelectListItem>()
+        {
+            new SelectListItem {Text="редовно" },
+            new SelectListItem {Text="задочно" },
+            
+
+        };
     }
 }

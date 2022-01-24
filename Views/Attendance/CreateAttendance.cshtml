@@ -85,19 +85,15 @@
                     <div class="col-1">
                         <input asp-for="@Model.Attendance.Date" class="form-control" />
                     </div>
-                    @*<div class="col-1">
-
-                <select id="DegreesList" asp-for="@Model.Attendance.Degree" class="form-control" asp-items="(await _Repo.GetDegrees()).Select(x=> new SelectListItem() { Text = x.Name , Value=x.Id.ToString()})">
-                    <option value="">Degree</option>
-                </select>
-            </div>*@
                     <div class="col-1">
                         <select id="DegreesList" class="form-control" asp-for="@Model.DegreeId" asp-items="@ViewBag.degreesNames">
                             <option> Select Programs</option>
                         </select>
                     </div>
                     <div class="col-1">
-                        <input asp-for="@Model.Attendance.Mode" class="form-control" />
+                        <select asp-for="@Model.Attendance.Mode" asp-items="@Model.AvailableModes" class="form-control">
+                            <option selected disabled> ---SELECT----</option>
+                        </select>
                     </div>
                     <div class="col-1">
                         <input asp-for="@Model.Attendance.Course" class="form-control" />
@@ -130,11 +126,11 @@
                     </div>
                     @*  <div class="col-1">
 
-            <select asp-for="@Model.Attendance.SemesterId" class="form-control" asp-items="(await _Repo.GetSemester()).Select(x=> new SelectListItem() { Text = x.Name })">
-                <option value="">Изберете семестър</option>
-            </select>
-            <span class="text-danger"></span>
-            </div>*@
+        <select asp-for="@Model.Attendance.SemesterId" class="form-control" asp-items="(await _Repo.GetSemester()).Select(x=> new SelectListItem() { Text = x.Name })">
+            <option value="">Изберете семестър</option>
+        </select>
+        <span class="text-danger"></span>
+        </div>*@
 
                     <div class="col-1">
 
@@ -144,11 +140,11 @@
                     </div>
                     @*<div class="col-1">
 
-            <select asp-for="@Model.Attendance.SemesterId" class="form-control" asp-items="(await _Repo.GetSemester()).Select(x=> new SelectListItem() { Text = x.Name })">
-                <option value="">The semester</option>
-            </select>
-            <span class="text-danger"></span>
-            </div>*@
+        <select asp-for="@Model.Attendance.SemesterId" class="form-control" asp-items="(await _Repo.GetSemester()).Select(x=> new SelectListItem() { Text = x.Name })">
+            <option value="">The semester</option>
+        </select>
+        <span class="text-danger"></span>
+        </div>*@
 
 
                 </div>

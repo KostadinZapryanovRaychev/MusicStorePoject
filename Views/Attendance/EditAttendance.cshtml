@@ -86,7 +86,9 @@
                         </select>
                     </div>
                     <div class="col-1">
-                        <input asp-for="@Model.Attendance.Mode" class="form-control" />
+                        <select asp-for="@Model.Attendance.Mode" asp-items="@Model.AvailableModes" class="form-control">
+                            <option selected disabled> ---SELECT----</option>
+                        </select>
                     </div>
                     <div class="col-1">
                         <input asp-for="@Model.Attendance.Course" class="form-control" />

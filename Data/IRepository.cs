@@ -77,7 +77,7 @@ namespace MvcMusicStoreWebProject.Data
 
         IList<Discipline> GetDisciplinesByProgramId(int DegreesId);
 
-        DateTime GetRelatedSemester(int id);
+        DateTime SemesterEndDateById(int id);
 
 
         IEnumerable<Attendance> FindAttendanceBySemesterId(int SemesterId);
@@ -89,6 +89,8 @@ namespace MvcMusicStoreWebProject.Data
         Task<string> CoppyAttendance(Attendance attendance);
 
         void ReDetached(Attendance attendanceEntity);
+
+        Semester GetCurrentSemester();
 
     }
 }

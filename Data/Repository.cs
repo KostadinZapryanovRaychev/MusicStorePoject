@@ -311,7 +311,9 @@ namespace MvcMusicStoreWebProject.Data
             return allSemestersNames;
         }
 
-        public DateTime GetRelatedSemester (int id)
+        
+        //todo: Rename to E
+        public DateTime SemesterEndDateById (int id)
         {
             var semester = Context.Semesters.FirstOrDefault(x => x.Id == id);
             return semester.endDate;
@@ -325,6 +327,21 @@ namespace MvcMusicStoreWebProject.Data
             var semesterLongitude= ((semester.startDate -semester.endDate)/7).Days;
             return semesterLongitude;
         }
+
+
+        public Semester GetCurrentSemester ()
+        {
+            DateTime now = DateTime.Now;
+            return Context.Semesters.FirstOrDefault(x => x.startDate <= now && x.endDate >= now);
+        }
+        // za tova krashtavame tablicite v edinstvetno chislo 
+        // krashtavame go taka zashtoto nezavisimo otkade shte doidat tova vruhsta daden period ot NonWorkingDays
+        // pravim da vrushta sprqmo nachalna i kraina data vrushta spisuk s Holidays
+
+        //public List<NonWorkingDays> GetHolidaysForPeriod(DateTime startDate , DateTime endDate)
+        //{
+
+        //}
 
     }
 }

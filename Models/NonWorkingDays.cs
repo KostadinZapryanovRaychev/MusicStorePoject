@@ -13,6 +13,8 @@ namespace MvcMusicStoreWebProject.Models
         [Column(TypeName = "date")]
         public DateTime Holiday { get; set; }
 
+
+        //TODO: to remove SemesterId from this model and to re run migrations 
         public int SemesterId { get; set; }
 
         public Semester Semester { get; set; }

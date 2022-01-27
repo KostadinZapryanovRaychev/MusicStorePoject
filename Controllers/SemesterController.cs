@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcMusicStoreWebProject.Data;
 using MvcMusicStoreWebProject.Models.ViewModels;
 using System;
@@ -6,8 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MvcMusicStoreWebProject.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class SemesterController : Controller
     {
         private ISemesterRepository Repo { get; }

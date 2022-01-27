@@ -229,7 +229,20 @@ namespace MvcMusicStoreWebProject.Controllers
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
-            IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
+            IEnumerable<Attendance> attendances;
+
+            // vzemame CurrentDate i sravnqvame dali Current date prisustva v nqkoi interval na start i endDate
+            var currentSemester = Repo.GetCurrentSemester();
+            if (currentSemester!=null)
+            {
+                // proverqvame i displaivame zapisite za dadeniq semester
+               attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id);
+            }
+            else
+            {
+                attendances = Repo.FindAttendanceByUserId(userId);
+            }
+            
             var result = attendances.OrderBy(x => x.Date);
 
             return View(result);
@@ -258,18 +271,18 @@ namespace MvcMusicStoreWebProject.Controllers
             //return View(attendances);
         }
 
-        public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId,int MultiplicationLenght)
+        public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId,int MultiplicationLength)
         {
             //, int MultiplicationLenght
 
-            var lenght = MultiplicationLenght;
+            var length = MultiplicationLength;
             var attendance = await Repo.GetAttendance(AttendanceId);
-            var semester =  Repo.GetRelatedSemester(attendance.SemesterId);
+            var semester =  Repo.SemesterEndDateById(attendance.SemesterId);
             
 
             // i < multiplicationLenght;
 
-            for (int i = 0; i < lenght; i++)
+            for (int i = 0; i < length; i++)
             //for (int i = 0; i < 2; i++)
             {
                     var newAttendanceDate = attendance.Date.AddDays(7);
@@ -333,21 +346,21 @@ namespace MvcMusicStoreWebProject.Controllers
 
         public async Task<IActionResult> Multiplication()
         {
-            var attendence =await AttendanceByUserId();
-            foreach (var r in attendence)
+            var attendences = await AttendanceByUserId();
+            foreach (var attendance in attendences)
             {
-                var semester = Repo.GetRelatedSemester(r.SemesterId);
-                //var semmesterLenght = Repo.GetRelatedSemesterLongitude(r.SemesterId);
+                var semesterEndDate = Repo.SemesterEndDateById(attendance.SemesterId);
+                //var semmesterLenght = Repo.GetRelatedSemesterLongitude(attendance.SemesterId);
 
                 for (int i = 0; i < 14; i++)
                 {
-                    var newAttendanceDate = r.Date.AddDays(7);
-                    if (newAttendanceDate < semester) 
+                    var newAttendanceDate = attendance.Date.AddDays(7);
+                    if (newAttendanceDate < semesterEndDate) 
                     {
-                        Repo.Detached(r);
-                        r.Date = newAttendanceDate;
+                        Repo.Detached(attendance);
+                        attendance.Date = newAttendanceDate;
                         // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
-                        await Repo.AddAttendanceWithoutHolidays(r);
+                        await Repo.AddAttendanceWithoutHolidays(attendance);
 
                     }
                 }

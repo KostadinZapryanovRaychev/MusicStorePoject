@@ -39,9 +39,19 @@
     </div>
 
     <div class="input-group">
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="Semester" asp-action="Index" class="btn btn-primary">Fill  the Semesters </a> </div>
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="Discipline" asp-action="Index" class="btn btn-primary">Fill  the Discipline </a> </div>
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Fill  the fields </a> </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col-6 text-right">
+                <a asp-area="" asp-controller="Semester" asp-action="Index" class="btn btn-primary">Fill the Semesters</a>
+            </div>
+
+            <div class="col-6 text-right">  <a asp-area="" asp-controller="Discipline" asp-action="Index" class="btn btn-primary">Fill  the Discipline </a> </div>
+            <div class="col-6 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="Index" class="btn btn-primary">NonWorkingDays </a> </div>
+        }
+
+
+
+        <div class="col-6 text-right">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Create Attendance </a> </div>
         <div class="col-6 text-right">  <a asp-area="" asp-controller="Attendance" asp-action="UserHistory" class="btn btn-primary">History </a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
@@ -49,7 +59,7 @@
         <button type="button" class="btn btn-primary">
             <i class="fa fa-search"></i>
         </button>
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="Index" class="btn btn-primary">NonWorkingDays </a> </div>
+
     </div>
 
     <br />
@@ -82,37 +92,37 @@
 
                 @foreach (var attendance in Model)
                 {
-                <tr class="tableRows">
-                    <td width="8%">@attendance.Date</td>
-                    <td width="8%">@attendance.Degree</td>
-                    <td width="8%">@attendance.Mode</td>
-                    <td width="8%">@attendance.Course</td>
-                    <td width="8%">@attendance.Groupe</td>
-                    <td width="8%">@attendance.Timeframe</td>
-                    <td width="8%">@attendance.Type</td>
-                    <td width="8%">@attendance.Hours</td>
-                    <td width="8%">@attendance.Auditorium</td>
-                    <td width="8%">@attendance.Note</td>
-                    <td width="8%">@attendance.Programs</td>
-                    <td width="12%">@attendance.Discipline</td>
-                    <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
-                    <td><a class="btn btn-primary" asp-action="CoppyAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Copy</a></td>
-                    <td><button class="btn btn-danger deleteAttendance" OnClientClick="return confirm('Are you certain you want to delete this item?');" value="@attendance.Id" role="button">Delete </button></td>
-                    
-                    <td>
-                      
+                    <tr class="tableRows">
+                        <td width="8%">@attendance.Date</td>
+                        <td width="8%">@attendance.Degree</td>
+                        <td width="8%">@attendance.Mode</td>
+                        <td width="8%">@attendance.Course</td>
+                        <td width="8%">@attendance.Groupe</td>
+                        <td width="8%">@attendance.Timeframe</td>
+                        <td width="8%">@attendance.Type</td>
+                        <td width="8%">@attendance.Hours</td>
+                        <td width="8%">@attendance.Auditorium</td>
+                        <td width="8%">@attendance.Note</td>
+                        <td width="8%">@attendance.Programs</td>
+                        <td width="12%">@attendance.Discipline</td>
+                        <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Edit</a></td>
+                        <td><a class="btn btn-primary" asp-action="CoppyAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Copy</a></td>
+                        <td><button class="btn btn-danger deleteAttendance" onclick="confirmAction()" value="@attendance.Id" role="button">Delete </button></td>
+
+                        <td>
+
                             <form asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id">
                                 <div>
-                                    <select name="MultiplicationLenght" asp-items="@ViewBag.MySkills" onsubmit="javascript:this.form.submit()">
+                                    <select name="MultiplicationLength" asp-items="@ViewBag.MySkills" onsubmit="javascript:this.form.submit()">
                                         <option selected disabled> ---SELECT----</option>
                                     </select>
                                 </div>
                                 <input type="submit" class="btn btn-info w-75" value="Multiply" />
                             </form>
-                        
-                  @*<a class="btn btn-primary" asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">MultiplyRow</a>*@
-                    </td>                  
-                </tr>
+
+                            @*<a class="btn btn-primary" asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">MultiplyRow</a>*@
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -126,87 +136,94 @@
 
 
 
-</div>
-
-<div>
-    <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
-    <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Multiplication</a>
-
-     @*PRKULNATIQ BUTON  <a class="btn btn-primary" asp-action="Multiply" asp-controller="Attendance" role="button">Multiply</a>*@
-</div>  
-
-
-
-<!-- Modal -->
-<div id="deleteMessageModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Server Message</h4>
-            </div>
-            <div class="modal-body">
-                <p id="message"> </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
     </div>
-</div>
+
+    <div>
+        <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
+        <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Multiplication</a>
+
+        @*PRKULNATIQ BUTON  <a class="btn btn-primary" asp-action="Multiply" asp-controller="Attendance" role="button">Multiply</a>*@
+    </div>
 
 
 
-@section Scripts {
+    <!-- Modal -->
+    <div id="deleteMessageModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Server Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="message"> </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    @section Scripts {
 
 
 
 
 
-    <script>
+        <script>
+            function confirmAction() {
+            }
 
+            $(document).ready(function () {
+                $(".deleteAttendance").on("click", function (e) {
 
-        $(document).ready(function () {
-            $(".deleteAttendance").on("click", function (e) {
+                    e.preventDefault();
 
-                e.preventDefault();
-
-                var attendanceId = $(this).val();
-
-                $.ajax({
-
-                    type: 'POST',
-                    url: '/Attendance/DeleteAttendance',
-                    data: { AttendanceId: attendanceId },
-                    success: function (data) {
-                        $("#message").html(data);
-                        $("#deleteMessageModal").modal("show");
+                    let confirmAction = confirm("Are you sure to execute this action?");
+                    if (!confirmAction) {
+                        alert("Action canceled");
+                        return
                     }
+                    alert("Action successfully executed");
+
+                    var attendanceId = $(this).val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Attendance/DeleteAttendance',
+                        data: { AttendanceId: attendanceId },
+                        success: function (data) {
+                            $("#message").html(data);
+                            $("#deleteMessageModal").modal("show");
+                        }
+
+                    });
 
                 });
 
+                // като кликна тука и релоадва страницата с тази функция след като deletetnem
+                $("#deleteMessageModal").on("hidden.bs.modal", function () {
+                    location.reload();
+                });
+
+                $("#searchTextId").on("keyup", function () {
+                    var searchTextId = $(this).val();
+                    if (searchTextId != undefined && searchTextId != "") {
+                        console.log(searchTextId);
+                        $(".tableRows").hide();
+                        $("td:contains(" + searchTextId + ")").parent().show();
+
+                    }
+                    else {
+                        $(".tableRows").show();
+                    }
+                });
             });
 
-            // като кликна тука и релоадва страницата с тази функция след като deletetnem
-            $("#deleteMessageModal").on("hidden.bs.modal", function () {
-                location.reload();
-            });
-
-            $("#searchTextId").on("keyup", function () {
-                var searchTextId = $(this).val();
-                if (searchTextId != undefined && searchTextId != "") {
-                    console.log(searchTextId);
-                    $(".tableRows").hide();
-                    $("td:contains(" + searchTextId + ")").parent().show();
-
-                }
-                else {
-                    $(".tableRows").show();
-                }
-            });
-        });
-
-    </script>
-}
+        </script>
+    }

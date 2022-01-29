@@ -64,6 +64,7 @@ namespace MvcMusicStoreWebProject.Data
             if (existingDiscipline != null)
             {
                 existingDiscipline.Name = discipline.Name;
+                existingDiscipline.DegreesId = discipline.DegreesId;
                 Context.Disciplines.Update(existingDiscipline);
                 await Context.SaveChangesAsync();
             }

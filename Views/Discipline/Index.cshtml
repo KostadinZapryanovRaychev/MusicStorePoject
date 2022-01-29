@@ -26,15 +26,15 @@
         <div class="col-6">
             <h1>    Здравейте г-н Администратор </h1>
             <div asp-validation-summary="All">   </div>
-            @*<img src="https://scontent.fsof10-1.fna.fbcdn.net/v/t1.6435-9/202194678_2930299750586537_8237822614223076407_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=3w_7ObFqxGEAX8x3rlY&_nc_oc=AQmAGJjo3hK-s23-GFr-ZlIEeiuGh58TKdUfrq2ag1-WrIXF4WLfksNmIsOkjSJkbz8&_nc_ht=scontent.fsof10-1.fna&oh=e5789b06a0869ede56221f4cae512cc2&oe=61C9FD18" alt="Alternate Text" width="400" height="400" />*@
             <img src="https://scontent.fsof9-1.fna.fbcdn.net/v/t1.18169-9/17264156_262025210914936_6532510675194426615_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=m5PWsmyf4_gAX-HfT6m&tn=h9kq6mqPTqKii2ia&_nc_ht=scontent.fsof9-1.fna&oh=000d88a4c53d5f2c6654940ddf588cd4&oe=61CD5A02" alt="Alternate Text" width="400" height="400" />
             <h2 class="text-primary"> Attandance</h2>
         </div>
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="Discipline" asp-action="CreateDiscipline" class="btn btn-primary">Попълване на дисциплини </a> </div>
+        
 
     </div>
 
     <div class="input-group">
+        <div class="col-4 text-right">  <a asp-area="" asp-controller="Discipline" asp-action="CreateDiscipline" class="btn btn-primary">Попълване на дисциплини </a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -76,8 +76,8 @@
                 {
                     <tr class="tableRows">
                         <td width="40%">@discipline.Name</td>
-                        <td><a class="btn btn-primary" asp-action="EditDiscipline" asp-controller="Discipline" asp-route-AttendanceId="@discipline.Id" role="button">Edit</a></td>
-                        <td><button class="btn btn-danger deleteDiscipline" value="@discipline.Id" role="button">Delete </button></td>
+                        <td><a class="btn btn-primary" asp-action="EditDiscipline" asp-controller="Discipline" asp-route-DisciplineId="@discipline.Id" role="button">Edit</a></td>
+                        <td><button class="btn btn-danger deleteDiscipline" onclick="confirmAction()" value="@discipline.Id" role="button">Delete </button></td>
 
                     </tr>
                 }
@@ -119,13 +119,24 @@
 @section Scripts {
 
     <script>
+        function confirmAction() {
+        }
 
         $(document).ready(function () {
             $(".deleteDiscipline").on("click", function (e) {
 
                 e.preventDefault();
 
+                let confirmAction = confirm("Are you sure to execute this action?");
+                if (!confirmAction) {
+                    alert("Action canceled");
+                    return
+                }
+                alert("Action successfully executed");
+
                 var disciplineId = $(this).val();
+
+
 
                 $.ajax({
 

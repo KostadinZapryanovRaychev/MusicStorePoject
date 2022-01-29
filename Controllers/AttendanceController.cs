@@ -13,15 +13,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
-   
+    
     public class AttendanceController : Controller
     {
         // tva teq raboti traq da si napravq truda da gi izucha nachi tuka imame konstruktor koito vzema IRepository kato argument dependancy injection i drugite neshta traq da gi razbera.
         int multiplicationLenght;
-        private IRepository Repo { get; }
+        private IAttendanceRepository Repo { get; }
         
         private readonly UserManager<ApplicationUser> _userManager;
-        public AttendanceController(IRepository repo , UserManager <ApplicationUser> userManager)
+        public AttendanceController(IAttendanceRepository repo , UserManager <ApplicationUser> userManager)
         {
             _userManager = userManager;
             Repo = repo;

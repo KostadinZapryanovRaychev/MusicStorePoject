@@ -43,8 +43,14 @@
                     <div class="col-1">
                         <input asp-for="@Model.Discipline.Name" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    @*<div class="col-1">
                         <input asp-for="@Model.Discipline.DegreesId" class="form-control" />
+                    </div>*@
+                    <div class="col-1">
+
+                        <select id="ProgramsList" asp-for="@Model.Discipline.DegreesId" asp-items="@ViewBag.degreesNames" class="form-control">
+                            <option> Select Semester</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">

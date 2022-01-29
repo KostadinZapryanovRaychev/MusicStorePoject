@@ -31,10 +31,11 @@ namespace MvcMusicStoreWebProject
         {
             string mySqlConnectionStr = Configuration.GetConnectionString("Connection");
 
-            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IDisciplineRepository, DisciplineRepository>();
             services.AddScoped<ISemesterRepository, SemesterRepository>();
             services.AddScoped<INWDRepository, NWDRepository>();
+            services.AddScoped<IDegreeRepository, DegreeRepository>();
 
             services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
             {

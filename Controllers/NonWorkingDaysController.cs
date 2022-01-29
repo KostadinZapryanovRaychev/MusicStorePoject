@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcMusicStoreWebProject.Data;
 using MvcMusicStoreWebProject.Models.ViewModels;
 using System;
@@ -8,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class NonWorkingDaysController : Controller
     {
         private IDisciplineRepository Repo { get; }
 
-        private IRepository _Repo { get; }
+        private IAttendanceRepository _Repo { get; }
 
         private INWDRepository nWDRepo { get; }
-        public NonWorkingDaysController(IDisciplineRepository repo, IRepository repository, INWDRepository nWDRepository)
+        public NonWorkingDaysController(IDisciplineRepository repo, IAttendanceRepository repository, INWDRepository nWDRepository)
         {
             Repo = repo;
             _Repo = repository;

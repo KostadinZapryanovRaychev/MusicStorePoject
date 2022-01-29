@@ -11,10 +11,10 @@ namespace MvcMusicStoreWebProject.Controllers
 {
     public class UserController : Controller
     {
-        private IRepository Repo { get; }
+        private IAttendanceRepository Repo { get; }
 
         private readonly UserManager<ApplicationUser> _userManager;
-        public UserController(IRepository repo, UserManager<ApplicationUser> userManager)
+        public UserController(IAttendanceRepository repo, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             Repo = repo;

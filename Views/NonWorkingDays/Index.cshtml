@@ -26,13 +26,14 @@
         <div class="col-6">
             <h1>    Здравейте г-н Администратор </h1>
             <div asp-validation-summary="All">   </div>
-          
+
         </div>
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Попълване на почиви дни</a> </div>
+
 
     </div>
 
     <div class="input-group">
+        <div class="col-4 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Попълване на почиви дни</a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -40,7 +41,7 @@
             <i class="fa fa-search"></i>
         </button>
     </div>
-
+   
 
     <br />
 
@@ -64,7 +65,7 @@
                         <td width="30%">@nonWorkingDays.Holiday</td>
                         <td width="30%">@nonWorkingDays.SemesterId</td>
                         <td><a class="btn btn-primary" asp-action="EditNonWorkingDays" asp-controller="NonWorkingDays" asp-route-NWDId="@nonWorkingDays.Id" role="button">Edit</a></td>
-                        <td><button class="btn btn-danger deleteNonWorkingDay" OnClientClick="return confirm('Are you certain you want to delete this item?');" value="@nonWorkingDays.Id" role="button"  >Delete </button></td>
+                        <td><button class="btn btn-danger deleteNonWorkingDay" onclick="confirmAction()" value="@nonWorkingDays.Id" role="button">Delete </button></td>
                     </tr>
                 }
             </tbody>
@@ -106,10 +107,20 @@
 
     <script>
 
+        function confirmAction() {
+        }
+
         $(document).ready(function () {
             $(".deleteNonWorkingDay").on("click", function (e) {
 
                 e.preventDefault();
+
+                let confirmAction = confirm("Are you sure to execute this action?");
+                if (!confirmAction) {
+                    alert("Action canceled");
+                    return
+                }
+                alert("Action successfully executed");
 
                 var nonWorkingDaysId = $(this).val();
 

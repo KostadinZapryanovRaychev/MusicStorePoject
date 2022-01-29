@@ -1,0 +1,49 @@
+﻿@model MvcMusicStoreWebProject.Models.ViewModels.DegreeViewModel
+<!---Blagodarenie na taq prostotie asp action barame metoda ot kontrolera -->
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h1> Присъствена форма </h1>
+
+<div asp-validation-summary="All">   </div>
+<form method="post" asp-controller="Degree" asp-action="CreateDegree">
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Попълнете името на академичната степен</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="@Model.Degrees.Name"></label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <input asp-for="@Model.Degrees.Name" class="form-control" />
+                        </div>
+                        <div class="col-2">
+                            <input type="submit" class="btn btn-info w-75" value="submit" />
+                        </div>
+                        <div class="col-2">
+                            <a asp-action="Index" class="btn btn-danger w-75">Back</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+</form>

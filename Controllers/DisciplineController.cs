@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MvcMusicStoreWebProject.Data;
 using MvcMusicStoreWebProject.Models;
@@ -10,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DisciplineController : Controller
     {
         private IDisciplineRepository Repo { get; }
 
-        private IRepository _Repo { get; }
+        private IAttendanceRepository _Repo { get; }
 
         public List<Degrees> GetAllDegrees()
         {
@@ -22,7 +24,7 @@ namespace MvcMusicStoreWebProject.Controllers
             return degreesNames;
 
         }
-        public DisciplineController(IDisciplineRepository repo, IRepository repository)
+        public DisciplineController(IDisciplineRepository repo, IAttendanceRepository repository)
         {
                 Repo = repo;
                 _Repo = repository;

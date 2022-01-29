@@ -15,8 +15,8 @@ namespace MvcMusicStoreWebProject.Controllers
     {
         private ISemesterRepository Repo { get; }
 
-        private IRepository _Repo { get; }
-        public SemesterController(ISemesterRepository repo, IRepository repository)
+        private IAttendanceRepository _Repo { get; }
+        public SemesterController(ISemesterRepository repo, IAttendanceRepository repository)
         {
             Repo = repo;
             _Repo = repository;

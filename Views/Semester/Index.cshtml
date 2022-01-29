@@ -29,11 +29,12 @@
             @*<img src="https://scontent.fsof10-1.fna.fbcdn.net/v/t1.6435-9/202194678_2930299750586537_8237822614223076407_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=3w_7ObFqxGEAX8x3rlY&_nc_oc=AQmAGJjo3hK-s23-GFr-ZlIEeiuGh58TKdUfrq2ag1-WrIXF4WLfksNmIsOkjSJkbz8&_nc_ht=scontent.fsof10-1.fna&oh=e5789b06a0869ede56221f4cae512cc2&oe=61C9FD18" alt="Alternate Text" width="400" height="400" />*@
             
         </div>
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="Semester" asp-action="CreateSemester" class="btn btn-primary">Попълване на семестрите </a> </div>
+        
 
     </div>
 
     <div class="input-group">
+        <div class="col-4 text-right">  <a asp-area="" asp-controller="Semester" asp-action="CreateSemester" class="btn btn-primary">Попълване на семестрите </a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -66,8 +67,8 @@
                     <td width="30%">@semester.Name</td>
                     <td width="30%">@semester.startDate</td>
                     <td width="30%">@semester.endDate</td>
-                    <td><a class="btn btn-primary" asp-action="EditSemester" asp-controller="Semester" asp-route-AttendanceId="@semester.Id" role="button">Edit</a></td>
-                    <td><button class="btn btn-danger deleteSemester" value="@semester.Id" role="button">Delete </button></td>
+                    <td><a class="btn btn-primary" asp-action="EditSemester" asp-controller="Semester" asp-route-SemesterId="@semester.Id" role="button">Edit</a></td>
+                    <td><button class="btn btn-danger deleteSemester" onclick="confirmAction()" value="@semester.Id" role="button">Delete </button></td>
 
                 </tr>
                 }
@@ -110,10 +111,20 @@
 
     <script>
 
+        function confirmAction() {
+        }
+
         $(document).ready(function () {
             $(".deleteSemester").on("click", function (e) {
 
                 e.preventDefault();
+
+                let confirmAction = confirm("Are you sure to execute this action?");
+                if (!confirmAction) {
+                    alert("Action canceled");
+                    return
+                }
+                alert("Action successfully executed");
 
                 var semesterId = $(this).val();
 

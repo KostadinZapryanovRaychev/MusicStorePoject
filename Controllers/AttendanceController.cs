@@ -117,7 +117,7 @@ namespace MvcMusicStoreWebProject.Controllers
                     
                     await Repo.AddAttendance(attendanceViewModel.Attendance);
                     
-                    return RedirectToAction("CreateAttendance");
+                    return RedirectToAction("Index");
                 }
 
                 return RedirectToAction("Index");

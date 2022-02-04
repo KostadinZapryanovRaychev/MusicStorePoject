@@ -1,80 +1,34 @@
 ﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Attendance>
 @using Microsoft.AspNetCore.Identity
 @using MvcMusicStoreWebProject.Data.Models
-
-
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 
-<style>
-    table {
-        font-family: Arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-</style>
-
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
-
-
             <div asp-validation-summary="All">   </div>
             <h2 class="text-primary"> Attandance</h2>
         </div>
-
-
     </div>
 
     <div class="input-group">
-        @if (User.IsInRole("Admin"))
-        {
-            <div class="col-6 text-right">
-                <a asp-area="" asp-controller="Semester" asp-action="Index" class="btn btn-primary">Fill the Semesters</a>
-            </div>
-
-            <div class="col-6 text-right">  <a asp-area="" asp-controller="Discipline" asp-action="Index" class="btn btn-primary">Fill  the Discipline </a> </div>
-            <div class="col-6 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="Index" class="btn btn-primary">NonWorkingDays </a> </div>
-            <div class="col-6 text-right">  <a asp-area="" asp-controller="Degree" asp-action="Index" class="btn btn-primary">Degrees </a> </div>
-        }
-
-        @*<button type="button" class="btn btn-primary">Primary</button>
-        <button type="button" class="btn btn-secondary">Secondary</button>
-        <button type="button" class="btn btn-success">Success</button>
-        <button type="button" class="btn btn-danger">Danger</button>
-        <button type="button" class="btn btn-warning">Warning</button>
-        <button type="button" class="btn btn-info">Info</button>
-        <button type="button" class="btn btn-light">Light</button>
-        <button type="button" class="btn btn-dark">Dark</button>*@
-
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Create Attendance </a> </div>
-        <div class="col-6 text-right">  <a asp-area="" asp-controller="Attendance" asp-action="UserHistory" class="btn btn-primary">History </a> </div>
+        <div class="col-6">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Create Attendance </a> </div>
+        <div class="col-6">  <a asp-area="" asp-controller="Attendance" asp-action="UserHistory" class="btn btn-primary">History </a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
         <button type="button" class="btn btn-primary">
             <i class="fa fa-search"></i>
         </button>
-
     </div>
 
     <br />
 
     @if (Model.Count() > 0)
     {
-        <table class="table table-bordered table-striped" style="width:100%" id="tableRepeat">
+        <table class="table-dark table table-bordered table-striped" style="width:100%" id="tableRepeat">
 
             <thead>
                 <tr>
@@ -149,8 +103,6 @@
     <div>
         <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
         <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Multiplication</a>
-
-        @*PRKULNATIQ BUTON  <a class="btn btn-primary" asp-action="Multiply" asp-controller="Attendance" role="button">Multiply</a>*@
     </div>
 
 

@@ -4,43 +4,34 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<!-- Sidebar -->
 <div id="sidebar-wrapper">
-    <ul id="sidebar_menu" class="sidebar-nav" style="text-align: right; padding-right: 10px;
-                padding-top: 10px">
-    </ul>
+    @if (User.IsInRole("Admin"))
+    {
     <ul class="sidebar-nav">
-        <li class="sidebar-brand"><a href="#">SIDEBAR </a></li>
-        <li>
-            @if (SignInManager.IsSignedIn(User))
-            {
-                var user = await UserManager.GetUserAsync(User);
-
-                
-                
-            }
-            else
-            {
-                <div></div>
-            }
-        </li>
-        <li>
-            <        @if (SignInManager.IsSignedIn(User))
-            {
-
-                var user = await UserManager.GetUserAsync(User);
-
-               
-            }
-            else
-            {
-                <div></div>
-            }
-        </li>
-        <li><a href="#">Contact</a> </li>
+        <li><a asp-area="" asp-controller="Discipline" asp-action="Index">Fill  the Discipline </a></li>
+        <li><a asp-area="" asp-controller="NonWorkingDays" asp-action="Index">NonWorkingDays </a></li>
+        <li><a asp-area="" asp-controller="Degree" asp-action="Index">Degrees </a></li>
+        <li><a asp-area="" asp-controller="Attendance" asp-action="UserHistory">History </a></li>
     </ul>
+    }
+
+    else if (SignInManager.IsSignedIn(User))
+    {
+
+        var user = await UserManager.GetUserAsync(User);
+        <ul class="sidebar-nav">
+            <li><a asp-area="" asp-controller="Attendance" asp-action="UserHistory">History </a></li>
+        </ul>
+    }
+    else
+            {
+
+            }
+
+
 </div>
-<!-- /#sidebar-wrapper -->
+
+
 
 
 

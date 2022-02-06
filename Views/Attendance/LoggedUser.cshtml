@@ -15,7 +15,6 @@
 
     <div class="input-group">
         <div class="col-6">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Create Attendance </a> </div>
-        <div class="col-6">  <a asp-area="" asp-controller="Attendance" asp-action="UserHistory" class="btn btn-primary">History </a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -23,7 +22,6 @@
             <i class="fa fa-search"></i>
         </button>
     </div>
-
     <br />
 
     @if (Model.Count() > 0)
@@ -81,13 +79,13 @@
                                 </div>
                                 <input type="submit" class="btn btn-info w-75" value="Multiply" />
                             </form>
-
-                            @*<a class="btn btn-primary" asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">MultiplyRow</a>*@
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+        <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
+        <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Multiplication</a>
     }
     else
     {
@@ -98,12 +96,11 @@
 
 
 
-    </div>
+</div>
 
-    <div>
-        <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
-        <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Multiplication</a>
-    </div>
+
+
+   
 
 
 
@@ -130,10 +127,6 @@
 
 
     @section Scripts {
-
-
-
-
 
         <script>
             function confirmAction() {

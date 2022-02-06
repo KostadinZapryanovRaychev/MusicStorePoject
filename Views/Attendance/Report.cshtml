@@ -7,9 +7,6 @@
 @model IEnumerable<MvcMusicStoreWebProject.Models.Attendance>
 @using Microsoft.AspNetCore.Identity
 @using MvcMusicStoreWebProject.Data.Models
-
-
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -17,21 +14,15 @@
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
-
-
-            <div asp-validation-summary="All">   </div>
+            <div asp-validation-summary="All"> </div>
             <h2 class="text-primary"> Preview</h2>
         </div>
-
-
     </div>
-
-
     <br />
 
     @if (Model.Count() > 0)
     {
-        <table class="table table-bordered table-striped" style="width:100%">
+        <table>
 
             <thead>
                 <tr>
@@ -53,22 +44,20 @@
 
                 @foreach (var attendance in Model)
                 {
-                    <tr class="tableRows">
-                        <td width="8%">@attendance.Date</td>
-                        <td width="8%">@attendance.Degree</td>
-                        <td width="8%">@attendance.Mode</td>
-                        <td width="8%">@attendance.Course</td>
-                        <td width="8%">@attendance.Groupe</td>
-                        <td width="8%">@attendance.Timeframe</td>
-                        <td width="8%">@attendance.Type</td>
-                        <td width="8%">@attendance.Hours</td>
-                        <td width="8%">@attendance.Auditorium</td>
-                        <td width="8%">@attendance.Note</td>
-                        <td width="8%">@attendance.Programs</td>
-                        <td width="12%">@attendance.Discipline</td>
-
-
-                    </tr>
+                <tr class="tableRows">
+                    <td width="8%">@attendance.Date</td>
+                    <td width="8%">@attendance.Degree</td>
+                    <td width="8%">@attendance.Mode</td>
+                    <td width="8%">@attendance.Course</td>
+                    <td width="8%">@attendance.Groupe</td>
+                    <td width="8%">@attendance.Timeframe</td>
+                    <td width="8%">@attendance.Type</td>
+                    <td width="8%">@attendance.Hours</td>
+                    <td width="8%">@attendance.Auditorium</td>
+                    <td width="8%">@attendance.Note</td>
+                    <td width="8%">@attendance.Programs</td>
+                    <td width="12%">@attendance.Discipline</td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -77,12 +66,8 @@
     {
         <p> No Items Created </p>
     }
-
-    @*<div> <button class="btn btn-danger deleteAttendance" role="button">Print</button>  </div>*@
-
     <form>
         <input type="button" value="Print"
                onclick="window.print()" />
     </form>
-
 </div>

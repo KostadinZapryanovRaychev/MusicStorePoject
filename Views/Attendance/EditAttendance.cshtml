@@ -1,122 +1,87 @@
 ﻿@model MvcMusicStoreWebProject.Models.ViewModels.AttendanceViewModel
-<!---Blagodarenie na taq prostotie asp action barame metoda ot kontrolera -->
-@inject MvcMusicStoreWebProject.Data.IAttendanceRepository _Repo;
-
 
 <h1>Присъствена форма </h1>
 
 <div asp-validation-summary="All">   </div>
 <form method="post" asp-controller="Attendance" asp-action="EditAttendance">
     <input type="hidden" asp-for="@Model.Attendance.Id" />
-    @*<input type="hidden" asp-for="@Model.Attendance.ApplicationUserId" />*@
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Моля редактирайте</h2>
+            <h2 >Моля редактирайте</h2>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
-                    <div class="col-1">
-                        @*tva e sintaksisa za dostupvane prez ViewModela*@
+                    <div class="col-3">
                         <label asp-for="@Model.Attendance.Date"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Degree"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Mode"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Course"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Groupe"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Timeframe"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Type"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Hours"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Auditorium"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Note"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Programs"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.Discipline"></label>
-                    </div>
-                    <div class="col-1">
-                        <label asp-for="@Model.Attendance.ApplicationUserId"></label>
-                    </div>
-                    <div class="col-1" style="display:none;">
-                        <label asp-for="@Model.Attendance.SemesterId" style-display="none" visible="false"></label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-1">
                         <input asp-for="@Model.Attendance.Date" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Degree"></label>
                         <select id="DegreesList" class="form-control" asp-for="@Model.DegreeId" asp-items="@ViewBag.degreesNames">
                             <option> Select Degree</option>
                         </select>
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Mode"></label>
                         <select asp-for="@Model.Attendance.Mode" asp-items="@Model.AvailableModes" class="form-control">
                             <option selected disabled> ---SELECT----</option>
                         </select>
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Course"></label>
                         <input asp-for="@Model.Attendance.Course" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Groupe"></label>
                         <input asp-for="@Model.Attendance.Groupe" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Timeframe"></label>
                         <input asp-for="@Model.Attendance.Timeframe" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Type"></label>
                         <input asp-for="@Model.Attendance.Type" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Hours"></label>
                         <input asp-for="@Model.Attendance.Hours" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Auditorium"></label>
                         <input asp-for="@Model.Attendance.Auditorium" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Note"></label>
                         <input asp-for="@Model.Attendance.Note" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Programs"></label>
                         <input asp-for="@Model.Attendance.Programs" class="form-control" />
                     </div>
-                    <div class="col-1">
-                        <select id="DisciplineList" asp-for="@Model.Attendance.Discipline" class="form-control" >
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.Discipline"></label>
+                        <select id="DisciplineList" asp-for="@Model.Attendance.Discipline" class="form-control">
                             <option value="-1"> Select Discipline</option>
                         </select>
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
+                        <label asp-for="@Model.Attendance.SemesterId"></label>
                         <select id="ProgramsList" asp-for="@Model.Attendance.SemesterId" asp-items="@ViewBag.semNames" class="form-control">
                             <option> Select Semester</option>
                         </select>
                     </div>
+                </div>
+                <div class="form-group row">
                     <div class="col-1" style="display:none;">
                         <input type="hidden" asp-for="@Model.Attendance.ApplicationUserId" class="form-control" />
                     </div>
-
                 </div>
+                <p> </p>
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
                         <div class="col">
-                            @*tuk koe pozvolqva da se zapazqt vbazata danni kato cuknesh submit*@
                             <input type="submit" class="btn btn-info w-75" value="Update" />
                         </div>
                         <div class="col">
@@ -124,7 +89,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -135,8 +99,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-
 
     <script>
 

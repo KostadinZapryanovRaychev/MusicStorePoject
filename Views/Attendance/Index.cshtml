@@ -11,9 +11,9 @@
         <div class="col-md-6">
             @if (SignInManager.IsSignedIn(User))
             {
-                <div>
-                    <div> <button><a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a></button> </div>
-                </div>
+                
+               <a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>
+                
             }
 
             else

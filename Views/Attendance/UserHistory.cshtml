@@ -1,41 +1,33 @@
 ﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Attendance>
 @using Microsoft.AspNetCore.Identity
 @using MvcMusicStoreWebProject.Data.Models
-
-
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-
+<h2 class="text-primary"> Attandance History</h2>
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
-
-
             <div asp-validation-summary="All">   </div>
-            <h2 class="text-primary"> Attandance History</h2>
         </div>
-
-
     </div>
-    <form action="/Attendance/UserHistory" method="get">
-        <div class="col-1">
-            <select name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames" onchange="javascript:this.form.submit()">
-                <option> Select Semester</option>
-            </select>
+    
+        <form action="/Attendance/UserHistory" method="get">
+            <div class="col-2">
+                <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames" onchange="javascript:this.form.submit()">
+                    <option> Select Semester</option>
+                </select>
+            </div>
+        </form>
+        <br />
+        <div class="input-group">
+            <div class="form-outline">
+                <input type="text" id="searchTextId" class="form-control" />
+            </div>
+            <button type="button" class="btn btn-primary">
+                <i class="fa fa-search"></i>
+            </button>
         </div>
-    </form>
-
-    <div class="input-group">
-        <div class="form-outline">
-            <input type="text" id="searchTextId" class="form-control" />
-        </div>
-        <button type="button" class="btn btn-primary">
-            <i class="fa fa-search"></i>
-        </button>
-    </div>
-
     <br />
 
     @if (Model.Count() > 0)
@@ -79,29 +71,16 @@
                 }
             </tbody>
         </table>
+        <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
     }
     else
     {
-        <p> No Items Created </p>
+        <p> No Items found</p>
     }
-
-
-
-
-
 </div>
 
-<div>
-    <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Preview</a>
-</div>
-
-
-
-<!-- Modal -->
 <div id="deleteMessageModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Server Message</h4>

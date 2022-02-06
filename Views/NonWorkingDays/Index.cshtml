@@ -1,15 +1,11 @@
 ﻿@model IEnumerable<MvcMusicStoreWebProject.Models.NonWorkingDays>
+  
+<h1>Неработни дни</h1>
 
-<div class=" container p-3">
-    <div class="row pt-4">
+<div class=" container p-3">   
         <div class="col-6">
-            <h1>    Здравейте г-н Администратор </h1>
             <div asp-validation-summary="All">   </div>
-
         </div>
-
-
-    </div>
 
     <div class="input-group">
         <div class="col-4 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Попълване на почиви дни</a> </div>
@@ -21,7 +17,6 @@
         </button>
     </div>
    
-
     <br />
 
     @if (Model.Count() > 0)

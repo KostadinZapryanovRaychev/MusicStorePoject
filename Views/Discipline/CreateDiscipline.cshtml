@@ -1,49 +1,35 @@
 ﻿@model MvcMusicStoreWebProject.Models.ViewModels.DisciplineViewModel
 
-<h1> Присъствена форма </h1>
+<h1>Страница за академична дисциплина </h1>
 
 <div asp-validation-summary="All">   </div>
 <form method="post" asp-controller="Discipline" asp-action="CreateDiscipline">
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Попълнете присъствието си</h2>
+            <h2>Попълнете името на академичната дисциплина</h2>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
-                    <div class="col-1">
+                    <div class="col-4">
                         <label asp-for="@Model.Discipline.Name"></label>
+                        <input asp-for="@Model.Discipline.Name" class="form-control" />
                     </div>
-                    <div class="col-1">
+                    <div class="col-4">
                         <label asp-for="@Model.Discipline.DegreesId"></label>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <input asp-for="@Model.Discipline.Name" class="form-control" />
-                        </div>
-                    </div>
-                    @*<div class="col">
-                        <div class="form-group row">
-                            <div class="col-6">
-                                <input asp-for="@Model.Discipline.DegreesId" class="form-control" />
-                            </div>
-                        </div>
-                    </div>*@
-                    <div class="col-1">
-
                         <select id="ProgramsList" asp-for="@Model.Discipline.DegreesId" asp-items="@ViewBag.degreesNames" class="form-control">
-                            <option> Select Semester</option>
+                            <option> Select Degree ID</option>
                         </select>
                     </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-info w-75" value="submit" />
+                    <p> </p>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <input type="submit" class="btn btn-info w-75" value="submit" />
+                        </div>
+                        <div class="col-2">
+                            <a asp-action="Index" class="btn btn-danger w-75">Back</a>
+                        </div>
                     </div>
-                    <div class="col">
-                        <a asp-action="Index" class="btn btn-danger w-75">Back</a>
-                    </div>
-
-
-                </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
-﻿
-@{
-    Layout = null ;
+﻿@{
+    Layout = null;
 }
 
 
@@ -10,6 +9,20 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+</style>
 
 <div class=" container p-3">
     <div class="row pt-4">
@@ -44,20 +57,20 @@
 
                 @foreach (var attendance in Model)
                 {
-                <tr class="tableRows">
-                    <td width="8%">@attendance.Date</td>
-                    <td width="8%">@attendance.Degree</td>
-                    <td width="8%">@attendance.Mode</td>
-                    <td width="8%">@attendance.Course</td>
-                    <td width="8%">@attendance.Groupe</td>
-                    <td width="8%">@attendance.Timeframe</td>
-                    <td width="8%">@attendance.Type</td>
-                    <td width="8%">@attendance.Hours</td>
-                    <td width="8%">@attendance.Auditorium</td>
-                    <td width="8%">@attendance.Note</td>
-                    <td width="8%">@attendance.Programs</td>
-                    <td width="12%">@attendance.Discipline</td>
-                </tr>
+                    <tr class="tableRows">
+                        <td width="8%">@attendance.Date</td>
+                        <td width="8%">@attendance.Degree</td>
+                        <td width="8%">@attendance.Mode</td>
+                        <td width="8%">@attendance.Course</td>
+                        <td width="8%">@attendance.Groupe</td>
+                        <td width="8%">@attendance.Timeframe</td>
+                        <td width="8%">@attendance.Type</td>
+                        <td width="8%">@attendance.Hours</td>
+                        <td width="8%">@attendance.Auditorium</td>
+                        <td width="8%">@attendance.Note</td>
+                        <td width="8%">@attendance.Programs</td>
+                        <td width="12%">@attendance.Discipline</td>
+                    </tr>
                 }
             </tbody>
         </table>

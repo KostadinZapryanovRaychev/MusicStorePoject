@@ -1,43 +1,34 @@
 ﻿@model MvcMusicStoreWebProject.Models.ViewModels.NonWorkingDaysViewModel
-
-<h1> Присъствена форма </h1>
+<h1>Неработни дни </h1>
 
 <div asp-validation-summary="All">   </div>
 <form method="post" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays">
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Попълнете данните за почивните дни в семестъра</h2>
+            <h2>Попълнете данните за почивните дни в семестъра</h2>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
-                    <div class="col-1">
+                    <div class="col-4">
                         <label asp-for="@Model.NonWorkingDays.Holiday"></label>
+                        <input asp-for="@Model.NonWorkingDays.Holiday" class="form-control" />
                     </div>
                     <div class="col-1">
                         <label asp-for="@Model.NonWorkingDays.SemesterId"></label>
+                        <input asp-for="@Model.NonWorkingDays.SemesterId" class="form-control" />
                     </div>
+                    <p> </p>
                     <div class="form-group row">
-                        <div class="col-6">
-                            <input asp-for="@Model.NonWorkingDays.Holiday" class="form-control" />
+                        <div class="col-2">
+                            <input type="submit" class="btn btn-info w-75" value="submit" />
                         </div>
-                        <div class="col">
-                            <div class="form-group row">
-                                <div class="col-6">
-                                    <input asp-for="@Model.NonWorkingDays.SemesterId" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <input type="submit" class="btn btn-info w-75" value="submit" />
-                            </div>
-                            <div class="col">
-                                <a asp-action="Index" class="btn btn-danger w-75">Back</a>
-                            </div>
+                        <div class="col-2">
+                            <a asp-action="Index" class="btn btn-danger w-75">Back</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </form>

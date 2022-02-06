@@ -12,6 +12,39 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
+
+
+
+.raychev {
+    font-weight: bold;
+    color: #fff;
+    font-size: 85px;
+}
+
+.raychev {
+    animation-duration: 4s;
+    animation-name: slidein;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.raychev {
+    animation-duration: 4s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        margin-left: 100%;
+        width: 300%;
+    }
+
+    to {
+        margin-left: 0%;
+        width: 100%;
+    }
+}
+
 .sidebar-navbar-inverse {
     background-color: #222222;
     border-color: #222222;

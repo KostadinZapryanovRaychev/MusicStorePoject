@@ -8,7 +8,6 @@ namespace MvcMusicStoreWebProject.Data
 {
     public interface INWDRepository
     {
-        IEnumerable<NonWorkingDays> FindNonWorkingDaysBySemesterId(int SemesterId);
         void Save();
         IEnumerable<NonWorkingDays> GetAllAvailableNWD();
 

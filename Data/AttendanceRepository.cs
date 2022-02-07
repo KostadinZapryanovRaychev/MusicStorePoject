@@ -22,25 +22,11 @@ namespace MvcMusicStoreWebProject.Data
         private string ExceptionMessage { get; set; }
 
 
-        public List<DateTime> FreeDates { get; set; } = new List<DateTime>()
-        {
-            new DateTime(2021, 12, 21),
-            new DateTime(2021, 12, 22),
-            new DateTime(2021, 12, 23),
-            new DateTime(2021, 12, 24),
-            new DateTime(2021, 12, 25),
-            new DateTime(2021, 12, 26),
-            new DateTime(2021, 12, 27),
-            new DateTime(2021, 12, 28)
-        };
-
         public static bool IsWeekend(DateTime date)
         {
             return date.DayOfWeek == DayOfWeek.Saturday
                 || date.DayOfWeek == DayOfWeek.Sunday;
         }
-
-
 
         public AttendanceRepository(MusicStoreDbContext context, IConfiguration config, UserManager<ApplicationUser> userManager)
         {
@@ -61,15 +47,12 @@ namespace MvcMusicStoreWebProject.Data
         public async Task<string> CoppyAttendance(Attendance attendance)
         {
           
-
             var originalEntity = Context.Attendances.AsNoTracking()
                              .FirstOrDefault(e => e.Id == attendance.Id);
             Context.Attendances.Add(originalEntity);
             await Context.SaveChangesAsync();
             return "Inserted";
         }
-
-
 
         // tuk kva e razlikata dali shte go narpavq taka ili s ID nemoga da razbera
         public async Task<string> DeleteAttendance(int id)
@@ -115,7 +98,6 @@ namespace MvcMusicStoreWebProject.Data
                 existingAttend.Discipline = attendance.Discipline;
                 existingAttend.Note = attendance.Note;
                 existingAttend.Course = attendance.Course;
-
                 
                 Context.Attendances.Update(existingAttend);
                 await Context.SaveChangesAsync();
@@ -124,9 +106,7 @@ namespace MvcMusicStoreWebProject.Data
 
         }
 
-      
-
-
+    
         // ei tva trqbva da listne vsichki attendances
         public IEnumerable<Attendance> GetAttendances()
         {
@@ -149,15 +129,6 @@ namespace MvcMusicStoreWebProject.Data
         public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId)
         {
             return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId== SemesterId);
-        }
-
-        public async Task<List<ProgramsViewModel>> GetPrograms()
-        {
-            return await Context.Programs.Select(x => new ProgramsViewModel()
-            {
-                Id = x.Id,
-                Name = x.Name
-            }).ToListAsync();
         }
 
         public async Task<List<DisciplineViewModel>> GetDiscipline()
@@ -286,13 +257,6 @@ namespace MvcMusicStoreWebProject.Data
             }).ToListAsync();
         }
 
-
-
-
-
-
-
-
         //trqbva da se opravi zaduljitelno imeto na View Modela osobeno na gornata funkciq
         public async Task<List<DegreeViewModel>> GetDegrees()
         {
@@ -334,14 +298,6 @@ namespace MvcMusicStoreWebProject.Data
             DateTime now = DateTime.Now;
             return Context.Semesters.FirstOrDefault(x => x.startDate <= now && x.endDate >= now);
         }
-        // za tova krashtavame tablicite v edinstvetno chislo 
-        // krashtavame go taka zashtoto nezavisimo otkade shte doidat tova vruhsta daden period ot NonWorkingDays
-        // pravim da vrushta sprqmo nachalna i kraina data vrushta spisuk s Holidays
-
-        //public List<NonWorkingDays> GetHolidaysForPeriod(DateTime startDate , DateTime endDate)
-        //{
-
-        //}
 
     }
 }

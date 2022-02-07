@@ -32,7 +32,6 @@ namespace MvcMusicStoreWebProject.Data
     {
         IEnumerable<Attendance> GetAttendances();
 
-
         // spored men tuk kato parametar vutre trqbva da se nashie novoto Id koeto shte se vkluchi v tablicata
         Task<Attendance> GetAttendance(int Id);
 
@@ -43,8 +42,6 @@ namespace MvcMusicStoreWebProject.Data
         Task<string> DeleteAttendance(int Id);
 
         Task<Attendance> EditAttendance(Attendance attendance);
-
-        Task<List<ProgramsViewModel>> GetPrograms();
 
         Task<List<DisciplineViewModel>> GetDiscipline();
 
@@ -59,12 +56,6 @@ namespace MvcMusicStoreWebProject.Data
         //Task<string> AddAttendanceWithoutHolidays(Attendance attendance, int semesterId);
 
         Task<string> AddAttendanceWithoutHolidays(Attendance attendance);
-
-
-        //Task<string> GetCurrentUserDetails();
-
-
-
         Task<List<DegreeViewModel>> GetDegrees();
 
         IList<Degrees> LetGetDegrees();

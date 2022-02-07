@@ -1,15 +1,9 @@
 ﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Semester>
 
-    <h1>    Здравейте г-н Администратор </h1>
+    <h1> Семестри </h1>
     <div class=" container p-3">
         <div class="row pt-4">
-            <div class="col-6">
                 <div asp-validation-summary="All">   </div>
-                @*<img src="https://scontent.fsof10-1.fna.fbcdn.net/v/t1.6435-9/202194678_2930299750586537_8237822614223076407_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=3w_7ObFqxGEAX8x3rlY&_nc_oc=AQmAGJjo3hK-s23-GFr-ZlIEeiuGh58TKdUfrq2ag1-WrIXF4WLfksNmIsOkjSJkbz8&_nc_ht=scontent.fsof10-1.fna&oh=e5789b06a0869ede56221f4cae512cc2&oe=61C9FD18" alt="Alternate Text" width="400" height="400" />*@
-
-            </div>
-
-
         </div>
 
         <div class="input-group">
@@ -21,8 +15,6 @@
                 <i class="fa fa-search"></i>
             </button>
         </div>
-
-
         <br />
 
         @if (Model.Count() > 0)
@@ -48,7 +40,6 @@
                             <td width="30%">@semester.endDate</td>
                             <td><a class="btn btn-primary" asp-action="EditSemester" asp-controller="Semester" asp-route-SemesterId="@semester.Id" role="button">Edit</a></td>
                             <td><button class="btn btn-danger deleteSemester" onclick="confirmAction()" value="@semester.Id" role="button">Delete </button></td>
-
                         </tr>
                     }
                 </tbody>

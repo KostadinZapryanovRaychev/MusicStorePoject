@@ -136,21 +136,6 @@ namespace MvcMusicStoreWebProject.Controllers
 
         }
 
-        //[HttpDelete]
-        //public async Task <IActionResult> DeleteAttendance(int id )
-
-        //{
-        //    var attend = await Repo.GetAttendance(id);
-
-        //    if (attend != null)
-        //    {
-        //        await Repo.DeleteAttendance(attend);
-        //        return Ok();
-        //    }
-        //    return NotFound();
-
-        //}
-
         [HttpGet]
         public async Task<IActionResult> EditAttendance(int AttendanceId)
 
@@ -179,14 +164,6 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(modifiedAttendance);
         }
 
-
-
-
-        /// <summary>
-        /// TOVA RABOTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-        /// </summary>
-        /// <param name="AttendanceId"></param>
-        /// <returns></returns>
         
         public async Task<IActionResult> CoppyAttendance(int AttendanceId)
 
@@ -246,9 +223,7 @@ namespace MvcMusicStoreWebProject.Controllers
             var result = attendances.OrderBy(x => x.Date);
 
             return View(result);
-            
-            //return View();
-            //return View(attendances);
+
         }
 
         public IActionResult Index()
@@ -260,37 +235,29 @@ namespace MvcMusicStoreWebProject.Controllers
         
         public async Task<IActionResult> Report()
         {
-
-            //IEnumerable<Attendance> attendances = Repo.GetAttendances();
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
             IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
             var result = attendances.OrderBy(x => x.Date);
             return View(result);
-            //return View(attendances);
         }
 
         public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId,int MultiplicationLength)
         {
-            //, int MultiplicationLenght
+
 
             var length = MultiplicationLength;
             var attendance = await Repo.GetAttendance(AttendanceId);
             var semester =  Repo.SemesterEndDateById(attendance.SemesterId);
-            
-
-            // i < multiplicationLenght;
 
             for (int i = 0; i < length; i++)
-            //for (int i = 0; i < 2; i++)
             {
                     var newAttendanceDate = attendance.Date.AddDays(7);
                     if (newAttendanceDate < semester)
                     {
                         Repo.Detached(attendance);
                         attendance.Date = newAttendanceDate;
-                        // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
                         await Repo.AddAttendanceWithoutHolidays(attendance);
 
                     }
@@ -366,7 +333,7 @@ namespace MvcMusicStoreWebProject.Controllers
                 }
 
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> UserHistory(int SemesterId)

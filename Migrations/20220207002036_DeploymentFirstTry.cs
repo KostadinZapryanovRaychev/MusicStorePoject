@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MvcMusicStoreWebProject.Migrations
 {
-    public partial class NewTry : Migration
+    public partial class DeploymentFirstTry : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,17 +86,16 @@ namespace MvcMusicStoreWebProject.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Programs",
+                name: "NonWorkingDays",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Holiday = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Programs", x => x.Id);
+                    table.PrimaryKey("PK_NonWorkingDays", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -267,7 +266,7 @@ namespace MvcMusicStoreWebProject.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
-                    Degree = table.Column<string>(type: "longtext", nullable: false)
+                    Degree = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Mode = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -299,27 +298,6 @@ namespace MvcMusicStoreWebProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Attendances_Semesters_SemesterId",
-                        column: x => x.SemesterId,
-                        principalTable: "Semesters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "NonWorkingDays",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Holiday = table.Column<DateTime>(type: "date", nullable: false),
-                    SemesterId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NonWorkingDays", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_NonWorkingDays_Semesters_SemesterId",
                         column: x => x.SemesterId,
                         principalTable: "Semesters",
                         principalColumn: "Id",
@@ -378,11 +356,6 @@ namespace MvcMusicStoreWebProject.Migrations
                 name: "IX_Disciplines_DegreesId",
                 table: "Disciplines",
                 column: "DegreesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NonWorkingDays_SemesterId",
-                table: "NonWorkingDays",
-                column: "SemesterId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -412,19 +385,16 @@ namespace MvcMusicStoreWebProject.Migrations
                 name: "NonWorkingDays");
 
             migrationBuilder.DropTable(
-                name: "Programs");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Degrees");
+                name: "Semesters");
 
             migrationBuilder.DropTable(
-                name: "Semesters");
+                name: "Degrees");
         }
     }
 }

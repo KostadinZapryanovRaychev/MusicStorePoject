@@ -9,8 +9,8 @@ using MvcMusicStoreWebProject.Data;
 namespace MvcMusicStoreWebProject.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    [Migration("20220117172214_newDatabase")]
-    partial class newDatabase
+    [Migration("20220207002036_DeploymentFirstTry")]
+    partial class DeploymentFirstTry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -321,28 +321,9 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.Property<DateTime>("Holiday")
                         .HasColumnType("date");
 
-                    b.Property<int>("SemesterId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SemesterId");
 
                     b.ToTable("NonWorkingDays");
-                });
-
-            modelBuilder.Entity("MvcMusicStoreWebProject.Models.Programs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Programs");
                 });
 
             modelBuilder.Entity("MvcMusicStoreWebProject.Models.Semester", b =>
@@ -444,17 +425,6 @@ namespace MvcMusicStoreWebProject.Migrations
                         .IsRequired();
 
                     b.Navigation("Degrees");
-                });
-
-            modelBuilder.Entity("MvcMusicStoreWebProject.Models.NonWorkingDays", b =>
-                {
-                    b.HasOne("MvcMusicStoreWebProject.Models.Semester", "Semester")
-                        .WithMany()
-                        .HasForeignKey("SemesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Semester");
                 });
 #pragma warning restore 612, 618
         }

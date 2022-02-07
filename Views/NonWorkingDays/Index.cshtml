@@ -26,7 +26,6 @@
             <thead>
                 <tr>
                     <th>Holiday</th>
-                    <th>SemesterId</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -37,7 +36,6 @@
                 {
                     <tr class="tableRows">
                         <td width="30%">@nonWorkingDays.Holiday</td>
-                        <td width="30%">@nonWorkingDays.SemesterId</td>
                         <td><a class="btn btn-primary" asp-action="EditNonWorkingDays" asp-controller="NonWorkingDays" asp-route-NWDId="@nonWorkingDays.Id" role="button">Edit</a></td>
                         <td><button class="btn btn-danger deleteNonWorkingDay" onclick="confirmAction()" value="@nonWorkingDays.Id" role="button">Delete </button></td>
                     </tr>

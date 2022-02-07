@@ -23,12 +23,8 @@ namespace MvcMusicStoreWebProject.Data
 
         //public DbSet <Album> Albums { get; set; }
         public DbSet<Discipline> Disciplines { get; set; }
-
-        public DbSet<Programs> Programs { get; set; }
-
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<NonWorkingDays> NonWorkingDays { get; set; }
-
         public DbSet<Degrees> Degrees { get; set; }
         public DbSet<Semester> Semesters { get; set; }
 

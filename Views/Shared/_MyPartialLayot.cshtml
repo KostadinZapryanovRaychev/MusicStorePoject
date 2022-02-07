@@ -8,10 +8,12 @@
     @if (User.IsInRole("Admin"))
     {
     <ul class="sidebar-nav">
-        <li><a asp-area="" asp-controller="Discipline" asp-action="Index">Fill  the Discipline </a></li>
-        <li><a asp-area="" asp-controller="NonWorkingDays" asp-action="Index">NonWorkingDays </a></li>
-        <li><a asp-area="" asp-controller="Degree" asp-action="Index">Degrees </a></li>
-        <li><a asp-area="" asp-controller="Attendance" asp-action="UserHistory">History </a></li>
+        <li><a asp-area="" asp-controller="Discipline" asp-action="Index">Дисциплини</a></li>
+        <li><a asp-area="" asp-controller="Semester" asp-action="Index">Семестри </a></li>
+        <li><a asp-area="" asp-controller="NonWorkingDays" asp-action="Index">Неработни дни </a></li>
+        <li><a asp-area="" asp-controller="Degree" asp-action="Index">Акад.степени </a></li>
+        <li><a asp-area="" asp-controller="Attendance" asp-action="UserHistory">История </a></li>
+
     </ul>
     }
 
@@ -30,11 +32,6 @@
 
 
 </div>
-
-
-
-
-
 
 <script>
     function openSideNav() {

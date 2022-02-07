@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-3">
                         <label asp-for="@Model.Attendance.Course"></label>
-                        <input type="number" name="test_name" min="0" oninput="validity.valid||(value='');" asp-for="@Model.Attendance.Course" class="form-control" />
+                        <input asp-for="@Model.Attendance.Course" class="form-control" />
                     </div>
                     <div class="col-3">
                         <label asp-for="@Model.Attendance.Groupe"></label>
@@ -42,11 +42,13 @@
                     </div>
                     <div class="col-3">
                         <label asp-for="@Model.Attendance.Type"></label>
-                        <input asp-for="@Model.Attendance.Type" class="form-control" />
+                        <select asp-for="@Model.Attendance.Type" asp-items="@Model.AvailableTypes" class="form-control">
+                            <option selected disabled> ---SELECT----</option>
+                        </select>
                     </div>
                     <div class="col-3">
                         <label asp-for="@Model.Attendance.Hours"></label>
-                        <input type="number" name="test_name" min="0" oninput="validity.valid||(value='');" asp-for="@Model.Attendance.Hours" class="form-control" />
+                        <input asp-for="@Model.Attendance.Hours" class="form-control" />
                     </div>
                     <div class="col-3">
                         <label asp-for="@Model.Attendance.Auditorium"></label>

@@ -9,8 +9,8 @@ using MvcMusicStoreWebProject.Data;
 namespace MvcMusicStoreWebProject.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    [Migration("20220207125306_Beta")]
-    partial class Beta
+    [Migration("20220207210451_CrazyStuff")]
+    partial class CrazyStuff
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -229,7 +229,6 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Auditorium")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("Course")
@@ -246,14 +245,12 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Groupe")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("Hours")
                         .HasColumnType("int");
 
                     b.Property<string>("Mode")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Note")
@@ -266,11 +263,9 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Timeframe")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

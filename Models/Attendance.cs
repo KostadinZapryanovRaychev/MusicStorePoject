@@ -14,12 +14,12 @@ namespace MvcMusicStoreWebProject.Models
 
         //dano tva e pravilniq tip
 
-        [Required]
+        
         [Column(TypeName = "date")]
         [Display(Name = "Дата")]
         public DateTime Date { get; set; }
 
-        [Required]
+        
         [Display(Name = "Степен")]
         public string Degree { get; set; }
 

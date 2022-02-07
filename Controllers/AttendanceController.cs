@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
@@ -17,7 +18,6 @@ namespace MvcMusicStoreWebProject.Controllers
     public class AttendanceController : Controller
     {
         // tva teq raboti traq da si napravq truda da gi izucha nachi tuka imame konstruktor koito vzema IRepository kato argument dependancy injection i drugite neshta traq da gi razbera.
-        int multiplicationLenght;
         private IAttendanceRepository Repo { get; }
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -26,6 +26,7 @@ namespace MvcMusicStoreWebProject.Controllers
             _userManager = userManager;
             Repo = repo;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult GetAttendances()
         {
@@ -33,6 +34,7 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(attend);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAttendance(int id)
         {
@@ -45,6 +47,8 @@ namespace MvcMusicStoreWebProject.Controllers
             return NotFound();
         }
 
+
+        [Authorize]
         [HttpGet]
         public IActionResult GetAttendanceById(int ApplicationUserId)
         {
@@ -80,6 +84,8 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
 
+
+        [Authorize]
         [HttpGet]
 
         public IActionResult CreateAttendance()
@@ -92,7 +98,7 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
 
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateAttendance(AttendanceViewModel attendanceViewModel)
         {
@@ -125,6 +131,8 @@ namespace MvcMusicStoreWebProject.Controllers
 
         }
 
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> DeleteAttendance(int AttendanceId)
 
@@ -151,6 +159,8 @@ namespace MvcMusicStoreWebProject.Controllers
 
         //}
 
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> EditAttendance(int AttendanceId)
 
@@ -162,7 +172,7 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(viewModel);
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> EditAttendance(AttendanceViewModel modifiedAttendance)
 
@@ -200,7 +210,7 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
 
-
+        [Authorize]
         public async Task<IActionResult> LoggedUser()
         {
 
@@ -258,6 +268,8 @@ namespace MvcMusicStoreWebProject.Controllers
             return View();
         }
 
+
+        [Authorize]
         public async Task<IActionResult> Report()
         {
 
@@ -271,6 +283,8 @@ namespace MvcMusicStoreWebProject.Controllers
             //return View(attendances);
         }
 
+
+        [Authorize]
         public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId, int MultiplicationLength)
         {
             //, int MultiplicationLenght
@@ -298,12 +312,15 @@ namespace MvcMusicStoreWebProject.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [Authorize]
         public async Task<IActionResult> CopyAttendance(Attendance att)
         {
             var attendence = await Repo.CoppyAttendance(att);
 
             return RedirectToAction("Index");
         }
+
 
         public async Task<IEnumerable<Attendance>> AttendanceByUserId()
         {
@@ -344,6 +361,7 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
 
+        [Authorize]
         public async Task<IActionResult> Multiplication()
         {
             var attendences = await AttendanceByUserId();
@@ -366,7 +384,7 @@ namespace MvcMusicStoreWebProject.Controllers
                 }
 
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> UserHistory(int SemesterId)

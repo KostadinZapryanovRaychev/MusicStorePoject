@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace MvcMusicStoreWebProject.Data
 {
-    
+
     public class AttendanceRepository : IAttendanceRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -22,11 +22,25 @@ namespace MvcMusicStoreWebProject.Data
         private string ExceptionMessage { get; set; }
 
 
+        public List<DateTime> FreeDates { get; set; } = new List<DateTime>()
+        {
+            new DateTime(2021, 12, 21),
+            new DateTime(2021, 12, 22),
+            new DateTime(2021, 12, 23),
+            new DateTime(2021, 12, 24),
+            new DateTime(2021, 12, 25),
+            new DateTime(2021, 12, 26),
+            new DateTime(2021, 12, 27),
+            new DateTime(2021, 12, 28)
+        };
+
         public static bool IsWeekend(DateTime date)
         {
             return date.DayOfWeek == DayOfWeek.Saturday
                 || date.DayOfWeek == DayOfWeek.Sunday;
         }
+
+
 
         public AttendanceRepository(MusicStoreDbContext context, IConfiguration config, UserManager<ApplicationUser> userManager)
         {
@@ -38,7 +52,7 @@ namespace MvcMusicStoreWebProject.Data
         }
         public async Task<string> AddAttendance(Attendance attendance)
         {
-            
+
             Context.Attendances.Add(attendance);
             await Context.SaveChangesAsync();
             return "Inserted";
@@ -46,13 +60,16 @@ namespace MvcMusicStoreWebProject.Data
 
         public async Task<string> CoppyAttendance(Attendance attendance)
         {
-          
+
+
             var originalEntity = Context.Attendances.AsNoTracking()
                              .FirstOrDefault(e => e.Id == attendance.Id);
             Context.Attendances.Add(originalEntity);
             await Context.SaveChangesAsync();
             return "Inserted";
         }
+
+
 
         // tuk kva e razlikata dali shte go narpavq taka ili s ID nemoga da razbera
         public async Task<string> DeleteAttendance(int id)
@@ -85,6 +102,7 @@ namespace MvcMusicStoreWebProject.Data
 
             if (existingAttend != null)
             {
+                existingAttend.Date = attendance.Date;
                 existingAttend.Hours = attendance.Hours;
                 existingAttend.Groupe = attendance.Groupe;
                 existingAttend.Type = attendance.Type;
@@ -98,7 +116,8 @@ namespace MvcMusicStoreWebProject.Data
                 existingAttend.Discipline = attendance.Discipline;
                 existingAttend.Note = attendance.Note;
                 existingAttend.Course = attendance.Course;
-                
+
+
                 Context.Attendances.Update(existingAttend);
                 await Context.SaveChangesAsync();
             }
@@ -106,7 +125,9 @@ namespace MvcMusicStoreWebProject.Data
 
         }
 
-    
+
+
+
         // ei tva trqbva da listne vsichki attendances
         public IEnumerable<Attendance> GetAttendances()
         {
@@ -128,8 +149,9 @@ namespace MvcMusicStoreWebProject.Data
 
         public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId)
         {
-            return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId== SemesterId);
+            return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId == SemesterId);
         }
+
 
         public async Task<List<DisciplineViewModel>> GetDiscipline()
         {
@@ -151,14 +173,14 @@ namespace MvcMusicStoreWebProject.Data
             return attend;
         }
 
-        public async Task<Attendance> GetAttendanceBySemesterId(int ApplicationUserId,int SemesterId)
+        public async Task<Attendance> GetAttendanceBySemesterId(int ApplicationUserId, int SemesterId)
         {
             // ako id to vkarano kato parametar v taq funkciq e ravno na Id na Attendance vurni mi toq attendance !
             // return Context.Attendances.SingleOrDefault(x => x.Id == id);
 
             // durgiq variant e 
 
-            var attend = await Context.Attendances.FindAsync( ApplicationUserId , SemesterId);
+            var attend = await Context.Attendances.FindAsync(ApplicationUserId, SemesterId);
             return attend;
         }
 
@@ -187,7 +209,7 @@ namespace MvcMusicStoreWebProject.Data
             attendanceEntity.Id = 0;
         }
 
-        public async Task<string> AddAttendanceWithoutHolidays(Attendance attendance )
+        public async Task<string> AddAttendanceWithoutHolidays(Attendance attendance)
         {
             // вземаме от контекста таблицата с НонУъркингДейс
 
@@ -206,7 +228,7 @@ namespace MvcMusicStoreWebProject.Data
             // сравняваме дните в двете таблици и препокритите от NonWorkingDays се премахват като записи
             if (!holidays.Contains(attendance.Date))
 
-                // тва беше със обикновен лист от данни
+            // тва беше със обикновен лист от данни
             //if (!FreeDates.Contains(attendance.Date))
             {
                 Context.Attendances.Add(attendance);
@@ -214,7 +236,7 @@ namespace MvcMusicStoreWebProject.Data
                 return "Inserted";
             }
             return "Success";
-            
+
         }
 
 
@@ -257,6 +279,13 @@ namespace MvcMusicStoreWebProject.Data
             }).ToListAsync();
         }
 
+
+
+
+
+
+
+
         //trqbva da se opravi zaduljitelno imeto na View Modela osobeno na gornata funkciq
         public async Task<List<DegreeViewModel>> GetDegrees()
         {
@@ -275,9 +304,9 @@ namespace MvcMusicStoreWebProject.Data
             return allSemestersNames;
         }
 
-        
+
         //todo: Rename to E
-        public DateTime SemesterEndDateById (int id)
+        public DateTime SemesterEndDateById(int id)
         {
             var semester = Context.Semesters.FirstOrDefault(x => x.Id == id);
             return semester.endDate;
@@ -288,16 +317,24 @@ namespace MvcMusicStoreWebProject.Data
         public int GetRelatedSemesterLongitude(int id)
         {
             var semester = Context.Semesters.FirstOrDefault(x => x.Id == id);
-            var semesterLongitude= ((semester.startDate -semester.endDate)/7).Days;
+            var semesterLongitude = ((semester.startDate - semester.endDate) / 7).Days;
             return semesterLongitude;
         }
 
 
-        public Semester GetCurrentSemester ()
+        public Semester GetCurrentSemester()
         {
             DateTime now = DateTime.Now;
             return Context.Semesters.FirstOrDefault(x => x.startDate <= now && x.endDate >= now);
         }
+        // za tova krashtavame tablicite v edinstvetno chislo 
+        // krashtavame go taka zashtoto nezavisimo otkade shte doidat tova vruhsta daden period ot NonWorkingDays
+        // pravim da vrushta sprqmo nachalna i kraina data vrushta spisuk s Holidays
+
+        //public List<NonWorkingDays> GetHolidaysForPeriod(DateTime startDate , DateTime endDate)
+        //{
+
+        //}
 
     }
 }

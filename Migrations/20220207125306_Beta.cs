@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MvcMusicStoreWebProject.Migrations
 {
-    public partial class DeploymentFirstTry : Migration
+    public partial class Beta : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -266,15 +266,17 @@ namespace MvcMusicStoreWebProject.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
-                    Degree = table.Column<string>(type: "longtext", nullable: true)
+                    Degree = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Mode = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Course = table.Column<int>(type: "int", nullable: false),
-                    Groupe = table.Column<int>(type: "int", nullable: false),
+                    Groupe = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Timeframe = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Type = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Hours = table.Column<int>(type: "int", nullable: false),
                     Auditorium = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

@@ -16,19 +16,11 @@ namespace MvcMusicStoreWebProject.Models.ViewModels
 
         public int DisciplineId { get; set; }
 
-        public List<SelectListItem> AvailableDegrees { get; set; } = new List<SelectListItem>()
+        public List<SelectListItem> AvailableTypes { get; set; } = new List<SelectListItem>()
         {
-            new SelectListItem {Text="Bachelor" , Value="Bachelor"},
-            new SelectListItem {Text="Master" , Value="Master"},
-            new SelectListItem {Text="Doctor" , Value="Doctor"}
-
-        };
-
-        public List<SelectListItem> Semester { get; set; } = new List<SelectListItem>()
-        {
-            new SelectListItem {Text="1" , Value="1"},
-            new SelectListItem {Text="2" , Value="2"},
-            new SelectListItem {Text="3" , Value="3"}
+            new SelectListItem {Text="Семинарно упражнение"},
+            new SelectListItem {Text="Лабораторно упражнение"},
+            new SelectListItem {Text="Лекция"}
 
         };
 

@@ -1,43 +1,28 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using MvcMusicStoreWebProject.Data.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-@*<style>
-    .raychev {
-        font-weight: bold;
-        color: #fff;
-        font-size: 60px;
-    }
-    .raychev {
- 
-        animation-duration: 4s;
-        animation-name: slidein;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-    }
-
-    .raychev {
- 
-        animation-duration: 4s;
-        animation-name: slidein;
-    }
-
-    @@keyframes slidein {
-        from {
-            margin-left: 100%;
-            width: 300%;
-        }
-
-        to {
-            margin-left: 0%;
-            width: 100%;
-        }
-    }
-</style>*@
 
 <div class="text-center">
     <h2 class="display-4">Welcome to</h2>
-
     <h1 class="raychev">Raychev Dynamics</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        <a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>
+
+    }
+    
+    @*else
+    {
+        <h1><a id="login" asp-area="Identity" asp-page="/Account/Login" class="form-control"> Please Loggin </a></h1>
+    }*@
+
+
 </div>
 

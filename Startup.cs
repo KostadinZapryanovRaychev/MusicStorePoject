@@ -79,7 +79,7 @@ namespace MvcMusicStoreWebProject
                 endpoints.MapControllerRoute(
                     name: "default",
                     // tuk beshe MusicStore kato controller default zadaden
-                    pattern: "{controller=Attendance}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

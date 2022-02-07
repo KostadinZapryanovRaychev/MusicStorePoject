@@ -2,7 +2,6 @@
 @using MvcMusicStoreWebProject.Data.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@inject MvcMusicStoreWebProject.Data.IAttendanceRepository _Repo;
 
 
 
@@ -13,10 +12,6 @@
             <li class="nav-item">
                 <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)! </a>
                 @{ var user = await UserManager.GetUserAsync(User); }
-
-
-
-
             </li>
             <li class="nav-item">
                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

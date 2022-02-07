@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcMusicStoreWebProject.Data;
 using MvcMusicStoreWebProject.Models.ViewModels;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DegreeController : Controller
     {
         private IDegreeRepository Repo { get; }

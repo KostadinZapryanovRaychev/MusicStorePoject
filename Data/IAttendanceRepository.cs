@@ -8,29 +8,11 @@ using MvcMusicStoreWebProject.Models.ViewModels;
 
 namespace MvcMusicStoreWebProject.Data
 {
-    //public interface IRepository
-    //{
-    //     Task <Album> GetAlbumById(int Id);
-
-    //    IEnumerable<Album> GetAllAblums();
-
-    //    Task <Album> UpdateAlbum(Album album);
-
-    //    Task<string> DeleteAlbum(int Id);
-
-    //    // toq izobshto ne go i razbiram
-    //    Task <string> DeleteAlbum(Album album);
-
-    //    Task <string> InsertNewAlbum(Album album);
-
-    //    bool IsDuplicateTitle(string Title);
-    //    Task <int >Save();
-    //}
-
 
     public interface IAttendanceRepository
     {
         IEnumerable<Attendance> GetAttendances();
+
 
         // spored men tuk kato parametar vutre trqbva da se nashie novoto Id koeto shte se vkluchi v tablicata
         Task<Attendance> GetAttendance(int Id);
@@ -56,6 +38,10 @@ namespace MvcMusicStoreWebProject.Data
         //Task<string> AddAttendanceWithoutHolidays(Attendance attendance, int semesterId);
 
         Task<string> AddAttendanceWithoutHolidays(Attendance attendance);
+
+
+        //Task<string> GetCurrentUserDetails();
+
         Task<List<DegreeViewModel>> GetDegrees();
 
         IList<Degrees> LetGetDegrees();

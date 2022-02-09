@@ -25,9 +25,9 @@
 
             <thead>
                 <tr>
-                    <th>Holiday</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Неработен ден</th>
+                    <th>Редакция</th>
+                    <th>Изтриване</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,8 +36,8 @@
                 {
                     <tr class="tableRows">
                         <td width="30%">@nonWorkingDays.Holiday</td>
-                        <td><a class="btn btn-primary" asp-action="EditNonWorkingDays" asp-controller="NonWorkingDays" asp-route-NWDId="@nonWorkingDays.Id" role="button">Edit</a></td>
-                        <td><button class="btn btn-danger deleteNonWorkingDay" onclick="confirmAction()" value="@nonWorkingDays.Id" role="button">Delete </button></td>
+                        <td><a class="btn btn-primary" asp-action="EditNonWorkingDays" asp-controller="NonWorkingDays" asp-route-NWDId="@nonWorkingDays.Id" role="button">Редакция</a></td>
+                        <td><button class="btn btn-danger deleteNonWorkingDay" onclick="confirmAction()" value="@nonWorkingDays.Id" role="button">Изтриване</button></td>
                     </tr>
                 }
             </tbody>
@@ -45,7 +45,7 @@
     }
     else
     {
-        <p> No Items Created </p>
+        <p> Няма създадени записи </p>
     }
 
 

@@ -79,12 +79,12 @@ namespace MvcMusicStoreWebProject.Data
             {
                 Context.Attendances.Remove(deletedAttendance);
                 await Context.SaveChangesAsync();
-                DeleteMassage = "Removed succesfully";
+                DeleteMassage = "Изтриването успешно";
             }
 
             else
             {
-                DeleteMassage = "Something went wrong , try again";
+                DeleteMassage = "Грешка";
             }
 
             return DeleteMassage;

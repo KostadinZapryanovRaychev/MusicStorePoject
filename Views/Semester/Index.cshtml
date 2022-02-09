@@ -23,11 +23,11 @@
 
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Име</th>
+                        <th>Начална дата</th>
+                        <th>Крайна дата</th>
+                        <th>Редакция</th>
+                        <th>Изтриване</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +38,8 @@
                             <td width="30%">@semester.Name</td>
                             <td width="30%">@semester.startDate</td>
                             <td width="30%">@semester.endDate</td>
-                            <td><a class="btn btn-primary" asp-action="EditSemester" asp-controller="Semester" asp-route-SemesterId="@semester.Id" role="button">Edit</a></td>
-                            <td><button class="btn btn-danger deleteSemester" onclick="confirmAction()" value="@semester.Id" role="button">Delete </button></td>
+                            <td><a class="btn btn-primary" asp-action="EditSemester" asp-controller="Semester" asp-route-SemesterId="@semester.Id" role="button">Редакция</a></td>
+                            <td><button class="btn btn-danger deleteSemester" onclick="confirmAction()" value="@semester.Id" role="button">Изтриване</button></td>
                         </tr>
                     }
                 </tbody>

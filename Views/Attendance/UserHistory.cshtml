@@ -4,7 +4,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<h2 class="text-primary"> Attandance History</h2>
+<h2> История на записите</h2>
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -15,7 +15,7 @@
         <form action="/Attendance/UserHistory" method="get">
             <div class="col-2">
                 <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames" onchange="javascript:this.form.submit()">
-                    <option> Select Semester</option>
+                    <option> Семестър</option>
                 </select>
             </div>
         </form>

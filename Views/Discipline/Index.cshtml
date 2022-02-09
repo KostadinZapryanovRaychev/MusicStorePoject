@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Discipline>
 
-<h1>    Академични дисциплини</h1>
+<h1> Академични дисциплини</h1>
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -22,7 +22,7 @@
     <form action="/Discipline" method="get">
         <div class="col-2">
             <select class="form-control" name="ProgramsId" id="ProgramsList" asp-items="@ViewBag.degreesNames" onchange="javascript:this.form.submit()">
-                <option> Sort by Degree</option>
+                <option>Сортирай по семестър</option>
             </select>
         </div>
     </form> 
@@ -34,9 +34,9 @@
 
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Име</th>
+                    <th>Редакция</th>
+                    <th>Изтртиване</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,9 +45,8 @@
                 {
                     <tr class="tableRows">
                         <td width="40%">@discipline.Name</td>
-                        <td><a class="btn btn-primary" asp-action="EditDiscipline" asp-controller="Discipline" asp-route-DisciplineId="@discipline.Id" role="button">Edit</a></td>
-                        <td><button class="btn btn-danger deleteDiscipline" onclick="confirmAction()" value="@discipline.Id" role="button">Delete </button></td>
-
+                        <td><a class="btn btn-primary" asp-action="EditDiscipline" asp-controller="Discipline" asp-route-DisciplineId="@discipline.Id" role="button">Редакция</a></td>
+                        <td><button class="btn btn-danger deleteDiscipline" onclick="confirmAction()" value="@discipline.Id" role="button">Изтриване</button></td>
                     </tr>
                 }
             </tbody>
@@ -55,7 +54,7 @@
     }
     else
     {
-        <p> No Items Created </p>
+        <p> Няма създадени записи </p>
     }
 </div>
 

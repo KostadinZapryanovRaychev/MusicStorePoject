@@ -27,9 +27,9 @@
 
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Име</th>
+                        <th>Редакция</th>
+                        <th>Изтриване</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +38,8 @@
                     {
                         <tr class="tableRows">
                             <td width="30%">@degrees.Name</td>
-                            <td><a class="btn btn-primary" asp-action="EditDegrees" asp-controller="Degree" asp-route-DegreesId="@degrees.Id" role="button">Edit</a></td>
-                            <td><button class="btn btn-danger deleteDegree" onclick="confirmAction()" value="@degrees.Id" role="button">Delete </button></td>
+                            <td><a class="btn btn-primary" asp-action="EditDegrees" asp-controller="Degree" asp-route-DegreesId="@degrees.Id" role="button">Редакция</a></td>
+                            <td><button class="btn btn-danger deleteDegree" onclick="confirmAction()" value="@degrees.Id" role="button">Изтриване</button></td>
 
                         </tr>
                     }
@@ -48,7 +48,7 @@
         }
         else
         {
-            <p> No Items Created </p>
+            <p> Няма създадени записи </p>
         }
 
 

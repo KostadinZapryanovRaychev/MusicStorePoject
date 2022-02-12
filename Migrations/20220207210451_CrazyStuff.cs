@@ -268,7 +268,7 @@ namespace MvcMusicStoreWebProject.Migrations
                     Date = table.Column<DateTime>(type: "date", nullable: false),
                     Degree = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Mode = table.Column<string>(type: "longtext", nullable: true)
+                    Mode = table.Column<string>(type: "varchar[12]", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Course = table.Column<int>(type: "int", nullable: false),
                     Groupe = table.Column<string>(type: "longtext", nullable: true)

@@ -134,11 +134,21 @@ namespace MvcMusicStoreWebProject.Data
             return Context.Attendances.ToList();
         }
 
-        public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId)
+        // tova = "" pokazva che parametara e opcionalen i moje da ne se podava vinagi
+        public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId, string mode = "")
         {
 
-            return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId);
+            if (mode == "")
+            {
+                return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId);    
+            }
+            else
+            {
+                return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.Mode == mode);
+            }
         }
+
+
 
 
         // teq dvete po otdelno li ili da gi obedenq v edna ama mai po otdelno e po dobre
@@ -147,9 +157,17 @@ namespace MvcMusicStoreWebProject.Data
             return Context.Attendances.Where(a => a.SemesterId == SemesterId);
         }
 
-        public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId)
+        public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId , string Mode = "")
         {
-            return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId == SemesterId);
+            if (Mode == "")
+            {
+                return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId == SemesterId);
+            }
+            else
+            {
+                return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId == SemesterId && a.Mode == Mode);
+
+            }
         }
 
 
@@ -171,6 +189,15 @@ namespace MvcMusicStoreWebProject.Data
 
             var attend = await Context.Attendances.FindAsync(ApplicationUserId);
             return attend;
+        }
+
+        public async Task<Attendance> GetAttendanceByMode(string Mode)
+        {
+ 
+            var attendanceByMode = from attendance in Context.Attendances where attendance.Mode == Mode select attendance;
+
+            var attendancesMode = await Context.Attendances.FindAsync(Mode);
+            return attendancesMode;
         }
 
         public async Task<Attendance> GetAttendanceBySemesterId(int ApplicationUserId, int SemesterId)

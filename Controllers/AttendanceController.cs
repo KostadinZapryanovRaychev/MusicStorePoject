@@ -211,7 +211,7 @@ namespace MvcMusicStoreWebProject.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> LoggedUser()
+        public async Task<IActionResult> LoggedUser(string mode)
         {
 
             List<SelectListItem> mySkills = new List<SelectListItem>()
@@ -235,6 +235,7 @@ namespace MvcMusicStoreWebProject.Controllers
                      };
             ViewBag.MySkills = mySkills;
 
+
             //IEnumerable<Attendance> attendances = Repo.GetAttendances();
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
@@ -246,19 +247,16 @@ namespace MvcMusicStoreWebProject.Controllers
             if (currentSemester != null)
             {
                 // proverqvame i displaivame zapisite za dadeniq semester
-                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id);
+                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id , mode);
             }
             else
             {
-                attendances = Repo.FindAttendanceByUserId(userId);
+                attendances = Repo.FindAttendanceByUserId(userId , mode);
             }
 
             var result = attendances.OrderBy(x => x.Date);
 
             return View(result);
-
-            //return View();
-            //return View(attendances);
         }
 
         public IActionResult Index()
@@ -299,7 +297,7 @@ namespace MvcMusicStoreWebProject.Controllers
             for (int i = 0; i < length; i++)
             //for (int i = 0; i < 2; i++)
             {
-                var newAttendanceDate = attendance.Date.AddDays(7);
+                var newAttendanceDate = attendance.Date.AddDays(1);
                 if (newAttendanceDate < semester)
                 {
                     Repo.Detached(attendance);
@@ -309,7 +307,7 @@ namespace MvcMusicStoreWebProject.Controllers
 
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("LoggedUser");
         }
 
 
@@ -360,12 +358,60 @@ namespace MvcMusicStoreWebProject.Controllers
             return result;
         }
 
+        [Authorize]
+
+        public async Task<IActionResult> MultiplicationByAttendanceIdForSemester(int AttendanceId)
+        {
+
+
+            var attendance = await Repo.GetAttendance(AttendanceId);
+            var semester = Repo.SemesterEndDateById(attendance.SemesterId);
+
+
+            // i < multiplicationLenght;
+
+            for (int i = 0; i < 14; i++)
+            {
+                var newAttendanceDate = attendance.Date.AddDays(7);
+                if (newAttendanceDate < semester)
+                {
+                    Repo.Detached(attendance);
+                    attendance.Date = newAttendanceDate;
+                    // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
+                    await Repo.AddAttendanceWithoutHolidays(attendance);
+
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+
 
         [Authorize]
-        public async Task<IActionResult> Multiplication()
+        public async Task<IActionResult> Multiplication(string mode = "")
         {
-            var attendences = await AttendanceByUserId();
-            foreach (var attendance in attendences)
+            // tuk trqbva da se dobavi if 
+            Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+            var user = await GetCurrentUserAsync();
+            var userId = user.Id;
+            var currentSemester = Repo.GetCurrentSemester();
+            IEnumerable<Attendance> attendances;
+
+
+            if (currentSemester != null)
+            {
+                // proverqvame i displaivame zapisite za dadeniq semester
+                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id, mode).ToList();
+            }
+            else
+            {
+                attendances = Repo.FindAttendanceByUserId(userId, mode).ToList();
+            }
+
+
+            //attendances.OrderBy(x => x.Date);
+
+            foreach (var attendance in attendances)
             {
                 var semesterEndDate = Repo.SemesterEndDateById(attendance.SemesterId);
                 //var semmesterLenght = Repo.GetRelatedSemesterLongitude(attendance.SemesterId);

@@ -12,14 +12,26 @@
         </div>
     </div>
 
+
     <div class="input-group">
-        <div class="col-6">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Попълни присъствие</a> </div>
+        <div class="col-4">  <a asp-area="" asp-controller="Attendance" asp-action="CreateAttendance" class="btn btn-primary">Попълни присъствие</a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
         <button type="button" class="btn btn-primary">
             <i class="fa fa-search"></i>
         </button>
+        <div class="col-2">   </div>
+        <div class="col-2">
+            <form action="/Attendance/LoggedUser" method="get">
+
+                <select class="form-control" name="Mode" onchange="javascript:this.form.submit()">
+                    <option value="">всички</option>
+                    <option value="редовно">редовно</option>
+                    <option value="задочно">задочно</option>
+                </select>
+            </form>
+        </div>
     </div>
     <br />
 
@@ -45,6 +57,7 @@
                     <th>Дубликация</th>
                     <th>Изтриване</th>
                     <th>Размножаване</th>
+                    <th>Размножаване за сем</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +78,7 @@
                         <td width="12%">@attendance.Programs</td>
                         <td width="12%">@attendance.Discipline</td>
                         <td><a class="btn btn-primary" asp-action="EditAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Редакция</a></td>
-                        <td><a class="btn btn-primary" asp-action="CoppyAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Дублициране</a></td>
+                        <td><a class="btn btn-primary" asp-action="CoppyAttendance" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Дублиране</a></td>
                         <td><button class="btn btn-danger deleteAttendance" onclick="confirmAction()" value="@attendance.Id" role="button">Изтриване</button></td>
                         <td>
                             <form asp-action="MultiplicationByAttendanceId" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id">
@@ -77,29 +90,48 @@
                                 <input type="submit" class="btn btn-info w-75" value="Размн." />
                             </form>
                         </td>
+                        <td> <a class="btn btn-primary" asp-action="MultiplicationByAttendanceIdForSemester" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Размн. за сем</a></td>
                     </tr>
                 }
             </tbody>
         </table>
-        <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Преглед</a>
-        <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Мултиплиция за семестър</a>
-    }
-    else
-    {
-        <p> Няма създадени записи </p>
-    }
+        
+        <div class="input-group inline">
+            <div class="col-4">
+                <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Преглед</a>
+            </div>
+            <div class="col-1">   </div>   
+            <div  class="col-5">
+                <form class="form-control" asp-action="Multiplication" asp-controller="Attendance">
+                    <div class="form-group row">
+                        <select name="Mode" onsubmit="javascript:this.form.submit()">
+                            <option value="">всички</option>nb
+                            <option value="редовно">редовно</option>
+                            <option value="задочно">задочно</option>
+                        </select>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Размн. за сем" />
+                </form>
+            </div>
+        </div>
+            }
+            else
+            {
+            <p> Няма създадени записи </p>
+            }
 
 
 
 
 
-</div>
+        </div>
 
     <!-- Modal -->
     <div id="deleteMessageModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
-            <!-- Modal content-->
+             Modal content
+
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Server Message</h4>
@@ -114,7 +146,6 @@
 
         </div>
     </div>
-
 
 
     @section Scripts {

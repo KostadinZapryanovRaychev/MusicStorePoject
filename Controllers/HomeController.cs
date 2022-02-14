@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcMusicStoreWebProject.Models;
 using System;
@@ -18,9 +19,20 @@ namespace MvcMusicStoreWebProject.Controllers
             _logger = logger;
         }
 
+
+
+     
+        // i direktno otiva kum Login na Identity
+       
+        [Authorize]
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult Index2()
+        {
+            // eee s taq tupa vrutka go prashtame kudeto taq iska 
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
         }
 
         public IActionResult Privacy()

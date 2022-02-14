@@ -191,13 +191,6 @@ namespace MvcMusicStoreWebProject.Controllers
 
 
 
-
-        /// <summary>
-        /// TOVA RABOTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-        /// </summary>
-        /// <param name="AttendanceId"></param>
-        /// <returns></returns>
-
         public async Task<IActionResult> CoppyAttendance(int AttendanceId)
 
         {
@@ -247,11 +240,11 @@ namespace MvcMusicStoreWebProject.Controllers
             if (currentSemester != null)
             {
                 // proverqvame i displaivame zapisite za dadeniq semester
-                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id , mode);
+                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id, mode);
             }
             else
             {
-                attendances = Repo.FindAttendanceByUserId(userId , mode);
+                attendances = Repo.FindAttendanceByUserId(userId, mode);
             }
 
             var result = attendances.OrderBy(x => x.Date);
@@ -266,20 +259,6 @@ namespace MvcMusicStoreWebProject.Controllers
             return View();
         }
 
-
-        [Authorize]
-        public async Task<IActionResult> Report()
-        {
-
-            //IEnumerable<Attendance> attendances = Repo.GetAttendances();
-            Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-            var user = await GetCurrentUserAsync();
-            var userId = user.Id;
-            IEnumerable<Attendance> attendances = Repo.FindAttendanceByUserId(userId);
-            var result = attendances.OrderBy(x => x.Date);
-            return View(result);
-            //return View(attendances);
-        }
 
 
         [Authorize]
@@ -388,7 +367,7 @@ namespace MvcMusicStoreWebProject.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> Multiplication(string mode = "")
+        public async Task<IActionResult> Multiplication(string mode = "редовно")
         {
             // tuk trqbva da se dobavi if 
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
@@ -433,17 +412,34 @@ namespace MvcMusicStoreWebProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> UserHistory(int SemesterId)
+        public async Task<IActionResult> UserHistory(int SemesterId, string mode = "всички")
+        {
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+            var result = await UserHistoryChoice(SemesterId, mode);
+
+            return View(result);
+        }
+
+        [Authorize]
+        // kak da vurna sashtot view koeto e na UserHistory ama bez layout
+        public async Task<IActionResult> Report(int SemesterId, string mode = "всички")
+        {
+            var selectList = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+            ViewBag.Selected = SemesterId;
+            ViewBag.semNames = selectList;
+            var result = await UserHistoryChoice(SemesterId, mode);
+            return View(result);
+        }
+
+
+        public async Task<IEnumerable<Attendance>> UserHistoryChoice(int SemesterId, string mode = "всички")
         {
             ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
-            var result = Repo.FindAttendanceBySemesterIdandUserId(userId, SemesterId);
-
-            return View(result);
+            return Repo.FindAttendanceBySemesterIdandUserId(userId, SemesterId, mode);
         }
-
 
 
         public List<Semester> GetAllSemesterDisplay()

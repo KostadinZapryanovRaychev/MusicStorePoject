@@ -2,22 +2,29 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Уеб базирана система за попълване на присъсвтия";
 }
 
 <style>
 
-        .login-form {
-            width: 340px;
-            margin: 100px auto;
-            font-size: 15px;
+    .login-form {
+        width: 340px;
+        margin: 100px auto;
+        font-size: 15px;
+    }
+
+        .login-form form {
+            margin-bottom: 15px;
+            box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+            padding: 30px;
         }
 
-            .login-form form {
-                margin-bottom: 15px;
-                box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
-                padding: 30px;
-            }
+/*    h1 {
+        width: 500px;
+        margin: 0 auto;
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+        text-align: center;
+    }*/
 </style>
 
 @*<style>
@@ -56,14 +63,15 @@
             font-weight: 700;
             font-family: verdana;
         }
-    </style>*@
+    </style style="text-align: center;">*@
 
-@*<h1>@ViewData["Title"]</h1>*@
+<h1 class="raychev">@ViewData["Title"]</h1>
 
 <div class="login-form">
     <form id="account" method="post">
         <div class="mb-3 text-center title">
-            <span>Raychev Dynamics Log In</span>
+            @*<span>Raychev Dynamics Log In</span>*@
+            <span></span>
         </div>
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
@@ -75,7 +83,8 @@
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            <button type="submit" class="btn btn-primary btn-block">Вход</button>
+            <button class="btn btn-primary btn-block" id="register" asp-area="Identity" asp-page="/Account/Register">Регистрация</button>
         </div>
         <div class="clearfix">
             <label class="float-left form-check-label" asp-for="Input.RememberMe">

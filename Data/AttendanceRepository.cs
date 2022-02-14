@@ -159,7 +159,7 @@ namespace MvcMusicStoreWebProject.Data
 
         public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId , string Mode = "")
         {
-            if (Mode == "")
+            if (Mode == "всички")
             {
                 return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId == SemesterId);
             }

@@ -24,11 +24,11 @@
         <div class="col-2">   </div>
         <div class="col-2">
             <form action="/Attendance/LoggedUser" method="get">
-
                 <select class="form-control" name="Mode" onchange="javascript:this.form.submit()">
-                    <option value="">всички</option>
+                    <option value="">изберете форма</option>
                     <option value="редовно">редовно</option>
                     <option value="задочно">задочно</option>
+                    <option value="всички">всички</option>
                 </select>
             </form>
         </div>
@@ -95,13 +95,14 @@
                 }
             </tbody>
         </table>
-        
-        <div class="input-group inline">
+        @*<a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Преглед</a>*@
+        <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Размн. за сем</a>
+        @*<div class="input-group inline">
             <div class="col-4">
                 <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Преглед</a>
             </div>
-            <div class="col-1">   </div>   
-            <div  class="col-5">
+            <div class="col-1">   </div>
+            <div class="col-5">
                 <form class="form-control" asp-action="Multiplication" asp-controller="Attendance">
                     <div class="form-group row">
                         <select name="Mode" onsubmit="javascript:this.form.submit()">
@@ -113,18 +114,18 @@
                     <input type="submit" class="btn btn-primary" value="Размн. за сем" />
                 </form>
             </div>
-        </div>
-            }
-            else
-            {
-            <p> Няма създадени записи </p>
-            }
+        </div>*@
+    }
+    else
+    {
+        <p> Няма създадени записи </p>
+    }
 
 
 
 
 
-        </div>
+</div>
 
     <!-- Modal -->
     <div id="deleteMessageModal" class="modal fade" role="dialog">

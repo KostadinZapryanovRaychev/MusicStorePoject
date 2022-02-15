@@ -30,6 +30,11 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.OfficialName"></label>
+                <input asp-for="Input.OfficialName" class="form-control" />
+                <span asp-validation-for="Input.OfficialName" class="text-danger"></span>
+            </div>
             <button type="submit" class="btn btn-primary">Регистрация</button>
         </form>
     </div>

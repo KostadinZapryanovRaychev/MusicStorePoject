@@ -6,7 +6,7 @@
 <form method="post" asp-controller="Discipline" asp-action="CreateDiscipline">
     <div class="border p-3">
         <div class="form-group row">
-            <h2>Попълнете името на специалност</h2>
+            <h2>Попълнете името на специалността</h2>
         </div>
         <div class="row">
             <div class="col-12">
@@ -18,7 +18,7 @@
                     <div class="col-4">
                         <label asp-for="@Model.Discipline.DegreesId"></label>
                         <select id="ProgramsList" asp-for="@Model.Discipline.DegreesId" asp-items="@ViewBag.degreesNames" class="form-control">
-                            <option> Select Degree ID</option>
+                            <option>Изберете образователна степен</option>
                         </select>
                     </div>
                     <p> </p>

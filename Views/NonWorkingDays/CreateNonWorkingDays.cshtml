@@ -1,11 +1,11 @@
 ﻿@model MvcMusicStoreWebProject.Models.ViewModels.NonWorkingDaysViewModel
-<h1>Неработни дни </h1>
+<h1>Празничен ден </h1>
 
 <div asp-validation-summary="All">   </div>
 <form method="post" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays">
     <div class="border p-3">
         <div class="form-group row">
-            <h2>Попълнете данните за почивните дни в семестъра</h2>
+            <h2>Въведете празничен ден</h2>
         </div>
         <div class="row">
             <div class="col-12">
@@ -17,7 +17,7 @@
                     <p> </p>
                     <div class="form-group row">
                         <div class="col-2">
-                            <input type="submit" class="btn btn-info w-75" value="Създай" />
+                            <input type="submit" class="btn btn-info w-75" value="Запис" />
                         </div>
                         <div class="col-2">
                             <a asp-action="Index" class="btn btn-danger w-75">Назад</a>

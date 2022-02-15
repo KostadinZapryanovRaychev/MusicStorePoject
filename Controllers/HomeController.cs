@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using MvcMusicStoreWebProject.Data;
 using MvcMusicStoreWebProject.Models;
 using System;
 using System.Collections.Generic;
@@ -13,20 +15,27 @@ namespace MvcMusicStoreWebProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IAttendanceRepository Repo { get; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger , IAttendanceRepository repo)
         {
             _logger = logger;
+            Repo = repo;
         }
 
 
+        public List<Semester> GetAllSemesterDisplay()
+        {
+            List<Semester> semNames = Repo.GetAllSemesters().ToList();
+            return semNames;
+        }
 
-     
         // i direktno otiva kum Login na Identity
-       
+
         [Authorize]
         public IActionResult Index()
         {
+            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
             return View();
         }
         public IActionResult Index2()

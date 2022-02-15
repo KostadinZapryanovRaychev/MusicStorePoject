@@ -12,7 +12,10 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
-
+.raychevdanger {
+    text-decoration-color:red;
+    color: red;
+}
 
 .raychev {
     font-weight: bold;

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MvcMusicStoreWebProject.Models.Discipline>
 
-<h1> Академични дисциплини</h1>
+<h1> Специалности</h1>
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="input-group">
-        <div class="col-4 text-right">  <a asp-area="" asp-controller="Discipline" asp-action="CreateDiscipline" class="btn btn-primary">Попълване на дисциплини </a> </div>
+        <div class="col-4 text-right">  <a asp-area="" asp-controller="Discipline" asp-action="CreateDiscipline" class="btn btn-primary">Въвеждане на специалност </a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -22,7 +22,7 @@
     <form action="/Discipline" method="get">
         <div class="col-2">
             <select class="form-control" name="ProgramsId" id="ProgramsList" asp-items="@ViewBag.degreesNames" onchange="javascript:this.form.submit()">
-                <option>Сортиране</option>
+                <option>Филтриране по степен</option>
             </select>
         </div>
     </form> 

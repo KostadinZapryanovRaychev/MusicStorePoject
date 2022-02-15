@@ -7,24 +7,44 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-    <div class="panel panel-body">
-        <div class="col-md-6">
-            @if (SignInManager.IsSignedIn(User))
-            {
-                
-               <a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>
-                
-            }
+<div class="panel panel-body">
+    <div class="col-md-6">
 
-            else
-            {
-                <h1>Вход</h1>
-            }
-        </div>
+        @*@{ var user = await UserManager.GetUserAsync(User);}*@
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            var user = await UserManager.GetUserAsync(User);
+
+            <h1>Здравейте @user.OfficialName</h1>
+
+            <form action="/Attendance/WriteCokie" method="post">
+
+                <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames">
+                    <option>Изберете семестър</option>
+                </select>
+                <input type="text" name="cockievalue" value="" />
+                <input type="checkbox" name="IsPersistent" value="true" />
+                <input type="submit" name="Add Cockie" />
+            </form>
+
+            <form action="/" method="post">
+                <input type="submit" name="Add Cockie" />
+            </form>
+
+            <a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>
+
+        }
+
+        else
+        {
+            <h1>Вход</h1>
+        }
     </div>
+</div>
 
 
-
+@*onchange="javascript:this.form.submit()"*@
 
 
 

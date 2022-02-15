@@ -10,7 +10,7 @@ namespace MvcMusicStoreWebProject.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Име")]
+        [Display(Name = "Образователна степен")]
         public string Name { get; set; }
 
     }

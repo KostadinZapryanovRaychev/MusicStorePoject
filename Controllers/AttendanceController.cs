@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
@@ -195,11 +196,11 @@ namespace MvcMusicStoreWebProject.Controllers
 
         {
             var existingAttend = await Repo.GetAttendance(AttendanceId);
-            var newAttendanceDate = existingAttend.Date.AddDays(1);
-            existingAttend.Date = newAttendanceDate;
+            //var newAttendanceDate = existingAttend.Date.AddDays(1);
+            //existingAttend.Date = newAttendanceDate;
             Repo.Detached(existingAttend);
             await Repo.AddAttendance(existingAttend);
-            return RedirectToAction("Index");
+            return RedirectToAction("LoggedUser");
         }
 
 
@@ -273,7 +274,7 @@ namespace MvcMusicStoreWebProject.Controllers
 
             // i < multiplicationLenght;
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i <= length; i++)
             //for (int i = 0; i < 2; i++)
             {
                 var newAttendanceDate = attendance.Date.AddDays(1);
@@ -441,6 +442,18 @@ namespace MvcMusicStoreWebProject.Controllers
             return Repo.FindAttendanceBySemesterIdandUserId(userId, SemesterId, mode);
         }
 
+        public IActionResult WriteCokie(int SemesterId)
+        {
+            CookieOptions cookies = new CookieOptions();
+            cookies.Expires = DateTime.Now.AddDays(1);
+            //Response.Cookies.Append(SemesterId,cookies);
+            return View();
+        }
+
+        public async Task<IActionResult> ReadCokie()
+        {
+            return View();
+        }
 
         public List<Semester> GetAllSemesterDisplay()
         {

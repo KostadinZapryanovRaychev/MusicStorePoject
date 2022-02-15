@@ -12,7 +12,7 @@ namespace MvcMusicStoreWebProject.Models
         public int Id{ get; set; }
 
         [Column(TypeName = "date")]
-        [Display(Name = "Почивен ден")]
+        [Display(Name = "Празничен ден")]
         public DateTime Holiday { get; set; }
 
 

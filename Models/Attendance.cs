@@ -20,7 +20,7 @@ namespace MvcMusicStoreWebProject.Models
         public DateTime Date { get; set; }
 
         
-        [Display(Name = "Степен")]
+        [Display(Name = "Образователна степен")]
         public string Degree { get; set; }
 
         [Display(Name = "Форма на обучение")]
@@ -44,13 +44,13 @@ namespace MvcMusicStoreWebProject.Models
         public int Hours { get; set; }
 
        
-        [Display(Name = "Аудитория")]
+        [Display(Name = "Зала")]
         public string Auditorium { get; set; }
 
         [Display(Name = "Забележка")]
         public string Note { get; set; }
 
-        [Display(Name = "Предмет")]
+        [Display(Name = "Дисциплина")]
         public string Programs { get; set; }
 
         [Display(Name = "Специалност")]

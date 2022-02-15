@@ -4,7 +4,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<h2> История на записите</h2>
+<h2> История по семестри</h2>
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -15,19 +15,11 @@
     <form action="/Attendance/UserHistory" method="get">
         <div class="col-2">
             <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames" onchange="javascript:this.form.submit()">
-                <option> Семестър</option>
+                <option>Изберете семестър</option>
             </select>
         </div>
     </form>
     <br />
-    <div class="input-group">
-        <div class="form-outline">
-            <input type="text" id="searchTextId" class="form-control" />
-        </div>
-        <button type="button" class="btn btn-primary">
-            <i class="fa fa-search"></i>
-        </button>
-    </div>
     <br />
 
     @if (Model.Count() > 0)

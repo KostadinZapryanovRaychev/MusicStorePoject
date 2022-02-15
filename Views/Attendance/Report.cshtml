@@ -9,6 +9,7 @@
 @inject UserManager<ApplicationUser> UserManager
 
 
+
 <style>
     table {
         font-family: Arial, sans-serif;
@@ -23,12 +24,10 @@
     }
 
     @@media print {
-        #printPageButton
-        {
+        #printPageButton {
             display: none;
         }
-      }
-
+    }
 </style>
 
 
@@ -42,7 +41,7 @@
     </div>
 
 
-    
+
     <form action="/Attendance/Report" method="get">
         <div class="col-2">
             <select class="form-control" name="SemesterId" id="ProgramsList" onchange="javascript:this.form.submit()">
@@ -54,65 +53,71 @@
                 }
             </select>
         </div>
-       
+
     </form>
 
     <br />
+
+    @{ var user = await UserManager.GetUserAsync(User);
+
+        <h1>@user.OfficialName</h1>}
+
     <br />
 
     @if (Model.Count() > 0)
-        {
+    {
 
 
-    <table>
+        <table>
 
-        <thead>
-            <tr>
-                <th>Дата</th>
-                <th>Степен</th>
-                <th>Вид</th>
-                <th>Курс</th>
-                <th>Група</th>
-                <th>Час.Диапазон</th>
-                <th>Тип</th>
-                <th>Часове</th>
-                <th>Зала</th>
-                <th>Забележка</th>
-                <th>Предмет</th>
-                <th>Специалност</th>
-            </tr>
-        </thead>
-        <tbody>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Степен</th>
+                    <th>Вид</th>
+                    <th>Курс</th>
+                    <th>Група</th>
+                    <th>Час.Диапазон</th>
+                    <th>Тип</th>
+                    <th>Часове</th>
+                    <th>Зала</th>
+                    <th>Забележка</th>
+                    <th>Предмет</th>
+                    <th>Специалност</th>
+                </tr>
+            </thead>
+            <tbody>
 
-            @foreach (var attendance in Model)
-                            {
-            <tr class="tableRows">
-                <td width="8%">@attendance.Date</td>
-                <td width="8%">@attendance.Degree</td>
-                <td width="8%">@attendance.Mode</td>
-                <td width="4%">@attendance.Course</td>
-                <td width="4%">@attendance.Groupe</td>
-                <td width="8%">@attendance.Timeframe</td>
-                <td width="8%">@attendance.Type</td>
-                <td width="4%">@attendance.Hours</td>
-                <td width="8%">@attendance.Auditorium</td>
-                <td width="8%">@attendance.Note</td>
-                <td width="8%">@attendance.Programs</td>
-                <td width="12%">@attendance.Discipline</td>
-            </tr>
-                            }
-        </tbody>
-    </table>
-}
+                @foreach (var attendance in Model)
+                {
+                    <tr class="tableRows">
+                        <td width="8%">@attendance.Date</td>
+                        <td width="8%">@attendance.Degree</td>
+                        <td width="8%">@attendance.Mode</td>
+                        <td width="4%">@attendance.Course</td>
+                        <td width="4%">@attendance.Groupe</td>
+                        <td width="8%">@attendance.Timeframe</td>
+                        <td width="8%">@attendance.Type</td>
+                        <td width="4%">@attendance.Hours</td>
+                        <td width="8%">@attendance.Auditorium</td>
+                        <td width="8%">@attendance.Note</td>
+                        <td width="8%">@attendance.Programs</td>
+                        <td width="12%">@attendance.Discipline</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
     else
-{
-  <p> </p>
-}
+    {
+        <p> </p>
+    }
     <form>
         <input id="printPageButton" type="button" value="Принтиране"
                onclick="window.print()" />
     </form>
 </div>
+
 
 
 

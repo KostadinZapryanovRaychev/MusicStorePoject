@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MvcMusicStoreWebProject.Models.NonWorkingDays>
   
-<h1>Неработни дни</h1>
+<h1>Празнични дни</h1>
 
 <div class=" container p-3">   
         <div class="col-6">
@@ -8,7 +8,7 @@
         </div>
 
     <div class="input-group">
-        <div class="col-4 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Попълване на почиви дни</a> </div>
+        <div class="col-4 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Въвеждане на празничен ден</a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -25,7 +25,7 @@
 
             <thead>
                 <tr>
-                    <th>Неработен ден</th>
+                    <th>Празничен ден</th>
                     <th>Редакция</th>
                     <th>Изтриване</th>
                 </tr>

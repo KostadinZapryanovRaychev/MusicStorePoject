@@ -121,10 +121,10 @@ namespace MvcMusicStoreWebProject.Controllers
                 var user = await GetCurrentUserAsync();
                 var userId = user.Id;
                 // tuk sashto
-                var currentSem = Repo.GetCurrentSemesterId();
+                //var currentSem = Repo.GetCurrentSemesterId();
                 attendanceViewModel.Attendance.ApplicationUserId = userId;
                 // tuk nadminavam sebe si
-                attendanceViewModel.Attendance.SemesterId = currentSem.Id;
+                //attendanceViewModel.Attendance.SemesterId = currentSem.Id;
                 await Repo.AddAttendance(attendanceViewModel.Attendance);
 
                 return RedirectToAction("Index");
@@ -445,18 +445,16 @@ namespace MvcMusicStoreWebProject.Controllers
             return Repo.FindAttendanceBySemesterIdandUserId(userId, SemesterId, mode);
         }
 
+        //////////////////////////////////////////////////////////Brutalni PROBi //////////////////////////////////////
+
         public IActionResult WriteCokie(int SemesterId)
         {
             CookieOptions cookies = new CookieOptions();
             cookies.Expires = DateTime.Now.AddDays(1);
-            //Response.Cookies.Append(SemesterId,cookies);
-            return View();
+            Response.Cookies.Append("SemesterId", SemesterId.ToString());
+            return RedirectToAction("CreateAttendance");
         }
 
-        public async Task<IActionResult> ReadCokie()
-        {
-            return View();
-        }
 
         public List<Semester> GetAllSemesterDisplay()
         {
@@ -465,7 +463,7 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
 
-        //////////////////////////////////////////////////////////Brutalni PROBi //////////////////////////////////////
+    
         
 
 

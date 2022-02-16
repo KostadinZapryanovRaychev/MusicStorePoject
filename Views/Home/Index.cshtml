@@ -15,16 +15,18 @@
     @if (SignInManager.IsSignedIn(User))
     {
 
-        @*<h2 class="display-4">Изберете семестър</h2>
-        <form action="/Attendance/WriteCokie" method="post" onchange="javascript:this.form.submit()">
+        <h2 class="display-4">Изберете семестър</h2>
+        <div class="col-3">
+            <form action="/Attendance/WriteCokie" method="post" onchange="javascript:this.form.submit()">
 
-            <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames">
-                <option>Изберете семестър</option>
-            </select>
-            <input type="text" name="cockievalue" value="" />
-            <input type="checkbox" name="IsPersistent" value="true" />
-            <input type="submit" name="Add Cockie" />
-        </form>*@
+                <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames">
+                    <option>Изберете семестър</option>
+                </select>
+                @*<input type="text" name="cockievalue" value="" />
+                <input type="checkbox" name="IsPersistent" value="true" />*@
+                <input type="submit" name="Add Cockie" />
+            </form>
+        </div>
 
         <a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>
         @*<p><a asp-action="Attendance" asp-controller="ReadCokie">Read Cockie</a></p>*@

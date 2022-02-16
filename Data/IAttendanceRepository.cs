@@ -71,5 +71,7 @@ namespace MvcMusicStoreWebProject.Data
 
         Task<Attendance> GetAttendanceByMode(string Mode);
 
+        Semester GetCurrentSemesterId();
+
     }
 }

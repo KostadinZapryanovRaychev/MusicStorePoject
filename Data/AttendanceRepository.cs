@@ -355,6 +355,14 @@ namespace MvcMusicStoreWebProject.Data
             DateTime now = DateTime.Now;
             return Context.Semesters.FirstOrDefault(x => x.startDate.AddDays(-3) <= now && x.endDate.AddDays(10) >= now);
         }
+
+        public Semester GetCurrentSemesterId()
+        {
+            // 10 дена преди и след края на семестъра
+            DateTime now = DateTime.Now;
+            var currentSem = Context.Semesters.FirstOrDefault(x => x.startDate <= now && x.endDate.AddDays(10) >= now);
+            return currentSem;
+        }
         // za tova krashtavame tablicite v edinstvetno chislo 
         // krashtavame go taka zashtoto nezavisimo otkade shte doidat tova vruhsta daden period ot NonWorkingDays
         // pravim da vrushta sprqmo nachalna i kraina data vrushta spisuk s Holidays

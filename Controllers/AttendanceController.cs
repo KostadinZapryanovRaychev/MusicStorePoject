@@ -120,8 +120,11 @@ namespace MvcMusicStoreWebProject.Controllers
                 Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
                 var user = await GetCurrentUserAsync();
                 var userId = user.Id;
+                // tuk sashto
+                var currentSem = Repo.GetCurrentSemesterId();
                 attendanceViewModel.Attendance.ApplicationUserId = userId;
-
+                // tuk nadminavam sebe si
+                attendanceViewModel.Attendance.SemesterId = currentSem.Id;
                 await Repo.AddAttendance(attendanceViewModel.Attendance);
 
                 return RedirectToAction("Index");
@@ -460,6 +463,13 @@ namespace MvcMusicStoreWebProject.Controllers
             List<Semester> semNames = Repo.GetAllSemesters().ToList();
             return semNames;
         }
+
+
+        //////////////////////////////////////////////////////////Brutalni PROBi //////////////////////////////////////
+        
+
+
+
 
     }
 }

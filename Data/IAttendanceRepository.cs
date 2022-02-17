@@ -29,7 +29,7 @@ namespace MvcMusicStoreWebProject.Data
 
         Task<Attendance> GetAttendanceByUserId(int ApplicationUserId);
 
-        public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId , string mode = "");
+        public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId , string Mode = null);
 
         public void Detached(Attendance entity);
 
@@ -61,7 +61,7 @@ namespace MvcMusicStoreWebProject.Data
 
         int GetRelatedSemesterLongitude(int id);
 
-        IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId , string mode = "");
+        IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId , string Mode = null);
 
         Task<string> CoppyAttendance(Attendance attendance);
 

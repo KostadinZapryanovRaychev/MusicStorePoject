@@ -12,6 +12,8 @@ using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using RestSharp;
+using System.Net;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
@@ -19,13 +21,16 @@ namespace MvcMusicStoreWebProject.Controllers
     public class AttendanceController : Controller
     {
         // tva teq raboti traq da si napravq truda da gi izucha nachi tuka imame konstruktor koito vzema IRepository kato argument dependancy injection i drugite neshta traq da gi razbera.
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private IAttendanceRepository Repo { get; }
 
         private readonly UserManager<ApplicationUser> _userManager;
-        public AttendanceController(IAttendanceRepository repo, UserManager<ApplicationUser> userManager)
+        public AttendanceController(IAttendanceRepository repo, UserManager<ApplicationUser> userManager , IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             Repo = repo;
+            this._httpContextAccessor = httpContextAccessor;
         }
         [Authorize]
         [HttpGet]
@@ -127,7 +132,7 @@ namespace MvcMusicStoreWebProject.Controllers
                 //attendanceViewModel.Attendance.SemesterId = currentSem.Id;
                 await Repo.AddAttendance(attendanceViewModel.Attendance);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("LoggedUser");
             }
 
             return RedirectToAction("Index");
@@ -240,11 +245,26 @@ namespace MvcMusicStoreWebProject.Controllers
             IEnumerable<Attendance> attendances;
 
             // vzemame CurrentDate i sravnqvame dali Current date prisustva v nqkoi interval na start i endDate
-            var currentSemester = Repo.GetCurrentSemester();
-            if (currentSemester != null)
+            // ZNACHI TUK
+            //var currentSelectedSemester = Repo.GetCurrentSemester();
+            //var currentSelectedSemester = Request.Cookies["SemesterId"].Value;
+            //HttpCookie cookie = HttpContext.Current.Request.Cookies[SemesterId];
+
+            // E TUK NADNIMAH SEBE SI S TVA IZVRASHTENIE 
+            var currentSelectedSemester = int.Parse(_httpContextAccessor.HttpContext.Request.Cookies["SemesterId"]);
+
+            //var currSelectedSemester = Request.Cookies["SemesterId"].Value;
+
+            //if (currentSelectedSemester != null)
+            //{
+            //    // proverqvame i displaivame zapisite za dadeniq semester
+            //    attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSelectedSemester.Id, mode);
+            //}
+
+            if (currentSelectedSemester != null)
             {
                 // proverqvame i displaivame zapisite za dadeniq semester
-                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id, mode);
+                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSelectedSemester, mode);
             }
             else
             {
@@ -275,10 +295,7 @@ namespace MvcMusicStoreWebProject.Controllers
             var semester = Repo.SemesterEndDateById(attendance.SemesterId);
 
 
-            // i < multiplicationLenght;
-
             for (int i = 0; i <= length; i++)
-            //for (int i = 0; i < 2; i++)
             {
                 var newAttendanceDate = attendance.Date.AddDays(1);
                 if (newAttendanceDate < semester)
@@ -341,32 +358,29 @@ namespace MvcMusicStoreWebProject.Controllers
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
 
-        public async Task<IActionResult> MultiplicationByAttendanceIdForSemester(int AttendanceId)
-        {
-
-
-            var attendance = await Repo.GetAttendance(AttendanceId);
-            var semester = Repo.SemesterEndDateById(attendance.SemesterId);
+        //public async Task<IActionResult> MultiplicationByAttendanceIdForSemester(int AttendanceId)
+        //{
 
 
-            // i < multiplicationLenght;
+        //    var attendance = await Repo.GetAttendance(AttendanceId);
+        //    var semester = Repo.SemesterEndDateById(attendance.SemesterId);
 
-            for (int i = 0; i < 14; i++)
-            {
-                var newAttendanceDate = attendance.Date.AddDays(7);
-                if (newAttendanceDate < semester)
-                {
-                    Repo.Detached(attendance);
-                    attendance.Date = newAttendanceDate;
-                    // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
-                    await Repo.AddAttendanceWithoutHolidays(attendance);
+        //    for (int i = 0; i < 14; i++)
+        //    {
+        //        var newAttendanceDate = attendance.Date.AddDays(7);
+        //        if (newAttendanceDate < semester)
+        //        {
+        //            Repo.Detached(attendance);
+        //            attendance.Date = newAttendanceDate;
+        //            // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
+        //            await Repo.AddAttendanceWithoutHolidays(attendance);
 
-                }
-            }
-            return RedirectToAction("Index");
-        }
+        //        }
+        //    }
+        //    return RedirectToAction("LoggedUser");
+        //}
 
 
 
@@ -377,14 +391,14 @@ namespace MvcMusicStoreWebProject.Controllers
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
-            var currentSemester = Repo.GetCurrentSemester();
+            var currentSelectedSemester = int.Parse(_httpContextAccessor.HttpContext.Request.Cookies["SemesterId"]);
             IEnumerable<Attendance> attendances;
 
 
-            if (currentSemester != null)
+            if (currentSelectedSemester != null)
             {
                 // proverqvame i displaivame zapisite za dadeniq semester
-                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSemester.Id, mode).ToList();
+                attendances = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSelectedSemester, mode).ToList();
             }
             else
             {
@@ -397,7 +411,6 @@ namespace MvcMusicStoreWebProject.Controllers
             foreach (var attendance in attendances)
             {
                 var semesterEndDate = Repo.SemesterEndDateById(attendance.SemesterId);
-                //var semmesterLenght = Repo.GetRelatedSemesterLongitude(attendance.SemesterId);
 
                 for (int i = 0; i < 14; i++)
                 {
@@ -413,37 +426,22 @@ namespace MvcMusicStoreWebProject.Controllers
                 }
 
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("LoggedUser");
         }
 
-        public async Task<IActionResult> UserHistory(int SemesterId, string mode = "всички")
-        {
-            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
-            var result = await UserHistoryChoice(SemesterId, mode);
 
-            return View(result);
-        }
 
         [Authorize]
-        // kak da vurna sashtot view koeto e na UserHistory ama bez layout
-        public async Task<IActionResult> Report(int SemesterId, string mode = "всички")
+        public async Task<IActionResult> UserHistory(string mode = "")
         {
-            var selectList = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
-            ViewBag.Selected = SemesterId;
-            ViewBag.semNames = selectList;
-            var result = await UserHistoryChoice(SemesterId, mode);
-            return View(result);
-        }
-
-
-        public async Task<IEnumerable<Attendance>> UserHistoryChoice(int SemesterId, string mode = "всички")
-        {
-            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+            var currentSelectedSemester = int.Parse(_httpContextAccessor.HttpContext.Request.Cookies["SemesterId"]);
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
-            return Repo.FindAttendanceBySemesterIdandUserId(userId, SemesterId, mode);
+            var result = Repo.FindAttendanceBySemesterIdandUserId(userId, currentSelectedSemester, mode);
+            return View(result);
         }
+
 
         //////////////////////////////////////////////////////////Brutalni PROBi //////////////////////////////////////
 
@@ -452,7 +450,7 @@ namespace MvcMusicStoreWebProject.Controllers
             CookieOptions cookies = new CookieOptions();
             cookies.Expires = DateTime.Now.AddDays(1);
             Response.Cookies.Append("SemesterId", SemesterId.ToString());
-            return RedirectToAction("CreateAttendance");
+            return RedirectToAction("LoggedUser");
         }
 
 
@@ -461,13 +459,6 @@ namespace MvcMusicStoreWebProject.Controllers
             List<Semester> semNames = Repo.GetAllSemesters().ToList();
             return semNames;
         }
-
-
-    
-        
-
-
-
 
     }
 }

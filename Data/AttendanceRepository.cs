@@ -135,16 +135,16 @@ namespace MvcMusicStoreWebProject.Data
         }
 
         // tova = "" pokazva che parametara e opcionalen i moje da ne se podava vinagi
-        public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId, string mode = "")
+        public IEnumerable<Attendance> FindAttendanceByUserId(int ApplicationUserId, string Mode = null)
         {
 
-            if (mode == "")
+            if (Mode == null || Mode =="")
             {
                 return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId);    
             }
             else
             {
-                return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.Mode == mode);
+                return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.Mode == Mode);
             }
         }
 
@@ -157,9 +157,9 @@ namespace MvcMusicStoreWebProject.Data
             return Context.Attendances.Where(a => a.SemesterId == SemesterId);
         }
 
-        public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId , string Mode = "")
+        public IEnumerable<Attendance> FindAttendanceBySemesterIdandUserId(int ApplicationUserId, int SemesterId , string Mode = null)
         {
-            if (Mode == "всички")
+            if (Mode == null || Mode == "")
             {
                 return Context.Attendances.Where(a => a.ApplicationUserId == ApplicationUserId && a.SemesterId == SemesterId);
             }

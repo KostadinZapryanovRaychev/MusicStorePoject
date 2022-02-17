@@ -30,15 +30,16 @@
 
         <div class="col-2">
             <form action="/Attendance/LoggedUser" method="get">
-                <select class="form-control" name="Mode" onchange="javascript:this.form.submit()">
+                <select id="selectedMode" class="form-control" name="Mode" onchange="javascript:this.form.submit()">
                     <option selected disabled value="">Филтриране по форма на обучение</option>
                     <option value="редовно">редовно</option>
                     <option value="задочно">задочно</option>
-                    <option value="всички">всички</option>
+                    <option value="">всички</option>
                 </select>
             </form>
         </div>
     </div>
+    @*винаги избраната да отговаря на стойноста в селекта*@
     <br />
 
 
@@ -65,7 +66,6 @@
                     <th>Дубликация</th>
                     <th>Изтриване</th>
                     <th>Мултиплициране</th>
-                    @*<th>Размножаване за сем</th>*@
                 </tr>
             </thead>
             <tbody>
@@ -95,7 +95,7 @@
                                         <option selected disabled> ---брой----</option>
                                     </select>
                                 </div>
-                                <input type="submit" class="btn btn-info w-75" value="Мултипл."/>
+                                <input type="submit" class="btn btn-info w-75" value="Мултипл." />
                             </form>
                         </td>
                         @*<td> <a class="btn btn-primary" asp-action="MultiplicationByAttendanceIdForSemester" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Размн. за сем</a></td>*@
@@ -105,24 +105,8 @@
         </table>
         @*<a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Преглед</a>*@
         <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Мултиплициране за семестър-редовно обучение</a>
-        @*<div class="input-group inline">
-            <div class="col-4">
-                <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Преглед</a>
-            </div>
-            <div class="col-1">   </div>
-            <div class="col-5">
-                <form class="form-control" asp-action="Multiplication" asp-controller="Attendance">
-                    <div class="form-group row">
-                        <select name="Mode" onsubmit="javascript:this.form.submit()">
-                            <option value="">всички</option>nb
-                            <option value="редовно">редовно</option>
-                            <option value="задочно">задочно</option>
-                        </select>
-                    </div>
-                    <input type="submit" class="btn btn-primary" value="Размн. за сем" />
-                </form>
-            </div>
-        </div>*@
+        <a class="btn btn-primary" asp-controller="Attendance" asp-action="UserHistory">Принт Преглед </a>
+
     }
     else
     {
@@ -208,6 +192,13 @@
                     }
                 });
             });
+
+
+            //$(document).ready(function () {
+            //    $(".selectedMode").val("всички");
+            //}
+
+
 
         </script>
     }

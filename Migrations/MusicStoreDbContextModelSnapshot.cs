@@ -254,7 +254,7 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Programs")
+                    b.Property<string>("Subjects")
                         .HasColumnType("longtext");
 
                     b.Property<int>("SemesterId")

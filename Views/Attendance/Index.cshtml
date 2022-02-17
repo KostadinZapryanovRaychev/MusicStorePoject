@@ -17,21 +17,6 @@
             var user = await UserManager.GetUserAsync(User);
 
             <h1>Здравейте @user.OfficialName</h1>
-
-            <form action="/Attendance/WriteCokie" method="post">
-
-                <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames">
-                    <option>Изберете семестър</option>
-                </select>
-                <input type="text" name="cockievalue" value="" />
-                <input type="checkbox" name="IsPersistent" value="true" />
-                <input type="submit" name="Add Cockie" />
-            </form>
-
-            <form action="/" method="post">
-                <input type="submit" name="Add Cockie" />
-            </form>
-
             <a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>
 
         }

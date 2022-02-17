@@ -22,13 +22,11 @@
                 <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames">
                     <option>Изберете семестър</option>
                 </select>
-                @*<input type="text" name="cockievalue" value="" />
-                <input type="checkbox" name="IsPersistent" value="true" />*@
-                <input type="submit" name="Add Cockie" />
+                <input class="btn btn-primary" type="submit"  value="Попълнете присъствие" name="Попълнете присъствие" />
             </form>
         </div>
 
-        <a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>
+        @*<a class="btn btn-primary" asp-action="LoggedUser" asp-controller="Attendance" role="button">Попълнете присъствената форма</a>*@
         @*<p><a asp-action="Attendance" asp-controller="ReadCokie">Read Cockie</a></p>*@
 
     }

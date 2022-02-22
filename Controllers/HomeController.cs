@@ -30,19 +30,22 @@ namespace MvcMusicStoreWebProject.Controllers
             return semNames;
         }
 
-        // i direktno otiva kum Login na Identity
 
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(string value)
         {
             ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+            //value = ViewBag.semNames();
+            TempData["name"] = value;
+
             return View();
         }
-        public IActionResult Index2()
-        {
-            // eee s taq tupa vrutka go prashtame kudeto taq iska 
-            return RedirectToPage("/Account/Login", new { area = "Identity" });
-        }
+
+        //public IActionResult Index2()
+        //{
+        //    // eee s taq tupa vrutka go prashtame kudeto taq iska 
+        //    return RedirectToPage("/Account/Login", new { area = "Identity" });
+        //}
 
         public IActionResult Privacy()
         {

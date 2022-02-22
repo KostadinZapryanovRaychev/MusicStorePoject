@@ -88,12 +88,12 @@
 
                     e.preventDefault();
 
-                    let confirmAction = confirm("Are you sure to execute this action?");
+                    let confirmAction = confirm("Потвърджавате ли изтриването?");
                     if (!confirmAction) {
-                        alert("Action canceled");
+                        alert("Изтриването отменено");
                         return
                     }
-                    alert("Action successfully executed");
+                    alert("Действието е извършено успешно");
 
                     var degreeId = $(this).val();
 

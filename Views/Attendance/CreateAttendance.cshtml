@@ -61,12 +61,6 @@
                         <label asp-for="@Model.Attendance.Programs"></label>
                         <input asp-for="@Model.Attendance.Programs" class="form-control" />
                     </div>
-                    @*<div class="col-3">
-                            <label asp-for="@Model.Attendance.Discipline"></label>
-                            <select id="DisciplineList" asp-for="@Model.Attendance.Discipline" class="form-control">
-                                <option value="-1"> Select Discipline</option>
-                            </select>
-                        </div>*@
                     <div class="col-3">
                         <label asp-for="@Model.Attendance.Discipline"></label>
                         <select id="DisciplineList" asp-for="@Model.Attendance.Discipline" class="form-control">
@@ -81,13 +75,6 @@
                         <label asp-for="@Model.Attendance.SemesterId" visible="false"> </label>
                         <input asp-for="@Model.Attendance.SemesterId" class="form-control" />
                     </div>
-                    @*<div class="col-3">
-                            <label asp-for="@Model.Attendance.SemesterId"></label>
-                            <select id="ProgramsList" asp-for="@Model.Attendance.SemesterId" asp-items="@ViewBag.semNames" class="form-control">
-                                <option selected disabled>Изберете семестър</option>
-                            </select>
-                        </div>*@
-
                 </div>
                 <p> </p>
                 <div class="form-group row">

@@ -20,7 +20,6 @@ namespace MvcMusicStoreWebProject.Controllers
 
     public class AttendanceController : Controller
     {
-        // tva teq raboti traq da si napravq truda da gi izucha nachi tuka imame konstruktor koito vzema IRepository kato argument dependancy injection i drugite neshta traq da gi razbera.
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IAttendanceRepository Repo { get; }
@@ -32,6 +31,39 @@ namespace MvcMusicStoreWebProject.Controllers
             Repo = repo;
             this._httpContextAccessor = httpContextAccessor;
         }
+
+
+
+        public List<Semester> GetAllSemesterDisplay()
+        {
+            List<Semester> semNames = Repo.GetAllSemesters().ToList();
+            return semNames;
+        }
+
+
+        public JsonResult GetDisciplineByProgramId(int DegreesId)
+        {
+            var disciplines = Repo.GetDisciplinesByProgramId(DegreesId);
+            return Json(new SelectList(disciplines, "Id", "Name"));
+        }
+
+
+        public List<Degrees> GetAllDegrees()
+        {
+            List<Degrees> degreeNames = Repo.LetGetDegrees().ToList();
+            return degreeNames;
+
+        }
+
+        public List<Discipline> GetAllDisciplines()
+        {
+            List<Discipline> discPlineNames = Repo.LetGetDisciplines().ToList();
+            return discPlineNames;
+
+        }
+
+
+
         [Authorize]
         [HttpGet]
         public IActionResult GetAttendances()
@@ -68,28 +100,6 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
 
-        public JsonResult GetDisciplineByProgramId(int DegreesId)
-        {
-            var disciplines = Repo.GetDisciplinesByProgramId(DegreesId);
-            return Json(new SelectList(disciplines, "Id", "Name"));
-        }
-
-
-        public List<Degrees> GetAllDegrees()
-        {
-            List<Degrees> degreeNames = Repo.LetGetDegrees().ToList();
-            return degreeNames;
-
-        }
-
-        public List<Discipline> GetAllDisciplines()
-        {
-            List<Discipline> discPlineNames = Repo.LetGetDisciplines().ToList();
-            return discPlineNames;
-
-        }
-
-
 
         [Authorize]
         [HttpGet]
@@ -111,9 +121,7 @@ namespace MvcMusicStoreWebProject.Controllers
             ViewBag.degreesNames = new SelectList(GetAllDegrees(), "Id", "Name");
             ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
 
-
             attendanceViewModel.Attendance.Degree = GetAllDegrees().Where(x => x.Id == attendanceViewModel.DegreeId).Select(x => x.Name).FirstOrDefault();
-            //attendanceViewModel.Attendance.Discipline = GetDisciplineByProgramId(DegreesId).Where(x => x.Id == attendanceViewModel.DegreeId).Select(x => x.Name).FirstOrDefault();
 
             var errors = ModelState
                 .Where(x => x.Value.Errors.Count > 0)
@@ -125,8 +133,6 @@ namespace MvcMusicStoreWebProject.Controllers
                 Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
                 var user = await GetCurrentUserAsync();
                 var userId = user.Id;
-                // tuk sashto
-                //var currentSem = Repo.GetCurrentSemesterId();
                 attendanceViewModel.Attendance.ApplicationUserId = userId;
                 // tuk nadminavam sebe si
                 //attendanceViewModel.Attendance.SemesterId = currentSem.Id;
@@ -135,8 +141,7 @@ namespace MvcMusicStoreWebProject.Controllers
                 return RedirectToAction("LoggedUser");
             }
 
-            return RedirectToAction("Index");
-
+            return RedirectToAction("LoggedUser");
 
         }
 
@@ -147,26 +152,9 @@ namespace MvcMusicStoreWebProject.Controllers
 
         {
             var deleteMessage = await Repo.DeleteAttendance(AttendanceId);
-
-
             return Content(deleteMessage);
 
         }
-
-        //[HttpDelete]
-        //public async Task <IActionResult> DeleteAttendance(int id )
-
-        //{
-        //    var attend = await Repo.GetAttendance(id);
-
-        //    if (attend != null)
-        //    {
-        //        await Repo.DeleteAttendance(attend);
-        //        return Ok();
-        //    }
-        //    return NotFound();
-
-        //}
 
 
         [Authorize]
@@ -199,7 +187,7 @@ namespace MvcMusicStoreWebProject.Controllers
         }
 
 
-
+        [Authorize]
         public async Task<IActionResult> CoppyAttendance(int AttendanceId)
 
         {
@@ -215,6 +203,10 @@ namespace MvcMusicStoreWebProject.Controllers
         [Authorize]
         public async Task<IActionResult> LoggedUser(string mode)
         {
+
+
+            TempData.Keep();
+
 
             List<SelectListItem> mySkills = new List<SelectListItem>()
                     {
@@ -276,20 +268,19 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(result);
         }
 
-        public IActionResult Index()
-        {
+        //public IActionResult Index()
+        //{
 
-            ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
-            return View();
-        }
+        //    ViewBag.semNames = new SelectList(GetAllSemesterDisplay(), "Id", "Name");
+        //    return View();
+        //}
 
 
 
         [Authorize]
         public async Task<IActionResult> MultiplicationByAttendanceId(int AttendanceId, int MultiplicationLength)
         {
-            //, int MultiplicationLenght
-
+            
             var length = MultiplicationLength;
             var attendance = await Repo.GetAttendance(AttendanceId);
             var semester = Repo.SemesterEndDateById(attendance.SemesterId);
@@ -310,16 +301,7 @@ namespace MvcMusicStoreWebProject.Controllers
             return RedirectToAction("LoggedUser");
         }
 
-
         [Authorize]
-        public async Task<IActionResult> CopyAttendance(Attendance att)
-        {
-            var attendence = await Repo.CoppyAttendance(att);
-
-            return RedirectToAction("Index");
-        }
-
-
         public async Task<IEnumerable<Attendance>> AttendanceByUserId()
         {
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
@@ -358,31 +340,6 @@ namespace MvcMusicStoreWebProject.Controllers
             return result;
         }
 
-        //[Authorize]
-
-        //public async Task<IActionResult> MultiplicationByAttendanceIdForSemester(int AttendanceId)
-        //{
-
-
-        //    var attendance = await Repo.GetAttendance(AttendanceId);
-        //    var semester = Repo.SemesterEndDateById(attendance.SemesterId);
-
-        //    for (int i = 0; i < 14; i++)
-        //    {
-        //        var newAttendanceDate = attendance.Date.AddDays(7);
-        //        if (newAttendanceDate < semester)
-        //        {
-        //            Repo.Detached(attendance);
-        //            attendance.Date = newAttendanceDate;
-        //            // edin If statemenet za da filtrira Holidays // TOZi metod e interesen trqbva da go dopogledna
-        //            await Repo.AddAttendanceWithoutHolidays(attendance);
-
-        //        }
-        //    }
-        //    return RedirectToAction("LoggedUser");
-        //}
-
-
 
         [Authorize]
         public async Task<IActionResult> Multiplication(string mode = "редовно")
@@ -405,14 +362,12 @@ namespace MvcMusicStoreWebProject.Controllers
                 attendances = Repo.FindAttendanceByUserId(userId, mode).ToList();
             }
 
-
-            //attendances.OrderBy(x => x.Date);
-
             foreach (var attendance in attendances)
             {
                 var semesterEndDate = Repo.SemesterEndDateById(attendance.SemesterId);
 
-                for (int i = 0; i < 14; i++)
+                //for (int i = 0; i < 14; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     var newAttendanceDate = attendance.Date.AddDays(7);
                     if (newAttendanceDate < semesterEndDate)
@@ -434,7 +389,11 @@ namespace MvcMusicStoreWebProject.Controllers
         [Authorize]
         public async Task<IActionResult> UserHistory(string mode = "")
         {
+            
             var currentSelectedSemester = int.Parse(_httpContextAccessor.HttpContext.Request.Cookies["SemesterId"]);
+            //var selection = ViewBag.customerSelectedSemester;
+            var selection = _httpContextAccessor.HttpContext.Request.Cookies["SemesterId"];
+            ViewBag.selectedValue = selection;
             Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
             var user = await GetCurrentUserAsync();
             var userId = user.Id;
@@ -442,22 +401,16 @@ namespace MvcMusicStoreWebProject.Controllers
             return View(result);
         }
 
-
-        //////////////////////////////////////////////////////////Brutalni PROBi //////////////////////////////////////
-
-        public IActionResult WriteCokie(int SemesterId)
+        [Authorize]
+        public IActionResult WriteCokie(int SemesterId , string semName)
         {
+            
+            TempData["semesterName"] = semName;
+            TempData.Keep(semName);
             CookieOptions cookies = new CookieOptions();
             cookies.Expires = DateTime.Now.AddDays(1);
             Response.Cookies.Append("SemesterId", SemesterId.ToString());
             return RedirectToAction("LoggedUser");
-        }
-
-
-        public List<Semester> GetAllSemesterDisplay()
-        {
-            List<Semester> semNames = Repo.GetAllSemesters().ToList();
-            return semNames;
         }
 
     }

@@ -15,11 +15,11 @@ namespace MvcMusicStoreWebProject.Models
 
         public string  Name { get; set; }
 
-        [Display(Name = "Начална дата")]
+        [Display(Name = "Начална дата за редовно обучение")]
         [Column(TypeName = "date")]
         public DateTime startDate { get; set; }
 
-        [Display(Name = "Крайна дата")]
+        [Display(Name = "Крайна дата за редовно обучение")]
         [Column(TypeName = "date")]
         public DateTime endDate { get; set; }
 

@@ -1,97 +1,4 @@
-﻿@*@model IEnumerable<MvcMusicStoreWebProject.Models.Attendance>
-@using Microsoft.AspNetCore.Identity
-@using MvcMusicStoreWebProject.Data.Models
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-
-<h2> История по семестри</h2>
-<div class=" container p-3">
-    <div class="row pt-4">
-        <div class="col-6">
-            <div asp-validation-summary="All">   </div>
-        </div>
-    </div>
-
-    <form action="/Attendance/UserHistory" method="get">
-        <div class="col-2">
-            <select class="form-control" name="SemesterId" id="ProgramsList" asp-items="@ViewBag.semNames" onchange="javascript:this.form.submit()">
-                <option>Изберете семестър</option>
-            </select>
-        </div>
-    </form>
-    <br />
-    <br />
-
-    @if (Model.Count() > 0)
-    {
-        <table class="table table-bordered table-striped" style="width:100%" id="tableRepeat">
-
-            <thead>
-                <tr>
-                    <th>Дата</th>
-                    <th>Степен</th>
-                    <th>Вид</th>
-                    <th>Курс</th>
-                    <th>Група</th>
-                    <th>Час.диапазон</th>
-                    <th>Тип</th>
-                    <th>Часове</th>
-                    <th>Зала</th>
-                    <th>Коментар</th>
-                    <th>Дисциплина</th>
-                    <th>Специалност</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var attendance in Model)
-                {
-                    <tr class="tableRows">
-                        <td width="8%">@attendance.Date</td>
-                        <td width="8%">@attendance.Degree</td>
-                        <td width="8%">@attendance.Mode</td>
-                        <td width="8%">@attendance.Course</td>
-                        <td width="8%">@attendance.Groupe</td>
-                        <td width="8%">@attendance.Timeframe</td>
-                        <td width="8%">@attendance.Type</td>
-                        <td width="8%">@attendance.Hours</td>
-                        <td width="8%">@attendance.Auditorium</td>
-                        <td width="8%">@attendance.Note</td>
-                        <td width="8%">@attendance.Programs</td>
-                        <td width="12%">@attendance.Discipline</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Принт Преглед</a>
-    }
-    else
-    {
-        <p> Няма записи</p>
-    }
-</div>*@
-
-@*<div id="deleteMessageModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Server Message</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="message"> </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>*@
-
-
-
-
-
-@{
+﻿@{
     Layout = null;
 }
 
@@ -104,6 +11,20 @@
 
 
 <style>
+
+    .btn {
+        display: inline-block;
+        color: #444;
+        border: 1px solid #CCC;
+        background: #DDD;
+        box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+        cursor: pointer;
+        vertical-align: middle;
+        max-width: 100px;
+        padding: 5px;
+        text-align: center;
+    }
+
     table {
         font-family: Arial, sans-serif;
         border-collapse: collapse;
@@ -120,6 +41,17 @@
         #printPageButton {
             display: none;
         }
+        }
+    @@media print {
+        #printPageButton1 {
+            display: none;
+        }
+    }
+
+    @@media print {
+        #printPageButton2 {
+            display: none;
+        }
     }
 </style>
 
@@ -132,9 +64,6 @@
         </div>
     </div>
 
-
-
-
     <br />
 
     @{ var user = await UserManager.GetUserAsync(User);}
@@ -142,11 +71,10 @@
     <h1>@user.OfficialName</h1>
 
     <br />
+    <p> <div>@TempData["semesterName"]</div></p>
 
     @if (Model.Count() > 0)
     {
-
-
         <table>
 
             <thead>
@@ -186,13 +114,16 @@
                 }
             </tbody>
         </table>
+
     }
     else
     {
         <p> </p>
     }
     <form>
-        <input id="printPageButton" type="button" value="Принтиране"
+        <input class='btn' id="printPageButton" type="button" value="Принтиране"
                onclick="window.print()" />
     </form>
+
+    <div class='btn' id="printPageButton2"><a type="button" a asp-controller="Attendance" asp-action="LoggedUser">Назад </a></div>
 </div>

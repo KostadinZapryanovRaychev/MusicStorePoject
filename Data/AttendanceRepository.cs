@@ -111,8 +111,6 @@ namespace MvcMusicStoreWebProject.Data
                 existingAttend.Programs = attendance.Programs;
                 existingAttend.Auditorium = attendance.Auditorium;
                 existingAttend.Degree = attendance.Degree;
-                existingAttend.Semester = attendance.Semester;
-                existingAttend.SemesterId = attendance.SemesterId;
                 existingAttend.Discipline = attendance.Discipline;
                 existingAttend.Note = attendance.Note;
                 existingAttend.Course = attendance.Course;
@@ -213,10 +211,6 @@ namespace MvcMusicStoreWebProject.Data
 
         public async Task<Attendance> GetAttendance(int id)
         {
-            // ako id to vkarano kato parametar v taq funkciq e ravno na Id na Attendance vurni mi toq attendance !
-            // return Context.Attendances.SingleOrDefault(x => x.Id == id);
-
-            // durgiq variant e 
 
             var attend = await Context.Attendances.FindAsync(id);
             return attend;

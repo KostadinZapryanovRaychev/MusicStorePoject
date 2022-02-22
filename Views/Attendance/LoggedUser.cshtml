@@ -5,6 +5,8 @@
 @inject UserManager<ApplicationUser> UserManager
 
 <h1>Отработени академични часове</h1>
+
+
 <div class=" container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -42,8 +44,12 @@
     @*винаги избраната да отговаря на стойноста в селекта*@
     <br />
 
+    @*@{
+            string msg = TempData.Peek("semesterName").ToString();
+        }*@
+    @{TempData.Keep("semesterName"); }
+    <p> <div>Попълване за:@TempData["semesterName"] </div></p>
 
-    <p>Часове за Семестър от Модела да идва избрания семестър</p>
     @if (Model.Count() > 0)
     {
         <table class="table-dark table table-bordered table-striped" style="width:100%" id="tableRepeat">
@@ -98,7 +104,6 @@
                                 <input type="submit" class="btn btn-info w-75" value="Мултипл." />
                             </form>
                         </td>
-                        @*<td> <a class="btn btn-primary" asp-action="MultiplicationByAttendanceIdForSemester" asp-controller="Attendance" asp-route-AttendanceId="@attendance.Id" role="button">Размн. за сем</a></td>*@
                     </tr>
                 }
             </tbody>
@@ -106,11 +111,13 @@
         @*<a class="btn btn-primary" asp-action="Report" asp-controller="Attendance" role="button">Преглед</a>*@
         <a class="btn btn-primary" asp-action="Multiplication" asp-controller="Attendance" role="button">Мултиплициране за семестър-редовно обучение</a>
         <a class="btn btn-primary" asp-controller="Attendance" asp-action="UserHistory">Принт Преглед </a>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Назад </a>
 
     }
     else
     {
         <p class="raychevdanger"> Няма създадени записи </p>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Назад </a>
     }
 
 
@@ -154,7 +161,7 @@
 
                     let confirmAction = confirm("Потвърджавате ли изтриването?");
                     if (!confirmAction) {
-                        alert("Action canceled");
+                        alert("Изтриването отменено");
                         return
                     }
                     alert("Действието е извършено успешно");
@@ -192,12 +199,6 @@
                     }
                 });
             });
-
-
-            //$(document).ready(function () {
-            //    $(".selectedMode").val("всички");
-            //}
-
 
 
         </script>

@@ -8,7 +8,7 @@
         </div>
 
     <div class="input-group">
-        <div class="col-4 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Въвеждане на празничен ден</a> </div>
+        <div class="col-4 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Въвеждане на неучебен ден</a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -87,12 +87,12 @@
 
                 e.preventDefault();
 
-                let confirmAction = confirm("Are you sure to execute this action?");
+                let confirmAction = confirm("Потвърджавате ли изтриването?");
                 if (!confirmAction) {
-                    alert("Action canceled");
+                    alert("Изтриването отменено");
                     return
                 }
-                alert("Action successfully executed");
+                alert("Действието е извършено успешно");
 
                 var nonWorkingDaysId = $(this).val();
 

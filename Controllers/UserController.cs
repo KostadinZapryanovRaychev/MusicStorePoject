@@ -28,7 +28,6 @@ namespace MvcMusicStoreWebProject.Controllers
             var user = await GetCurrentUserAsync();
             var userEmail = user.Email;
             return userEmail;
-
             
         }
     }

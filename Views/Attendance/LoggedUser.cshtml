@@ -126,80 +126,93 @@
 
 </div>
 
-    <!-- Modal -->
-    <div id="deleteMessageModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+<!-- Modal -->
+<div id="deleteMessageModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-             Modal content
+        Modal content
 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Server Message</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="message"> </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Server Message</h4>
             </div>
-
+            <div class="modal-body">
+                <p id="message"> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
         </div>
+
     </div>
+</div>
 
 
-    @section Scripts {
+@section Scripts {
 
-        <script>
-            function confirmAction() {
-            }
+    <script>
+        function confirmAction() {
+        }
 
-            $(document).ready(function () {
-                $(".deleteAttendance").on("click", function (e) {
+        $(document).ready(function () {
+            $(".deleteAttendance").on("click", function (e) {
 
-                    e.preventDefault();
+                e.preventDefault();
 
-                    let confirmAction = confirm("Потвърджавате ли изтриването?");
-                    if (!confirmAction) {
-                        alert("Изтриването отменено");
-                        return
+                let confirmAction = confirm("Потвърджавате ли изтриването?");
+                if (!confirmAction) {
+                    alert("Изтриването отменено");
+                    return
+                }
+                alert("Действието е извършено успешно");
+
+                var attendanceId = $(this).val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Attendance/DeleteAttendance',
+                    data: { AttendanceId: attendanceId },
+                    success: function (data) {
+                        $("#message").html(data);
+                        $("#deleteMessageModal").modal("show");
                     }
-                    alert("Действието е извършено успешно");
-
-                    var attendanceId = $(this).val();
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Attendance/DeleteAttendance',
-                        data: { AttendanceId: attendanceId },
-                        success: function (data) {
-                            $("#message").html(data);
-                            $("#deleteMessageModal").modal("show");
-                        }
-
-                    });
 
                 });
 
-                // като кликна тука и релоадва страницата с тази функция след като deletetnem
-                $("#deleteMessageModal").on("hidden.bs.modal", function () {
-                    location.reload();
-                });
-
-                $("#searchTextId").on("keyup", function () {
-                    var searchTextId = $(this).val();
-                    if (searchTextId != undefined && searchTextId != "") {
-                        console.log(searchTextId);
-                        $(".tableRows").hide();
-                        $("td:contains(" + searchTextId + ")").parent().show();
-
-                    }
-                    else {
-                        $(".tableRows").show();
-                    }
-                });
             });
 
+            // като кликна тука и релоадва страницата с тази функция след като deletetnem
+            $("#deleteMessageModal").on("hidden.bs.modal", function () {
+                location.reload();
+            });
 
-        </script>
-    }
+            $("#searchTextId").on("keyup", function () {
+                var searchTextId = $(this).val();
+                if (searchTextId != undefined && searchTextId != "") {
+                    console.log(searchTextId);
+                    $(".tableRows").hide();
+                    $("td:contains(" + searchTextId + ")").parent().show();
+
+                }
+                else {
+                    $(".tableRows").show();
+                }
+            });
+        });
+
+
+
+        $(function () {
+            var modeValue = localStorage.getItem("modeValue");
+            if (modeValue != null) {
+                $("select[name=Mode]").val(modeValue);
+            }
+
+            $("select[name=Mode]").on("change", function () {
+                localStorage.setItem("modeValue", $(this).val());
+            });
+        })
+
+
+    </script>
+}

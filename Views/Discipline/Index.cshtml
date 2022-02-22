@@ -22,7 +22,7 @@
     <form action="/Discipline" method="get">
         <div class="col-2">
             <select class="form-control" name="ProgramsId" id="ProgramsList" asp-items="@ViewBag.degreesNames" onchange="javascript:this.form.submit()">
-                <option>Филтриране по степен</option>
+                <option selected disabled>Филтриране по степен</option>
             </select>
         </div>
     </form> 
@@ -133,6 +133,18 @@
                 }
             });
         });
+
+
+        $(function () {
+            var modeValue = localStorage.getItem("modeValue");
+            if (modeValue != null) {
+                $("select[id=ProgramsList]").val(modeValue);
+            }
+
+            $("select[id=ProgramsList]").on("change", function () {
+                localStorage.setItem("modeValue", $(this).val());
+            });
+        })
 
     </script>
 }

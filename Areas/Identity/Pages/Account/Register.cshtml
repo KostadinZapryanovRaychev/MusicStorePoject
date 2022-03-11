@@ -1,8 +1,5 @@
 ﻿@page
 @model RegisterModel
-@*@{
-    ViewData["Title"] = "Register";
-}*@
 
 @{
     ViewData["Title"] = "Регистрация";
@@ -35,6 +32,11 @@
                 <input asp-for="Input.OfficialName" class="form-control" />
                 <span asp-validation-for="Input.OfficialName" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.Description"></label>
+                <input asp-for="Input.Description" class="form-control" />
+                <span asp-validation-for="Input.Description" class="text-danger"></span>
+            </div>
             <button type="submit" class="btn btn-primary">Регистрация</button>
         </form>
     </div>
@@ -45,12 +47,7 @@
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
-                    @*<div>
-                            <p>
-                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                                for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>
-                        </div>*@
+
                 }
                 else
                 {

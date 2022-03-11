@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using RestSharp;
 using System.Net;
+using MvcMusicStoreWebProject.Areas.Identity.Pages.Account;
 
 namespace MvcMusicStoreWebProject.Controllers
 {
@@ -411,6 +412,28 @@ namespace MvcMusicStoreWebProject.Controllers
             cookies.Expires = DateTime.Now.AddDays(1);
             Response.Cookies.Append("SemesterId", SemesterId.ToString());
             return RedirectToAction("LoggedUser");
+        }
+
+
+        public List<string> AllowedNames { get; set; } = new List<string>()
+        {
+            new string ("Георги Иванов Георгиев"),
+            new string ("Цветан Иванов Георгиев"),
+            new string ("Михаил Иванов Георгиев"),
+            new string ("Трендафил Иванов Георгиев"),
+            new string ("Божидар Иванов Георгиев"),
+            new string ("Манол Иванов Георгиев"),
+            new string ("Костадин Иванов Георгиев"),
+        };
+
+        public bool isUserAllowedToRegister(RegisterModel registerModel)
+        {
+
+            if (!AllowedNames.Contains(registerModel.Input.OfficialName))
+            {
+                return true;
+            }
+            return false;
         }
 
     }

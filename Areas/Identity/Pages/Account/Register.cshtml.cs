@@ -63,10 +63,29 @@ namespace MvcMusicStoreWebProject.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
            
-            [Display(Name = "Академична длъжност и степен, Име, Презиме, Фамилия")]
+            [Display(Name = "Име, Презиме, Фамилия")]
             public string OfficialName { get; set; }
+
+            [Display(Name = "Академична длъжност и степен")]
+            public string Description { get; set; }
         }
 
+
+        //TODO // da idva ot bazata danni tva i da razdelq akademichnata stepen i trite imena na 2 chasti
+
+        public List<string> AllowedNames { get; set; } = new List<string>()
+        {
+            new string ("Георги Иванов Георгиев"),
+            new string ("Цветан Иванов Георгиев"),
+            new string ("Михаил Иванов Георгиев"),
+            new string ("Трендафил Иванов Георгиев"),
+            new string ("Божидар Иванов Георгиев"),
+            new string ("Манол Иванов Георгиев"),
+            new string ("Костадин Иванов Георгиев"),
+        };
+
+
+        
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -79,37 +98,46 @@ namespace MvcMusicStoreWebProject.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email , OfficialName=Input.OfficialName };
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
 
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = "", returnUrl = returnUrl },
-                        protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email , OfficialName=Input.OfficialName , Description=Input.Description };
+              
+                
+               if(AllowedNames.Contains(user.OfficialName)) {
+                    var result = await _userManager.CreateAsync(user, Input.Password);
+                    if (result.Succeeded)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        _logger.LogInformation("User created a new account with password.");
+
+                        //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = user.Id, code = "", returnUrl = returnUrl },
+                            protocol: Request.Scheme);
+
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                        {
+                            return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }
                     }
-                    else
+                    foreach (var error in result.Errors)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                
             }
 
             // If we got this far, something failed, redisplay form

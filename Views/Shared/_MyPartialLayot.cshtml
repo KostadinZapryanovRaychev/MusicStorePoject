@@ -8,15 +8,16 @@
     @if (User.IsInRole("Admin"))
     {
 
-        <ul class="sidebar-nav">
-            <li><a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Профил </a></li>
-            @{ var user = await UserManager.GetUserAsync(User);}
-            <li><a asp-area="" asp-controller="Discipline" asp-action="Index">Специалности</a></li>
-            <li><a asp-area="" asp-controller="Semester" asp-action="Index">Семестри </a></li>
-            <li><a asp-area="" asp-controller="NonWorkingDays" asp-action="Index">Неучебни дни</a></li>
-            <li><a asp-area="" asp-controller="Degree" asp-action="Index">Образ. степени </a></li>
-            <li> <a asp-action="Index" asp-controller="Home">Присъствена форма</a></li>
-        </ul>
+    <ul class="sidebar-nav">
+        <li><a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Профил </a></li>
+        @{ var user = await UserManager.GetUserAsync(User);}
+        <li><a asp-area="" asp-controller="Discipline" asp-action="Index">Специалности</a></li>
+        <li><a asp-area="" asp-controller="Semester" asp-action="Index">Семестри </a></li>
+        <li><a asp-area="" asp-controller="NonWorkingDays" asp-action="Index">Неучебни дни</a></li>
+        <li><a asp-area="" asp-controller="Degree" asp-action="Index">Образ. степени </a></li>
+        <li><a asp-area="" asp-controller="UsersAlloewdToRegister" asp-action="Index">Позволена регистрация</a></li>
+        <li> <a asp-action="Index" asp-controller="Home">Присъствена форма</a></li>
+    </ul>
 
     }
 

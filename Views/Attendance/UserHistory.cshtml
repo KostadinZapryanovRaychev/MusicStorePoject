@@ -68,7 +68,7 @@
 
     @{ var user = await UserManager.GetUserAsync(User);}
 
-    <h1>@user.OfficialName</h1>
+    <h1>@user.Description @user.OfficialName</h1>
 
     <br />
     <p> <div>@TempData["semesterName"]</div></p>

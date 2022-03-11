@@ -1,14 +1,14 @@
-﻿@model IEnumerable<MvcMusicStoreWebProject.Models.NonWorkingDays>
-  
+﻿@model IEnumerable<MvcMusicStoreWebProject.Models.AllowedPersonsToRegister>
+
 <h1>Неучебни дни</h1>
 
-<div class=" container p-3">   
-        <div class="col-6">
-            <div asp-validation-summary="All">   </div>
-        </div>
+<div class=" container p-3">
+    <div class="col-6">
+        <div asp-validation-summary="All">   </div>
+    </div>
 
     <div class="input-group">
-        <div class="col-4 text-right">  <a asp-area="" asp-controller="NonWorkingDays" asp-action="CreateNonWorkingDays" class="btn btn-primary">Въвеждане на неучебен ден</a> </div>
+        <div class="col-4 text-right">  <a asp-area="" asp-controller="UsersAlloewdToRegister" asp-action="CreateAPtoReg" class="btn btn-primary">Одобрени за регистрация лица</a> </div>
         <div class="form-outline">
             <input type="text" id="searchTextId" class="form-control" />
         </div>
@@ -16,7 +16,7 @@
             <i class="fa fa-search"></i>
         </button>
     </div>
-   
+
     <br />
 
     @if (Model.Count() > 0)
@@ -25,19 +25,19 @@
 
             <thead>
                 <tr>
-                    <th>Неучебен ден</th>
+                    <th>Три Имена</th>
                     <th>Редакция</th>
                     <th>Изтриване</th>
                 </tr>
             </thead>
             <tbody>
 
-                @foreach (var nonWorkingDays in Model)
+                @foreach (var allowedPerson in Model)
                 {
                     <tr class="tableRows">
-                        <td width="30%">@nonWorkingDays.Holiday</td>
-                        <td><a class="btn btn-primary" asp-action="EditNonWorkingDays" asp-controller="NonWorkingDays" asp-route-NWDId="@nonWorkingDays.Id" role="button">Редакция</a></td>
-                        <td><button class="btn btn-danger deleteNonWorkingDay" onclick="confirmAction()" value="@nonWorkingDays.Id" role="button">Изтриване</button></td>
+                        <td width="30%">@allowedPerson.Name</td>
+                        <td><a class="btn btn-primary" asp-action="EditAPtoReg" asp-controller="UsersAlloewdToRegister" asp-route-APtoRegId="@allowedPerson.Id" role="button">Редакция</a></td>
+                        <td><button class="btn btn-danger deletePerson" onclick="confirmAction()" value="@allowedPerson.Id" role="button">Изтриване</button></td>
                     </tr>
                 }
             </tbody>
@@ -83,7 +83,7 @@
         }
 
         $(document).ready(function () {
-            $(".deleteNonWorkingDay").on("click", function (e) {
+            $(".deletePerson").on("click", function (e) {
 
                 e.preventDefault();
 
@@ -94,13 +94,13 @@
                 }
                 alert("Действието е извършено успешно");
 
-                var nonWorkingDaysId = $(this).val();
+                var personAllowedToRegId = $(this).val();
 
                 $.ajax({
 
                     type: 'POST',
-                    url: '/NonWorkingDays/DeleteNWD',
-                    data: { NWDId: nonWorkingDaysId },
+                    url: '/UsersAlloewdToRegister/DeleteAPtoReg',
+                    data: { APtoRId: personAllowedToRegId },
                     success: function (data) {
                         $("#message").html(data);
                         $("#deleteMessageModal").modal("show");

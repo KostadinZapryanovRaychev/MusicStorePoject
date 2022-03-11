@@ -4,11 +4,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MvcMusicStoreWebProject.Migrations
 {
-    public partial class CrazyStuff : Migration
+    public partial class Persons : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "AllowedPersonsToRegisters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AllowedPersonsToRegisters", x => x.Id);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -107,8 +122,8 @@ namespace MvcMusicStoreWebProject.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    startDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    endDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    startDate = table.Column<DateTime>(type: "date", nullable: false),
+                    endDate = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -266,9 +281,9 @@ namespace MvcMusicStoreWebProject.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
-                    Degree = table.Column<string>(type: "longtext", nullable: false)
+                    Degree = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Mode = table.Column<string>(type: "varchar[12]", nullable: true)
+                    Mode = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Course = table.Column<int>(type: "int", nullable: false),
                     Groupe = table.Column<string>(type: "longtext", nullable: true)
@@ -362,6 +377,9 @@ namespace MvcMusicStoreWebProject.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AllowedPersonsToRegisters");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

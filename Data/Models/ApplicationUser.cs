@@ -14,9 +14,7 @@ namespace MvcMusicStoreWebProject.Data.Models
 
         public string OfficialName { get; set; }
         public string Description { get; set; }
-
-        //public string AcademicDegree { get; set; }
-        //public string AcademicTitle { get; set; }
+        // public string AcademicTitleAndDegree { get; set; }
 
     }
 }

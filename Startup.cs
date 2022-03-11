@@ -36,6 +36,7 @@ namespace MvcMusicStoreWebProject
             services.AddScoped<ISemesterRepository, SemesterRepository>();
             services.AddScoped<INWDRepository, NWDRepository>();
             services.AddScoped<IDegreeRepository, DegreeRepository>();
+            services.AddScoped<IAPtRRepository, APtRRepository>();
 
             services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
             {

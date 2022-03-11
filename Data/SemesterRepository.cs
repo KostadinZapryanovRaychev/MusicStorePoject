@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MvcMusicStoreWebProject.Data
 {
-    public class SemesterRepository: ISemesterRepository
+    public class SemesterRepository : ISemesterRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private MusicStoreDbContext Context { get; }

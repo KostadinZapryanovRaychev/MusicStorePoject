@@ -9,8 +9,8 @@ using MvcMusicStoreWebProject.Data;
 namespace MvcMusicStoreWebProject.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    [Migration("20220207210451_CrazyStuff")]
-    partial class CrazyStuff
+    [Migration("20220310145548_Persons")]
+    partial class Persons
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -219,6 +219,20 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
+            modelBuilder.Entity("MvcMusicStoreWebProject.Models.AllowedPersonsToRegister", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AllowedPersonsToRegisters");
+                });
+
             modelBuilder.Entity("MvcMusicStoreWebProject.Models.Attendance", b =>
                 {
                     b.Property<int>("Id")
@@ -238,7 +252,6 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Degree")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Discipline")
@@ -256,7 +269,7 @@ namespace MvcMusicStoreWebProject.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Subjects")
+                    b.Property<string>("Programs")
                         .HasColumnType("longtext");
 
                     b.Property<int>("SemesterId")
@@ -334,10 +347,10 @@ namespace MvcMusicStoreWebProject.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("endDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("startDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 

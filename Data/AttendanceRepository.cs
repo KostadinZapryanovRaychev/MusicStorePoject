@@ -180,10 +180,6 @@ namespace MvcMusicStoreWebProject.Data
 
         public async Task<Attendance> GetAttendanceByUserId(int ApplicationUserId)
         {
-            // ako id to vkarano kato parametar v taq funkciq e ravno na Id na Attendance vurni mi toq attendance !
-            // return Context.Attendances.SingleOrDefault(x => x.Id == id);
-
-            // durgiq variant e 
 
             var attend = await Context.Attendances.FindAsync(ApplicationUserId);
             return attend;
@@ -357,15 +353,6 @@ namespace MvcMusicStoreWebProject.Data
             var currentSem = Context.Semesters.FirstOrDefault(x => x.startDate <= now && x.endDate.AddDays(10) >= now);
             return currentSem;
         }
-        // za tova krashtavame tablicite v edinstvetno chislo 
-        // krashtavame go taka zashtoto nezavisimo otkade shte doidat tova vruhsta daden period ot NonWorkingDays
-        // pravim da vrushta sprqmo nachalna i kraina data vrushta spisuk s Holidays
-
-        //public List<NonWorkingDays> GetHolidaysForPeriod(DateTime startDate , DateTime endDate)
-        //{
-
-        //}
-
 
     }
 }

@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using MvcMusicStoreWebProject.Data.Models;
+using MvcMusicStoreWebProject.Models;
+using MvcMusicStoreWebProject.Data;
 
 namespace MvcMusicStoreWebProject.Areas.Identity.Pages.Account
 {
@@ -24,17 +26,19 @@ namespace MvcMusicStoreWebProject.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private static IAPtRRepository _repo;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender , IAPtRRepository repo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _repo = repo;
         }
 
         [BindProperty]
@@ -85,7 +89,40 @@ namespace MvcMusicStoreWebProject.Areas.Identity.Pages.Account
         };
 
 
+        //public IList<AllowedPersonsToRegister> ANames ()
+        //{
+        //    var result = Context.NonWorkingDays.ToList();
+
+        //    // правим нов лист от тип Datetime
+        //    var holidays = new List<DateTime>();
+
+        //    // попълваме листа с данните от таблицата НонУъркингДейс
+        //    foreach (var holiday in result)
+        //    {
+
+        //        holidays.Add(holiday.Holiday);
+        //    };
+        //}
+
+        //public IList<Discipline> GetDisciplinesByProgramId(int DegreesId)
+        //{
+        //    var disciplinelist = from discipline in Context.Disciplines where discipline.DegreesId == DegreesId select discipline;
+        //    var disciplineNames = disciplinelist.ToList<Discipline>();
+        //    var onlyNames = new List<string>();
+
+        //    foreach (var onlyName in disciplineNames)
+        //    {
+
+        //        onlyNames.Add(onlyName.Name);
+        //    };
+
+        //    return disciplineNames;
+        //}
+
         
+
+
+
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -103,9 +140,10 @@ namespace MvcMusicStoreWebProject.Areas.Identity.Pages.Account
 
 
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email , OfficialName=Input.OfficialName , Description=Input.Description };
-              
-                
-               if(AllowedNames.Contains(user.OfficialName)) {
+
+                var allowdNames = _repo.ANames();
+
+                if (allowdNames.Contains(user.OfficialName)) {
                     var result = await _userManager.CreateAsync(user, Input.Password);
                     if (result.Succeeded)
                     {

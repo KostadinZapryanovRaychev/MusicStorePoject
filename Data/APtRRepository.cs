@@ -88,5 +88,17 @@ namespace MvcMusicStoreWebProject.Data
             await Context.SaveChangesAsync();
         }
 
+
+        public IList<string> ANames()
+        {
+            var result = Context.AllowedPersonsToRegisters.ToList();
+            var allNames = new List<string>();
+
+            foreach (var onlyName in result)
+            {
+              allNames.Add(onlyName.Name);
+            };
+            return allNames;
+        }
     }
 }

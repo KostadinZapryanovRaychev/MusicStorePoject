@@ -20,6 +20,6 @@ namespace MvcMusicStoreWebProject.Data
 
         Task<string> AddAPtoReg(AllowedPersonsToRegister allowedPersonsToRegister);
 
-        
+        IList<string> ANames();
     }
 }
